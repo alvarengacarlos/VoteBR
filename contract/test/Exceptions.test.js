@@ -9,6 +9,7 @@ const InvalidAge = require("../lib/Exceptions/InvalidAge");
 const CpfDoesNotExists = require("../lib/Exceptions/CpfDoesNotExist");
 const TotalVotesAchieved = require("../lib/Exceptions/TotalVotesAchieved");
 const IncorrectInformationReceived = require("../lib/Exceptions/IncorrectInformationReceived");
+const ExistingRecord = require("../lib/Exceptions/ExistingRecord");
 
 describe("Exceptions/*", () => {
     
@@ -60,6 +61,13 @@ describe("Exceptions/*", () => {
 		it("Must be IncorrectInformationReceived instance", () => {
 			const exception = new IncorrectInformationReceived();
 			expect(exception).instanceOf(IncorrectInformationReceived);
+		});
+	});
+	
+	describe("ExistingRecord", () => {
+		it("Must be ExistingRecord instance", () => {
+			const exception = new ExistingRecord();
+			expect(exception).instanceOf(ExistingRecord);
 		});
 	});
 
