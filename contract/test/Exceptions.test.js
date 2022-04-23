@@ -10,6 +10,7 @@ const CpfDoesNotExists = require("../lib/Exceptions/CpfDoesNotExist");
 const TotalVotesAchieved = require("../lib/Exceptions/TotalVotesAchieved");
 const IncorrectInformationReceived = require("../lib/Exceptions/IncorrectInformationReceived");
 const ExistingRecord = require("../lib/Exceptions/ExistingRecord");
+const AccessDenied = require("../lib/Exceptions/AccessDenied");
 
 describe("Exceptions/*", () => {
     
@@ -68,6 +69,13 @@ describe("Exceptions/*", () => {
 		it("Must be ExistingRecord instance", () => {
 			const exception = new ExistingRecord();
 			expect(exception).instanceOf(ExistingRecord);
+		});
+	});
+
+	describe("AccessDenied", () => {
+		it("Must be AccessDenied instance", () => {
+			const exception = new AccessDenied();
+			expect(exception).instanceOf(AccessDenied);
 		});
 	});
 
