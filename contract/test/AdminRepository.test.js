@@ -106,5 +106,23 @@ describe("VoteBr", () => {
 
         });
 
+		describe("#updateElectionResearch", () => {
+
+			it("Must update an electoral research", async () => {
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+                await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+
+				const eBuffer = await chaincodeStub.getState(electionResearch.getId());
+				const eObject = JSON.parse(eBuffer.toString());
+
+				e = ElectionResearch.mountsObjectRetrievedFromTheBlockchain(eObject);
+				e.start = true;
+
+				const adminRepository = new AdminRepository();                
+				await adminRepository.updateElectionResearch(transactionContext, e);
+			});
+
+		});
+
     });
 });
