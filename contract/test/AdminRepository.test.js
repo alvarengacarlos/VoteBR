@@ -158,7 +158,48 @@ describe("VoteBr", () => {
 				expect(result[0]).to.eql(electionResearch);
 			});
 
-		})
+		});
 
+		describe("#_getQueryResultForQueryString", () => {
+
+			it("Must return an array with election researches", async () => {
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01")
+				const electionResearchBuffer = Buffer.from(JSON.stringify(electionResearch));
+				
+				const arrayOfElectionResearch = [
+					{value: electionResearchBuffer}
+				];
+
+				function makeIterator(array) {
+					let nextIndex = 0;
+
+					return {
+						next: async () => {
+							return nextIndex < array.length ?
+						 		{value: array[nextIndex++], done: false} :
+						 		{done: true};
+						},
+						close: () => {
+							return {done: true}
+						}
+					}
+				}
+
+				const iterator = makeIterator(arrayOfElectionResearch)
+
+				let queryString = {};
+				queryString.selector = {};
+				queryString.selector.start = false;
+				queryString.selector.close = false; 
+
+				chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);				
+							
+				const adminRepository = new AdminRepository();				
+                const result = await adminRepository._getQueryResultForQueryString(transactionContext, JSON.stringify(queryString));
+
+				expect(result[0]).to.eql(electionResearch);
+			});
+
+		});
     });
 });
