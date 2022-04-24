@@ -11,6 +11,7 @@ const TotalVotesAchieved = require("../lib/Exceptions/TotalVotesAchieved");
 const IncorrectInformationReceived = require("../lib/Exceptions/IncorrectInformationReceived");
 const ExistingRecord = require("../lib/Exceptions/ExistingRecord");
 const AccessDenied = require("../lib/Exceptions/AccessDenied");
+const ResearchWithoutStartingDoesNotExist = require("../lib/Exceptions/ResearchWithoutStartingDoesNotExist");
 
 describe("Exceptions/*", () => {
     
@@ -76,6 +77,13 @@ describe("Exceptions/*", () => {
 		it("Must be AccessDenied instance", () => {
 			const exception = new AccessDenied();
 			expect(exception).instanceOf(AccessDenied);
+		});
+	});
+
+	describe("ResearchWithoutStartingDoesNotExist", () => {
+		it("Must be ResearchWithoutStartingDoesNotExist instance", () => {
+			const exception = new ResearchWithoutStartingDoesNotExist();
+			expect(exception).instanceOf(ResearchWithoutStartingDoesNotExist);
 		});
 	});
 
