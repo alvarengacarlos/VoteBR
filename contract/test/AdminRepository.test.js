@@ -39,25 +39,48 @@ describe("VoteBr", () => {
 			return Promise.resolve(ret);
 		});
 
-		chaincodeStub.getStateByRange.callsFake(async () => {
-			function* internalGetStateByRange() {
-				if (chaincodeStub.states) {
+		// chaincodeStub.getStateByRange.callsFake(async () => {
+		// 	function* internalGetStateByRange() {
+		// 		if (chaincodeStub.states) {
                     
-					const copied = Object.assign({}, chaincodeStub.states);
+		// 			const copied = Object.assign({}, chaincodeStub.states);
 
-					for (let key in copied) {
-						yield {value: copied[key]};
-					}
-				}
-			}
+		// 			for (let key in copied) {
+		// 				yield {value: copied[key]};
+		// 			}
+		// 		}
+		// 	}
 
-			return Promise.resolve(internalGetStateByRange());
-		});
+		// 	return Promise.resolve(internalGetStateByRange());
+		// });
 	});
 
     describe("AdminRepository", () => {
 
         describe("#electionResearchExists", () => {
+
+			it("Must return true", async () => {
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+                await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+
+				const adminRepository = new AdminRepository(); 
+				const response = await adminRepository.electionResearchExists(transactionContext, electionResearch.getId());
+
+				expect(response).to.eql(true);
+			});
+
+			it("Must return false", async () => {
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+
+				const adminRepository = new AdminRepository(); 
+				const response = await adminRepository.electionResearchExists(transactionContext, electionResearch.getId());
+
+				expect(response).to.eql(false);
+			});
+
+		});
+
+		describe("#createElectionResearch", () => {
             
             it("Must throw an error for existing electoral research", async () => {
                 const electionResearch1 = ElectionResearch.makeElectionResearch("2000", "01");
