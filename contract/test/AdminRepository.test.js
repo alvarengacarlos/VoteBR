@@ -13,6 +13,7 @@ const { ChaincodeStub } = require("fabric-shim");
 const AdminRepository = require("../lib/Repository/AdminRepository");
 const ElectionResearch = require("../lib/Classes/ElectionResearch");
 const ExistingRecord = require("../lib/Exceptions/ExistingRecord");
+const ResearchWithoutStartingDoesNotExist = require("../lib/Exceptions/ResearchWithoutStartingDoesNotExist");
 
 describe("VoteBr", () => {
     
@@ -200,6 +201,79 @@ describe("VoteBr", () => {
 				expect(result[0]).to.eql(electionResearch);
 			});
 
+		});
+
+		describe("#retrieveElectionResearchWithoutStarting", () => {
+
+			it("Must return an error because there is no election research without starting", async () => {
+				const arrayOfElectionResearch = [];
+
+				function makeIterator(array) {
+					let nextIndex = 0;
+
+					return {
+						next: async () => {
+							return nextIndex < array.length ?
+						 		{value: array[nextIndex++], done: false} :
+						 		{done: true};
+						},
+						close: () => {
+							return {done: true}
+						}
+					}
+				}
+
+				const iterator = makeIterator(arrayOfElectionResearch)
+
+				let queryString = {};
+				queryString.selector = {};
+				queryString.selector.start = false;
+				queryString.selector.close = false; 
+
+				chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);
+
+				const adminRepository = new AdminRepository();				
+                await adminRepository.retrieveElectionResearchWithoutStarting(transactionContext).should.be.rejectedWith(ResearchWithoutStartingDoesNotExist);
+			});
+
+			it("Must return an array with election researches", async () => {
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01")
+				const electionResearchBuffer = Buffer.from(JSON.stringify(electionResearch));
+				
+				const arrayOfElectionResearch = [
+					{value: electionResearchBuffer}
+				];
+
+				function makeIterator(array) {
+					let nextIndex = 0;
+
+					return {
+						next: async () => {
+							return nextIndex < array.length ?
+						 		{value: array[nextIndex++], done: false} :
+						 		{done: true};
+						},
+						close: () => {
+							return {done: true}
+						}
+					}
+				}
+
+				const iterator = makeIterator(arrayOfElectionResearch)
+
+				let queryString = {};
+				queryString.selector = {};
+				queryString.selector.start = false;
+				queryString.selector.close = false; 
+
+				chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);
+
+				const adminRepository = new AdminRepository();				
+                const result = await adminRepository.retrieveElectionResearchWithoutStarting(transactionContext);
+				
+				expect(result).to.eql(electionResearch);
+			});
+			
 		});
     });
 });
