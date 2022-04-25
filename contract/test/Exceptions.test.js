@@ -12,8 +12,9 @@ const IncorrectInformationReceived = require("../lib/Exceptions/IncorrectInforma
 const ExistingRecord = require("../lib/Exceptions/ExistingRecord");
 const NotExistingRecord = require("../lib/Exceptions/NotExistingRecord");
 const AccessDenied = require("../lib/Exceptions/AccessDenied");
-const ElectoralResearchWithoutStartingDoesNotExist = require("../lib/Exceptions/ElectoralResearchWithoutStartingDoesNotExist");
-const ElectoralResearchWithoutStartingExist = require("../lib/Exceptions/Admin/ElectoralResearchWithoutStartingExist");
+const ElectionResearchWithoutStartingDoesNotExist = require("../lib/Exceptions/ElectionResearchWithoutStartingDoesNotExist");
+const ElectionResearchWithoutStartingExist = require("../lib/Exceptions/Admin/ElectionResearchWithoutStartingExist");
+const ElectionResearchAlreadyStarted = require("../lib/Exceptions/ElectionResearchAlreadyStarted");
 
 describe("Exceptions/*", () => {
     
@@ -89,17 +90,24 @@ describe("Exceptions/*", () => {
 		});
 	});
 
-	describe("ElectoralResearchWithoutStartingDoesNotExist", () => {
-		it("Must be ElectoralResearchWithoutStartingDoesNotExist instance", () => {
-			const exception = new ElectoralResearchWithoutStartingDoesNotExist();
-			expect(exception).instanceOf(ElectoralResearchWithoutStartingDoesNotExist);
+	describe("ElectionResearchWithoutStartingDoesNotExist", () => {
+		it("Must be ElectionResearchWithoutStartingDoesNotExist instance", () => {
+			const exception = new ElectionResearchWithoutStartingDoesNotExist();
+			expect(exception).instanceOf(ElectionResearchWithoutStartingDoesNotExist);
 		});
 	});
 
-	describe("ElectoralResearchWithoutStartingExist", () => {
-		it("Must be ElectoralResearchWithoutStartingExist instance", () => {
-			const exception = new ElectoralResearchWithoutStartingExist();
-			expect(exception).instanceOf(ElectoralResearchWithoutStartingExist);
+	describe("ElectionResearchWithoutStartingExist", () => {
+		it("Must be ElectionResearchWithoutStartingExist instance", () => {
+			const exception = new ElectionResearchWithoutStartingExist();
+			expect(exception).instanceOf(ElectionResearchWithoutStartingExist);
+		});
+	});
+
+	describe("ElectionResearchWithoutStartingExist", () => {
+		it("Must be ElectionResearchWithoutStartingExist instance", () => {
+			const exception = new ElectionResearchAlreadyStarted();
+			expect(exception).instanceOf(ElectionResearchAlreadyStarted);
 		});
 	});
 	
