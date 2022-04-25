@@ -16,6 +16,8 @@ const ElectionResearch = require("../lib/Classes/ElectionResearch");
 
 const AdminService = require("../lib/Service/AdminService");
 const AdminRepository = require("../lib/Repository/AdminRepository");
+const TotalOfCandidatesIsZero = require("../lib/Exceptions/Admin/TotalOfCandidatesIsZero");
+const Candidate = require("../lib/Classes/Candidate");
 
 describe("VoteBr", () => {
     
@@ -58,7 +60,7 @@ describe("VoteBr", () => {
 
 		it("Must throw exception to ElectionResearchStartedExist", async () => {			
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.startElectoralResearch();			
+			electionResearch.beginCollectingVotes();			
 			
 			const adminRepository = sinon.createStubInstance(AdminRepository);
 			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => []);
@@ -93,7 +95,7 @@ describe("VoteBr", () => {
 		
 		it("Must throw exception to ElectionResearchStartedExist", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.startElectoralResearch();			
+			electionResearch.beginCollectingVotes();			
 			
 			const adminRepository = sinon.createStubInstance(AdminRepository);
 			adminRepository.retrieveElectionResearchStarted.withArgs(transactionContext).callsFake(() => [electionResearch]);
@@ -131,5 +133,44 @@ describe("VoteBr", () => {
 			
 			expect(e).to.eql(electionResearch);
 		});
+	});
+
+	describe("#beginCollectingVotes", () => {
+
+		it("Must throw exception to ElectionResearchWithoutStartingDoesNotExist", async () => {
+			const adminRepository = sinon.createStubInstance(AdminRepository);
+
+			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => []);
+			
+			const adminService = new AdminService();
+			await adminService.beginCollectingVotes(transactionContext, adminRepository)
+				.should.be.rejectedWith(ElectionResearchWithoutStartingDoesNotExist);			
+		});
+
+		it("Must throw exception to TotalOfCandidatesIsZero", async () => {
+			const adminRepository = sinon.createStubInstance(AdminRepository);
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");	
+
+			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => [electionResearch]);
+			
+			const adminService = new AdminService();
+			await adminService.beginCollectingVotes(transactionContext, adminRepository)
+				.should.be.rejectedWith(TotalOfCandidatesIsZero);	
+		});
+
+		it("Must successfully execute beginCollectingVotes", async () => {
+			const adminRepository = sinon.createStubInstance(AdminRepository);
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");	
+			
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			
+			electionResearch.insertCandidate(candidate);
+
+			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => [electionResearch]);
+			
+			const adminService = new AdminService();
+			await adminService.beginCollectingVotes(transactionContext, adminRepository);
+		});
+
 	});
 });
