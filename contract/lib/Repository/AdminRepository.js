@@ -63,6 +63,17 @@ class AdminRepository {
 		iterator.close();
 		return allResults;
 	}
+
+    async retrieveElectionResearchStarted(ctx) {
+        let queryString = {};
+		queryString.selector = {};
+		queryString.selector.start = true;
+		queryString.selector.close = false;        
+
+        const resultsArray = await this._getQueryResultForQueryString(ctx, JSON.stringify(queryString));
+
+        return resultsArray;
+    }
 }
 
 module.exports = AdminRepository;
