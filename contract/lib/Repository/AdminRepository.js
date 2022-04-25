@@ -1,11 +1,8 @@
 const ExistingRecord = require("../Exceptions/ExistingRecord");
-const ResearchWithoutStartingDoesNotExist = require("../Exceptions/ResearchWithoutStartingDoesNotExist");
+const NotExistsRecord = require("../Exceptions/NotExistingRecord");
 
 class AdminRepository {
 
-    //TODO: Não deixar criar pesquisa eleitoral quanto já tiver uma criaca em aberto e sem iniciar.
-    //Não deixar criar pesquisa eleitoral até que tenha finalizado a atual
-    //Não deixar deixar mexer na pesquisa eleitoral quando estiver em andamento
     async createElectionResearch(ctx, electionResearch) {        
         const electionResearchExists = await this.electionResearchExists(ctx, electionResearch.getId());
         if (electionResearchExists) {
@@ -21,6 +18,11 @@ class AdminRepository {
     }
 
     async updateElectionResearch(ctx, electionResearch) {
+        const electionResearchExists = await this.electionResearchExists(ctx, electionResearch.getId());
+        if (!electionResearchExists) {
+            throw new NotExistsRecord();
+        }
+
         await ctx.stub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
     }
 
@@ -32,11 +34,7 @@ class AdminRepository {
 
         const resultsArray = await this._getQueryResultForQueryString(ctx, JSON.stringify(queryString));
 
-        if (resultsArray.length == 0) {
-            throw new ResearchWithoutStartingDoesNotExist();
-        }
-
-        return resultsArray[0];
+        return resultsArray;
     }
 
     async _getQueryResultForQueryString(ctx, queryString) {
