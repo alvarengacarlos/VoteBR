@@ -11,7 +11,8 @@ const TotalVotesAchieved = require("../lib/Exceptions/TotalVotesAchieved");
 const IncorrectInformationReceived = require("../lib/Exceptions/IncorrectInformationReceived");
 const ExistingRecord = require("../lib/Exceptions/ExistingRecord");
 const AccessDenied = require("../lib/Exceptions/AccessDenied");
-const ResearchWithoutStartingDoesNotExist = require("../lib/Exceptions/ResearchWithoutStartingDoesNotExist");
+const ElectoralResearchWithoutStartingDoesNotExist = require("../lib/Exceptions/ElectoralResearchWithoutStartingDoesNotExist");
+const ElectoralResearchWithoutStartingExist = require("../lib/Exceptions/Admin/ElectoralResearchWithoutStartingExist");
 
 describe("Exceptions/*", () => {
     
@@ -80,11 +81,18 @@ describe("Exceptions/*", () => {
 		});
 	});
 
-	describe("ResearchWithoutStartingDoesNotExist", () => {
-		it("Must be ResearchWithoutStartingDoesNotExist instance", () => {
-			const exception = new ResearchWithoutStartingDoesNotExist();
-			expect(exception).instanceOf(ResearchWithoutStartingDoesNotExist);
+	describe("ElectoralResearchWithoutStartingDoesNotExist", () => {
+		it("Must be ElectoralResearchWithoutStartingDoesNotExist instance", () => {
+			const exception = new ElectoralResearchWithoutStartingDoesNotExist();
+			expect(exception).instanceOf(ElectoralResearchWithoutStartingDoesNotExist);
 		});
 	});
 
+	describe("ElectoralResearchWithoutStartingExist", () => {
+		it("Must be ElectoralResearchWithoutStartingExist instance", () => {
+			const exception = new ElectoralResearchWithoutStartingExist();
+			expect(exception).instanceOf(ElectoralResearchWithoutStartingExist);
+		});
+	});
+	
 });

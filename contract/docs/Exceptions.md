@@ -8,5 +8,6 @@
 |INCORRECT_INFORMATION_RECEIVED|400|Some Information provided does not meet requirements|
 |EXISTING_RECORD|400|This record already exists|
 |ACCESS_DENIED|403|Your credentials do not allow access|
-|RESEARCH_WITHOUT_STARTING_DOES_NOT_EXIST|404|it was not possible to find an election survey without starting|
+|ELECTORAL_RESEARCH_WITHOUT_STARTING_DOES_NOT_EXIST|404|It was not possible to find an election survey without starting|
+|ELECTORAL_RESEARCH_WITHOUT_STARTING_EXIST|400|Electoral research without starting exist|
 |TOTAL_VOTES_ACHIEVED|500|The established limit of votes received has been reached|
