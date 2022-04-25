@@ -12,5 +12,6 @@
 |ELECTION_RESEARCH_WITHOUT_STARTING_DOES_NOT_EXIST|404|It was not possible to find an election research without starting|
 |ELECTION_RESEARCH_WITHOUT_STARTING_EXIST|400|Election research without starting exist|
 |ELECTION_RESEARCH_ALREADY_STARTED|400|Election research already started|
-|ELECTION_RESEARCH_ALREADY_STARTED|400|Election research started exist|
+|ELECTION_RESEARCH_STARTED_EXIST|400|Election research started exist|
+|ELECTION_RESEARCH_ALREADY_CLOSED|400|Election research already closed|
 |TOTAL_VOTES_ACHIEVED|500|The established limit of votes received has been reached|

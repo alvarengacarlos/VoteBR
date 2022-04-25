@@ -16,6 +16,7 @@ const ElectionResearchWithoutStartingDoesNotExist = require("../lib/Exceptions/E
 const ElectionResearchWithoutStartingExist = require("../lib/Exceptions/Admin/ElectionResearchWithoutStartingExist");
 const ElectionResearchAlreadyStarted = require("../lib/Exceptions/ElectionResearchAlreadyStarted");
 const ElectionResearchStartedExist = require("../lib/Exceptions/ElectionResearchStartedExist");
+const ElectionResearchAlreadyClosed = require("../lib/Exceptions/ElectionResearchAlreadyClosed");
 
 describe("Exceptions/*", () => {
     
@@ -119,4 +120,10 @@ describe("Exceptions/*", () => {
 		});
 	});
 	
+	describe("ElectionResearchAlreadyClosed", () => {
+		it("Must be ElectionResearchAlreadyClosed instance", () => {
+			const exception = new ElectionResearchAlreadyClosed();
+			expect(exception).instanceOf(ElectionResearchAlreadyClosed);
+		});
+	});
 });
