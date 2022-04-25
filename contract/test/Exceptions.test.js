@@ -15,6 +15,7 @@ const AccessDenied = require("../lib/Exceptions/AccessDenied");
 const ElectionResearchWithoutStartingDoesNotExist = require("../lib/Exceptions/ElectionResearchWithoutStartingDoesNotExist");
 const ElectionResearchWithoutStartingExist = require("../lib/Exceptions/Admin/ElectionResearchWithoutStartingExist");
 const ElectionResearchAlreadyStarted = require("../lib/Exceptions/ElectionResearchAlreadyStarted");
+const ElectionResearchStartedExist = require("../lib/Exceptions/ElectionResearchStartedExist");
 
 describe("Exceptions/*", () => {
     
@@ -104,10 +105,17 @@ describe("Exceptions/*", () => {
 		});
 	});
 
-	describe("ElectionResearchWithoutStartingExist", () => {
-		it("Must be ElectionResearchWithoutStartingExist instance", () => {
+	describe("ElectionResearchAlreadyStarting", () => {
+		it("Must be ElectionResearchAlreadyWithoutStarting instance", () => {
 			const exception = new ElectionResearchAlreadyStarted();
 			expect(exception).instanceOf(ElectionResearchAlreadyStarted);
+		});
+	});
+
+	describe("ElectionResearchStartedExist", () => {
+		it("Must be ElectionResearchStartedExist instance", () => {
+			const exception = new ElectionResearchStartedExist();
+			expect(exception).instanceOf(ElectionResearchStartedExist);
 		});
 	});
 	
