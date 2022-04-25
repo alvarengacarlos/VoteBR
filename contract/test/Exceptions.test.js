@@ -10,6 +10,7 @@ const CpfDoesNotExists = require("../lib/Exceptions/CpfDoesNotExist");
 const TotalVotesAchieved = require("../lib/Exceptions/TotalVotesAchieved");
 const IncorrectInformationReceived = require("../lib/Exceptions/IncorrectInformationReceived");
 const ExistingRecord = require("../lib/Exceptions/ExistingRecord");
+const NotExistingRecord = require("../lib/Exceptions/NotExistingRecord");
 const AccessDenied = require("../lib/Exceptions/AccessDenied");
 const ElectoralResearchWithoutStartingDoesNotExist = require("../lib/Exceptions/ElectoralResearchWithoutStartingDoesNotExist");
 const ElectoralResearchWithoutStartingExist = require("../lib/Exceptions/Admin/ElectoralResearchWithoutStartingExist");
@@ -73,6 +74,13 @@ describe("Exceptions/*", () => {
 			expect(exception).instanceOf(ExistingRecord);
 		});
 	});
+
+	describe("NotExistingRecord", () => {
+		it("Must be NotExistingRecord instance", () => {
+			const exception = new NotExistingRecord();
+			expect(exception).instanceOf(NotExistingRecord);
+		});
+	});	
 
 	describe("AccessDenied", () => {
 		it("Must be AccessDenied instance", () => {
