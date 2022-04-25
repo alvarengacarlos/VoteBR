@@ -241,7 +241,7 @@ describe("VoteBr", () => {
 
 			it("Must return an array with election researches started", async () => {
 				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-				electionResearch.startElectoralResearch();				
+				electionResearch.beginCollectingVotes();				
 				const electionResearchBuffer = Buffer.from(JSON.stringify(electionResearch));
 				
 				const arrayOfElectionResearch = [
