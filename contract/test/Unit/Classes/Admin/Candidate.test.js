@@ -2,7 +2,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const {describe, it} = require("mocha");
 
-const Candidate = require("../../lib/Classes/Candidate");
+const Candidate = require("../../../../lib/Classes/Admin/Candidate");
 
 describe("Candidate", () => {
 
@@ -23,7 +23,7 @@ describe("Candidate", () => {
 
             candidate.addOneVote();
 
-            expect(candidate.getTotalOfVotes()).to.eql(1);
+            expect(candidate.totalOfVotes).to.eql(1);
         });
         
     });
