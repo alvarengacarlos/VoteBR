@@ -15,12 +15,10 @@ class BirthDate {
 		const month = new Date().getMonth();
 		const day = new Date().getDay();
 		
-		const YEARS_IN_MILISECUNDS = 0.00000000003171;
-
 		const toDay = new Date(`${year}-${month}-${day}`);
 		const birthDate = new Date(`${this.year}-${this.month}-${this.day}`);
 		
-		const age =  Number.parseInt((toDay - birthDate) * YEARS_IN_MILISECUNDS);		
+		const age =  (toDay.getFullYear() - birthDate.getFullYear());		
 
 		return age;
 	}	

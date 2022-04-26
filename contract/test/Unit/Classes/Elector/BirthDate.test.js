@@ -2,7 +2,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const {describe, it} = require("mocha");
 
-const BirthDate = require("../../lib/Classes/BirthDate");
+const BirthDate = require("../../../../lib/Classes/Elector/BirthDate");
 
 describe("BirthDate", () => {
 
@@ -22,8 +22,8 @@ describe("BirthDate", () => {
             const birthDate = BirthDate.makeBirthDate("2000", "06", "23");
 
             const age = birthDate.getAge();
-
-            expect(age >= 21).to.eql(true);
+            
+            expect(age >= 22).to.eql(true);
         });
 
     });
