@@ -11,7 +11,7 @@ describe("BirthDate", () => {
         it("Must create an birth date", () => {
             const birthDate = BirthDate.makeBirthDate("2000", "06", "23");
 
-            expect(birthDate).to.eql({year: "2000", month: "06", day: "23"});
+            expect(birthDate).to.instanceOf(BirthDate);
         });
         
     });
