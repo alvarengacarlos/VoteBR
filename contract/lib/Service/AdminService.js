@@ -5,7 +5,6 @@ const Candidate = require("../Classes/Candidate");
 const ElectionResearchWithoutStartingDoesNotExist = require("../Exceptions/ElectionResearchWithoutStartingDoesNotExist");
 const ElectionResearchWithoutStartingExist = require("../Exceptions/Admin/ElectionResearchWithoutStartingExist");
 const ElectionResearchStartedExist = require("../Exceptions/ElectionResearchStartedExist");
-const TotalOfCandidatesIsZero = require("../Exceptions/Admin/TotalOfCandidatesIsZero");
 
 class AdminService {
     
@@ -51,10 +50,6 @@ class AdminService {
         } 
 
         const electionResearch = ElectionResearch.mountsObjectRetrievedFromTheBlockchain(electionResearchWithoutStarting[0]);
-
-        if (electionResearch.getTotalOfCandidates() == 0) {
-            throw new TotalOfCandidatesIsZero();
-        }
 
         electionResearch.beginCollectingVotes();
 

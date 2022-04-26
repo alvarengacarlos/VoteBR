@@ -3,7 +3,8 @@ const Serializer = require("./Serializer");
 const CandidateDoesNotExist = require("../Exceptions/CandidateDoesNotExist");
 const Candidate = require("./Candidate");
 const ElectionResearchAlreadyStarted = require("../Exceptions/ElectionResearchAlreadyStarted");
-const ElectionResearchAlreadyClosed = require("../Exceptions/ElectionResearchAlreadyClosed");
+const TotalOfCandidatesIsZero = require("../Exceptions/Admin/TotalOfCandidatesIsZero");
+const UninitiatedElectionResearch = require("../Exceptions/UninitiatedElectionResearch");
 
 class ElectionResearch extends Serializer {
     
@@ -36,10 +37,6 @@ class ElectionResearch extends Serializer {
         return electionResearch;
     }
 
-    startElectoralResearch() {
-        this.start = true;
-    }
-
     getId() {
         return this.id;
     }
@@ -47,10 +44,6 @@ class ElectionResearch extends Serializer {
     insertCandidate(candidate) {
         if (this.start) {
             throw new ElectionResearchAlreadyStarted();
-        }
-
-        if (this.close) {
-            throw new ElectionResearchAlreadyClosed();
         }
 
         for (const c of this.candidatesList) {                         
@@ -62,10 +55,27 @@ class ElectionResearch extends Serializer {
         this.candidatesList.push(candidate);
     }
 
-    getCandidate(numberOfCandidate) {
-        for (const candidate of this.candidatesList) {                         
-            if(numberOfCandidate == candidate.getId()) {
-                return Candidate.makeCandidate(candidate.getName(), candidate.getId(), candidate.getTotalOfVotes());
+    beginCollectingVotes() {        
+        if (this.candidatesList.length == 0) {
+            throw new TotalOfCandidatesIsZero();
+        }
+
+        this.start = true;
+    }
+
+    finishCollectingVotesAndElectionResearch() {
+        if (this.start == false) {
+            throw new UninitiatedElectionResearch();
+        }
+
+        this.close = true;
+        this.finishIn = new Date().toString();
+    }
+    
+    getCandidate(candidate) {
+        for (const c of this.candidatesList) {                         
+            if(candidate.getId() == c.getId()) {
+                return Candidate.makeCandidate(c.getName(), c.getId(), c.getTotalOfVotes());
             }
         }  
         
