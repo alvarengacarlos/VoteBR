@@ -16,3 +16,4 @@
 |ELECTION_RESEARCH_ALREADY_CLOSED|400|Election research already closed|
 |TOTAL_VOTES_ACHIEVED|500|The established limit of votes received has been reached|
 |TOTAL_OF_CANDIDATES_IS_ZERO|400|It is not possible to start an electoral research with zero candidates|
+|UNINITIATED_ELECTION_RESEARCH|400|The electoral research has not been started|

@@ -14,8 +14,9 @@ const AdminRepository = require("../lib/Repository/AdminRepository");
 const ElectionResearch = require("../lib/Classes/ElectionResearch");
 const ExistingRecord = require("../lib/Exceptions/ExistingRecord");
 const NotExistingRecord = require("../lib/Exceptions/NotExistingRecord");
+const Candidate = require("../lib/Classes/Candidate");
 
-describe("VoteBr", () => {
+describe("AdminRepository", () => {
     
 	let transactionContext, chaincodeStub;
     
@@ -241,6 +242,7 @@ describe("VoteBr", () => {
 
 			it("Must return an array with election researches started", async () => {
 				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+				electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
 				electionResearch.beginCollectingVotes();				
 				const electionResearchBuffer = Buffer.from(JSON.stringify(electionResearch));
 				

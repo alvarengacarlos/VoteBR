@@ -18,6 +18,7 @@ const ElectionResearchAlreadyStarted = require("../lib/Exceptions/ElectionResear
 const ElectionResearchStartedExist = require("../lib/Exceptions/ElectionResearchStartedExist");
 const ElectionResearchAlreadyClosed = require("../lib/Exceptions/ElectionResearchAlreadyClosed");
 const TotalOfCandidatesIsZero = require("../lib/Exceptions/Admin/TotalOfCandidatesIsZero");
+const UninitiatedElectionResearch = require("../lib/Exceptions/UninitiatedElectionResearch");
 
 describe("Exceptions/*", () => {
     
@@ -134,4 +135,12 @@ describe("Exceptions/*", () => {
 			expect(exception).instanceOf(TotalOfCandidatesIsZero);
 		});
 	});
+
+	describe("UninitiatedElectionResearch", () => {
+		it("Must be UninitiatedElectionResearch instance", () => {
+			const exception = new UninitiatedElectionResearch();
+			expect(exception).instanceOf(UninitiatedElectionResearch);
+		});
+	});
+
 });

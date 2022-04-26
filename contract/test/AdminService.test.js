@@ -16,10 +16,9 @@ const ElectionResearch = require("../lib/Classes/ElectionResearch");
 
 const AdminService = require("../lib/Service/AdminService");
 const AdminRepository = require("../lib/Repository/AdminRepository");
-const TotalOfCandidatesIsZero = require("../lib/Exceptions/Admin/TotalOfCandidatesIsZero");
 const Candidate = require("../lib/Classes/Candidate");
 
-describe("VoteBr", () => {
+describe("AdminService", () => {
     
 	let transactionContext, chaincodeStub;
     
@@ -60,6 +59,7 @@ describe("VoteBr", () => {
 
 		it("Must throw exception to ElectionResearchStartedExist", async () => {			
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
 			electionResearch.beginCollectingVotes();			
 			
 			const adminRepository = sinon.createStubInstance(AdminRepository);
@@ -95,6 +95,7 @@ describe("VoteBr", () => {
 		
 		it("Must throw exception to ElectionResearchStartedExist", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
 			electionResearch.beginCollectingVotes();			
 			
 			const adminRepository = sinon.createStubInstance(AdminRepository);
@@ -145,17 +146,6 @@ describe("VoteBr", () => {
 			const adminService = new AdminService();
 			await adminService.beginCollectingVotes(transactionContext, adminRepository)
 				.should.be.rejectedWith(ElectionResearchWithoutStartingDoesNotExist);			
-		});
-
-		it("Must throw exception to TotalOfCandidatesIsZero", async () => {
-			const adminRepository = sinon.createStubInstance(AdminRepository);
-			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");	
-
-			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => [electionResearch]);
-			
-			const adminService = new AdminService();
-			await adminService.beginCollectingVotes(transactionContext, adminRepository)
-				.should.be.rejectedWith(TotalOfCandidatesIsZero);	
 		});
 
 		it("Must successfully execute beginCollectingVotes", async () => {
