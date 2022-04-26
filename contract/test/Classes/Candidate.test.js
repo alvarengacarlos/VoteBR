@@ -6,6 +6,16 @@ const Candidate = require("../../lib/Classes/Candidate");
 
 describe("Candidate", () => {
 
+    describe("#makeCandidate", () => {
+
+        it("Must return an instance of Candidate", () => {
+            const candidate = Candidate.makeCandidate("Fulano", "10");
+
+            expect(candidate).to.instanceOf(Candidate);
+        });
+
+    });
+
     describe("#addOneVote", () => {
 
         it("Must add a vote", () => {
