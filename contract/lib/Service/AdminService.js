@@ -58,7 +58,8 @@ class AdminService {
 
     async finishCollectingVotesAndElectionResearch(ctx, adminRepository) {
         const electionResearchStarted = await adminRepository.retrieveElectionResearchStarted(ctx);
-        if (electionResearchStarted.length != 0) {
+        if (electionResearchStarted.length == 0) {
+            //TODO: Exception Errada
             throw new ElectionResearchStartedExist();
         }
 

@@ -163,4 +163,35 @@ describe("AdminService", () => {
 		});
 
 	});
+
+	describe("#finishCollectingVotesAndElectionResearch", () => {
+		
+		it("Must throw exception for ElectionResearchStartedExist", async () => {
+			const adminRepository = sinon.createStubInstance(AdminRepository);
+
+			adminRepository.retrieveElectionResearchStarted.withArgs(transactionContext).callsFake(() => []);
+			
+			const adminService = new AdminService();
+			await adminService.finishCollectingVotesAndElectionResearch(transactionContext, adminRepository).should.be.rejectedWith(ElectionResearchStartedExist);
+		});
+
+		it("Must successfully execute finishCollectingVotesAndElectionResearch", async () => {
+			const adminRepository = sinon.createStubInstance(AdminRepository);
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			
+			electionResearch.insertCandidate(candidate);
+			electionResearch.beginCollectingVotes();
+
+			adminRepository.retrieveElectionResearchStarted.withArgs(transactionContext).callsFake(() => [electionResearch]);
+
+			const adminService = new AdminService();
+			await adminService.finishCollectingVotesAndElectionResearch(transactionContext, adminRepository);
+
+			expect().to.eql();
+		});
+
+	});
+
 });
