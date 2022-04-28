@@ -1,10 +1,9 @@
-const ElectionResearch = require("../Classes/ElectionResearch");
+const ElectionResearch = require("../Classes/Admin/ElectionResearch");
+const Candidate = require("../Classes/Admin/Candidate");
 
-const Candidate = require("../Classes/Candidate");
-
-const ElectionResearchWithoutStartingDoesNotExist = require("../Exceptions/ElectionResearchWithoutStartingDoesNotExist");
-const ElectionResearchWithoutStartingExist = require("../Exceptions/Admin/ElectionResearchWithoutStartingExist");
-const ElectionResearchStartedExist = require("../Exceptions/ElectionResearchStartedExist");
+const ElectionResearchWithoutStartingExist = require("../Exceptions/Admin/ElectionResearch/ElectionResearchWithoutStartingExist");
+const ElectionResearchInProgress = require("../Exceptions/Admin/ElectionResearch/ElectionResearchInProgress");
+const ElectionResearchNotFound = require("../Exceptions/Admin/ElectionResearch/ElectionResearchNotFound");
 
 class AdminService {
     
@@ -14,9 +13,9 @@ class AdminService {
             throw new ElectionResearchWithoutStartingExist();
         }
         
-        const electionResearchStarted = await adminRepository.retrieveElectionResearchStarted(ctx);
-        if (electionResearchStarted.length != 0) {
-            throw new ElectionResearchStartedExist();
+        const electionResearchInProgress = await adminRepository.retrieveElectionResearchInProgress(ctx);
+        if (electionResearchInProgress.length != 0) {
+            throw new ElectionResearchInProgress();
         }
 
         const electionResearch = ElectionResearch.makeElectionResearch(year, month);
@@ -25,14 +24,9 @@ class AdminService {
     }
 
     async insertCandidateInTheElectionResearch(ctx, adminRepository, name, numberOfCandidate) {
-        const electionResearchStarted = await adminRepository.retrieveElectionResearchStarted(ctx);
-        if (electionResearchStarted.length != 0) {
-            throw new ElectionResearchStartedExist();
-        }
-        
         const electionResearchWithoutStarting = adminRepository.retrieveElectionResearchWithoutStarting(ctx);
         if (electionResearchWithoutStarting.length == 0) {
-            throw new ElectionResearchWithoutStartingDoesNotExist();
+            throw new ElectionResearchNotFound();
         }        
 
         const electionResearch = ElectionResearch.mountsObjectRetrievedFromTheBlockchain(electionResearchWithoutStarting[0]);
@@ -46,7 +40,7 @@ class AdminService {
     async beginCollectingVotes(ctx, adminRepository) {
         const electionResearchWithoutStarting = adminRepository.retrieveElectionResearchWithoutStarting(ctx);
         if (electionResearchWithoutStarting.length == 0) {
-            throw new ElectionResearchWithoutStartingDoesNotExist();
+            throw new ElectionResearchNotFound();
         } 
 
         const electionResearch = ElectionResearch.mountsObjectRetrievedFromTheBlockchain(electionResearchWithoutStarting[0]);
@@ -56,16 +50,15 @@ class AdminService {
         await adminRepository.updateElectionResearch(ctx, electionResearch);
     }
 
-    async finishCollectingVotesAndElectionResearch(ctx, adminRepository) {
-        const electionResearchStarted = await adminRepository.retrieveElectionResearchStarted(ctx);
-        if (electionResearchStarted.length == 0) {
-            //TODO: Exception Errada
-            throw new ElectionResearchStartedExist();
+    async finishElectionResearch(ctx, adminRepository) {
+        const electionResearchInProgress = await adminRepository.retrieveElectionResearchInProgress(ctx);
+        if (electionResearchInProgress.length == 0) {
+            throw new ElectionResearchNotFound();
         }
 
-        const electionResearch = ElectionResearch.mountsObjectRetrievedFromTheBlockchain(electionResearchStarted[0]);
+        const electionResearch = ElectionResearch.mountsObjectRetrievedFromTheBlockchain(electionResearchInProgress[0]);
 
-        electionResearch.finishCollectingVotesAndElectionResearch();
+        electionResearch.finishElectionResearch();
 
         await adminRepository.updateElectionResearch(ctx, electionResearch);
     }
