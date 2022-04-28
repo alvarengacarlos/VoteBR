@@ -1,6 +1,15 @@
 # Exceptions
 |InternalCode|HttpCode|Message|
 |:---:|:---:|:---:|
+|ELECTION_RESEARCH_IN_PROGRESS|400|There is already an election research in progress|
+|ELECTION_RESEARCH_CLOSED|400|Election research already closed|
+|EXISTING_RECORD|400|This record already exists|
+|NOT_EXISTING_RECORD|404|This record not exists|
+|TOTAL_OF_CANDIDATES_IS_ZERO|400|It is not possible to start an electoral research with zero candidates|
+|UNINITIATED_ELECTION_RESEARCH|400|The electoral research has not been started|
+
+#Antigas
+
 |INVALID_CPF|400|The provided cpf is not valid|
 |CANDIDATE_DOES_NOT_EXIST|404|Informed candidate does not exist|
 |CPF_DOES_NOT_EXIST|404|Informed cpf does not exist|
