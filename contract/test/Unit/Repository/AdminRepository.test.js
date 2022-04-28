@@ -10,11 +10,12 @@ chai.should();
 const { Context } = require("fabric-contract-api");
 const { ChaincodeStub } = require("fabric-shim");
 
-const AdminRepository = require("../lib/Repository/AdminRepository");
-const ElectionResearch = require("../lib/Classes/ElectionResearch");
-const ExistingRecord = require("../lib/Exceptions/ExistingRecord");
-const NotExistingRecord = require("../lib/Exceptions/NotExistingRecord");
-const Candidate = require("../lib/Classes/Candidate");
+const ExistingRecord = require("../../../lib/Exceptions/ExistingRecord");
+const NotExistingRecord = require("../../../lib/Exceptions/NotExistingRecord");
+
+const AdminRepository = require("../../../lib/Repository/AdminRepository");
+const ElectionResearch = require("../../../lib/Classes/Admin/ElectionResearch");
+const Candidate = require("../../../lib/Classes/Admin/Candidate");
 
 describe("AdminRepository", () => {
     
@@ -238,7 +239,7 @@ describe("AdminRepository", () => {
 			
 		});
 
-		describe("#retrieveElectionResearchStarted", () => {
+		describe("#retrieveElectionResearchInProgress", () => {
 
 			it("Must return an array with election researches started", async () => {
 				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
@@ -275,7 +276,7 @@ describe("AdminRepository", () => {
 				chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);
 
 				const adminRepository = new AdminRepository();				
-                const result = await adminRepository.retrieveElectionResearchStarted(transactionContext);
+                const result = await adminRepository.retrieveElectionResearchInProgress(transactionContext);
 				
 				expect(result[0]).to.eql(electionResearch);
 			});

@@ -64,7 +64,7 @@ class AdminRepository {
 		return allResults;
 	}
 
-    async retrieveElectionResearchStarted(ctx) {
+    async retrieveElectionResearchInProgress(ctx) {
         let queryString = {};
 		queryString.selector = {};
 		queryString.selector.start = true;
