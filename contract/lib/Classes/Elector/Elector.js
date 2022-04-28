@@ -1,31 +1,37 @@
-const InvalidCpf = require("../Exceptions/InvalidCpf");
-const InvalidAge = require("../Exceptions/InvalidAge");
+const InvalidCpf = require("../../Exceptions/Elector/InvalidCpf");
+const InvalidAge = require("../../Exceptions/Elector/InvalidAge");
+const Serializer = require("../Serializer");
 
 const MINIMUM_AGE = 16;
 
-class Elector {
+class Elector extends Serializer {
 
-    constructor(cpf, birthDate) {      
-        this.id = `_${cpf}`;  
+    constructor(cpf, birthDate, electionResearchId, candidate) {      
+		super();
+        this.id = `${electionResearchId}_${cpf}`;  
         this.birthDate = birthDate;
-        this.candidate;
-		this.pesquisa;
+        this.candidate = candidate;
     }
 
-    static makeElector(cpf, birthDate) {
-		if (age >= MINIMUM_AGE) {
+    static makeElector(cpf, birthDate, electionResearch, candidate) {
+		const electionResearchId = electionResearch.getId();
+
+		const elector = new Elector(cpf, birthDate, electionResearchId, candidate);
+
+		const age = birthDate.getAge();
+		if (age < MINIMUM_AGE) {
 			throw new InvalidAge();
 		}
 
-        const cpfIsValid = Elector._cpfIsValid(cpf);
-		if (!cpfIsValid) {
+        const cpfIsValid = elector.cpfIsValid(cpf);
+		if (cpfIsValid == false) {
 			throw new InvalidCpf();
 		}
         
-        return new Elector(cpf, birthDate);
+        return elector;
     }
 
-    static _cpfIsValid(cpf) {
+    cpfIsValid(cpf) {
 		var sum;
 		var mod;
 		sum = 0;
@@ -63,8 +69,6 @@ class Elector {
 
 		return true;
 	}
-
-
 }
 
 module.exports = Elector;

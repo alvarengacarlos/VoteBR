@@ -7,13 +7,14 @@
 |NOT_EXISTING_RECORD|404|This record not exists|
 |TOTAL_OF_CANDIDATES_IS_ZERO|400|It is not possible to start an electoral research with zero candidates|
 |UNINITIATED_ELECTION_RESEARCH|400|The electoral research has not been started|
+|INVALID_AGE|400|Date of birth informed not valid. You are under 16 years old|
+|INVALID_CPF|400|The provided cpf is not valid|
 
 #Antigas
 
-|INVALID_CPF|400|The provided cpf is not valid|
+
 |CANDIDATE_DOES_NOT_EXIST|404|Informed candidate does not exist|
 |CPF_DOES_NOT_EXIST|404|Informed cpf does not exist|
-|INVALID_AGE|400|Date of birth informed not valid. You are under 16 years old|
 |INCORRECT_INFORMATION_RECEIVED|400|Some Information provided does not meet requirements|
 |EXISTING_RECORD|400|This record already exists|
 |NOT_EXISTING_RECORD|404|This record not exists|
