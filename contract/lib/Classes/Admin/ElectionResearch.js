@@ -1,12 +1,12 @@
 const Serializer = require("../Serializer");
 const Candidate = require("./Candidate");
 
-const ElectionResearchInProgress = require("../../Exceptions/ElectionResearch/ElectionResearchInProgress");
-const ElectionResearchClosed = require("../../Exceptions/ElectionResearch/ElectionResearchClosed");
+const ElectionResearchInProgress = require("../../Exceptions/Admin/ElectionResearch/ElectionResearchInProgress");
+const ElectionResearchClosed = require("../../Exceptions/Admin/ElectionResearch/ElectionResearchClosed");
 const ExistingRecord = require("../../Exceptions/ExistingRecord");
 const NotExistingRecord = require("../../Exceptions/NotExistingRecord");
 const TotalOfCandidatesIsZero = require("../../Exceptions/Admin/TotalOfCandidatesIsZero");
-const UninitiatedElectionResearch = require("../../Exceptions/UninitiatedElectionResearch");
+const UninitiatedElectionResearch = require("../../Exceptions/Admin/ElectionResearch/UninitiatedElectionResearch");
 
 class ElectionResearch extends Serializer {
     

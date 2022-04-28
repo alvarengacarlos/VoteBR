@@ -5,12 +5,12 @@ const {describe, it} = require("mocha");
 const ElectionResearch = require("../../../../lib/Classes/Admin/ElectionResearch");
 const Candidate = require("../../../../lib/Classes/Admin/Candidate");
 
-const ElectionResearchInProgress = require("../../../../lib/Exceptions/ElectionResearch/ElectionResearchInProgress");
-const ElectionResearchClosed = require("../../../../lib/Exceptions/ElectionResearch/ElectionResearchClosed");
+const ElectionResearchInProgress = require("../../../../lib/Exceptions/Admin/ElectionResearch/ElectionResearchInProgress");
+const ElectionResearchClosed = require("../../../../lib/Exceptions/Admin/ElectionResearch/ElectionResearchClosed");
 const ExistingRecord = require("../../../../lib/Exceptions/ExistingRecord");
 const NotExistingRecord = require("../../../../lib/Exceptions/NotExistingRecord");
 const TotalOfCandidatesIsZero = require("../../../../lib/Exceptions/Admin/TotalOfCandidatesIsZero");
-const UninitiatedElectionResearch = require("../../../../lib/Exceptions/UninitiatedElectionResearch");
+const UninitiatedElectionResearch = require("../../../../lib/Exceptions/Admin/ElectionResearch/UninitiatedElectionResearch");
 
 describe("ElectionResearch", () => {
 
