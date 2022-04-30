@@ -19,6 +19,7 @@ class ElectionResearch extends Serializer {
         this.createIn = new Date().toString();
         this.startIn = null;
         this.finishIn = null;
+        this.totalOfVotes = 0;
     }
 
     static makeElectionResearch(year, month) {        
@@ -27,7 +28,7 @@ class ElectionResearch extends Serializer {
         return new ElectionResearch(id);
     }
 
-    static mountsObjectRetrievedFromTheBlockchain(electionResearchObject) {
+    static mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchObject) {
         const electionResearch = new ElectionResearch(null);
         
         electionResearch.id = electionResearchObject.id;
@@ -37,12 +38,21 @@ class ElectionResearch extends Serializer {
         electionResearch.createIn = electionResearchObject.createIn;
         electionResearch.startIn = electionResearchObject.startIn;
         electionResearch.finishIn = electionResearchObject.finishIn;
+        electionResearch.totalOfVotes = electionResearchObject.totalOfVotes;
 
         return electionResearch;
     }
 
     getId() {
         return this.id;
+    }
+
+    addOneVote() {
+        this.totalOfVotes++; 
+    }
+
+    getTotalOfVotes() {
+        return this.totalOfVotes;
     }
 
     insertCandidate(candidate) {
@@ -90,10 +100,10 @@ class ElectionResearch extends Serializer {
         throw new NotExistingRecord();
     }
 
-    getCandidate(candidate) {
-        for (let c of this.candidatesList) {                         
-            if(candidate.getId() == c.getId()) {
-                return Candidate.makeCandidate(c.getName(), c.getId(), c.getTotalOfVotes());
+    getCandidateByNumber(numberOfCandidate) {
+        for (let c of this.candidatesList) {                   
+            if(numberOfCandidate == c.getId()) {
+                return Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(c);
             }
         }  
         
@@ -114,6 +124,7 @@ class ElectionResearch extends Serializer {
         }
 
         this.isStart = true;
+        this.totalOfVotes = 0;
         this.startIn = new Date().toString();
     }
 
@@ -129,8 +140,6 @@ class ElectionResearch extends Serializer {
         this.isClose = true;
         this.finishIn = new Date().toString();
     }
-    
-    
 
 }
 

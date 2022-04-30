@@ -27,22 +27,28 @@ describe("ElectionResearch", () => {
     describe("#mountsObjectRetrievedFromTheBlockchain", () => {
 
         it("Must return an ElectionResearch object", () => {
-            const object = {
-                id: "2000-01",
-                candidatesList: [],
-                isStart: false,
-                isClose: false,
-                createIn: new Date().toString(),
-                startIn: null,
-                finishIn: null
-            };
+            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 
-            const electionResearch = ElectionResearch.mountsObjectRetrievedFromTheBlockchain(object);
+            const e = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearch);
 
             expect(electionResearch).to.instanceOf(ElectionResearch);
-            expect(electionResearch).to.eql(object);
+            expect(electionResearch).to.eql(e);
         });
 
+    });
+
+    describe("#addVote", () => {
+        const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+
+        electionResearch.addOneVote();
+
+        expect(electionResearch.totalOfVotes).to.eql(1);
+    });
+
+    describe("#getTotalOfVotes", () => {
+        const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+
+        expect(electionResearch.getTotalOfVotes()).to.eql(0);
     });
 
     describe("#insertCandidate", () => {
@@ -90,9 +96,7 @@ describe("ElectionResearch", () => {
             electionResearch.insertCandidate(candidate);                      
             
             expect(() => electionResearch.insertCandidate(candidate)).to.throw(ExistingRecord);
-        });
-
-        
+        });        
 
     });
 
@@ -159,14 +163,36 @@ describe("ElectionResearch", () => {
 
     });
 
-    describe("#getCandidate", () => {
+    describe("#getCandidateIndex", () => {
 
         it("Must throw excepction NotExistRecord", () => {
             const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 
             const candidate = Candidate.makeCandidate("Fulano", "01");
 
-            expect(() => electionResearch.getCandidate(candidate)).to.throw(NotExistingRecord);
+            expect(() => electionResearch.getCandidateIndex(candidate)).to.throw(NotExistingRecord);
+        });
+
+        it("Must return a successfull candidate index", () => {
+            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+            
+            const candidate = Candidate.makeCandidate("Fulano", "01");
+
+            electionResearch.insertCandidate(candidate);            
+
+            const index = electionResearch.getCandidateIndex(candidate);
+
+            expect(index).to.eql(0);
+        });
+
+    });
+
+    describe("#getCandidateByNumber", () => {
+
+        it("Must throw excepction NotExistRecord", () => {
+            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+
+            expect(() => electionResearch.getCandidateByNumber("02")).to.throw(NotExistingRecord);
         });
 
         it("Must return a successfull candidate", () => {
@@ -176,7 +202,7 @@ describe("ElectionResearch", () => {
 
             electionResearch.insertCandidate(candidate);            
 
-            const c = electionResearch.getCandidate(candidate);
+            const c = electionResearch.getCandidateByNumber("01");
 
             expect(c).to.eql(candidate);
         });
@@ -196,7 +222,7 @@ describe("ElectionResearch", () => {
             expect(electionResearch.isStart).to.eql(true);
         });
 
-        it("Must throw exception to ElectionResearachInProgress o", async () => {
+        it("Must throw exception to ElectionResearachInProgress", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");	
             
             const candidate = Candidate.makeCandidate("Fulano", "01");
