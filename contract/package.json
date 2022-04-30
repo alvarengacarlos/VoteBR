@@ -32,7 +32,6 @@
     "sinon-chai": "~3.7.0"
   },
   "dependencies": {
-    "axios": "~0.26.1",
     "dotenv": "~16.0.0",
     "fabric-contract-api": "~2.2.2",
     "fabric-shim": "~2.2.2",
