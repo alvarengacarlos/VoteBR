@@ -17,6 +17,16 @@ class AdminRepository {
         return !!buffer && buffer.length > 0;
     }
 
+    async retrieveElectionResearch(ctx, electionResearch) {
+        const electionResearchExists = await this.electionResearchExists(ctx, electionResearch.getId());
+        if (!electionResearchExists) {
+            throw new NotExistsRecord();
+        }
+
+        const e = await ctx.stub.getState(electionResearch.getId());
+        return e;
+    }
+
     async updateElectionResearch(ctx, electionResearch) {
         const electionResearchExists = await this.electionResearchExists(ctx, electionResearch.getId());
         if (!electionResearchExists) {

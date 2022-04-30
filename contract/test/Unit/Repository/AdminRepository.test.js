@@ -94,6 +94,30 @@ describe("AdminRepository", () => {
 
         });
 
+		describe("#retrieveElectionResearch", () => {
+			
+			it("Must throw NotExistsRecord exception", async () => {
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+                
+                const adminRepository = new AdminRepository();
+				await adminRepository.retrieveElectionResearch(transactionContext, electionResearch)
+					.should.be.rejectedWith(NotExistingRecord);                                
+			});
+
+			it("Must return an electionResearch", async () => {
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+                
+				await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+
+				const adminRepository = new AdminRepository(); 
+				const elBuffer = await adminRepository.retrieveElectionResearch(transactionContext, electionResearch);
+				const el = JSON.parse(elBuffer.toString());
+
+				expect(el).to.eql(electionResearch);
+			});
+
+		});
+
 		describe("#updateElectionResearch", () => {
 
 			it("Must throw exception", async () => {
@@ -110,7 +134,7 @@ describe("AdminRepository", () => {
 				const eBuffer = await chaincodeStub.getState(electionResearch.getId());
 				const eObject = JSON.parse(eBuffer.toString());
 
-				e = ElectionResearch.mountsObjectRetrievedFromTheBlockchain(eObject);
+				e = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(eObject);
 				e.start = true;
 
 				const adminRepository = new AdminRepository();                
