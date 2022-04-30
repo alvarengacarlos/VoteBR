@@ -3,26 +3,12 @@
 |:---:|:---:|:---:|
 |ELECTION_RESEARCH_IN_PROGRESS|400|There is already an election research in progress|
 |ELECTION_RESEARCH_CLOSED|400|Election research already closed|
-|EXISTING_RECORD|400|This record already exists|
-|NOT_EXISTING_RECORD|404|This record not exists|
-|TOTAL_OF_CANDIDATES_IS_ZERO|400|It is not possible to start an electoral research with zero candidates|
-|UNINITIATED_ELECTION_RESEARCH|400|The electoral research has not been started|
-|INVALID_AGE|400|Date of birth informed not valid. You are under 16 years old|
-|INVALID_CPF|400|The provided cpf is not valid|
-
-#Antigas
-
-
-|CANDIDATE_DOES_NOT_EXIST|404|Informed candidate does not exist|
-|CPF_DOES_NOT_EXIST|404|Informed cpf does not exist|
-|INCORRECT_INFORMATION_RECEIVED|400|Some Information provided does not meet requirements|
-|EXISTING_RECORD|400|This record already exists|
-|NOT_EXISTING_RECORD|404|This record not exists|
-|ACCESS_DENIED|403|Your credentials do not allow access|
-|ELECTION_RESEARCH_WITHOUT_STARTING_DOES_NOT_EXIST|404|It was not possible to find an election research without starting|
+|ELECTION_RESEARCH_NOT_FOUND|404|Election research not found|
 |ELECTION_RESEARCH_WITHOUT_STARTING_EXIST|400|Election research without starting exist|
-|ELECTION_RESEARCH_ALREADY_STARTED|400|Election research already started|
-|ELECTION_RESEARCH_STARTED_EXIST|400|Election research started exist|
-|TOTAL_VOTES_ACHIEVED|500|The established limit of votes received has been reached|
+|EXISTING_RECORD|400|This record already exists|
+|NOT_EXISTING_RECORD|404|This record not exists|
 |TOTAL_OF_CANDIDATES_IS_ZERO|400|It is not possible to start an electoral research with zero candidates|
 |UNINITIATED_ELECTION_RESEARCH|400|The electoral research has not been started|
+|TOTAL_VOTES_ACHIEVED|500|The established limit of votes received has been reached|
+|ACCESS_DENIED|403|Your credentials do not allow access|
+|INCORRECT_INFORMATION_RECEIVED|400|Some Information provided does not meet requirements|
