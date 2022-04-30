@@ -165,7 +165,7 @@ describe("AdminAvaliation", () => {
         adminValidation = new AdminValidation();
     });
 
-    describe("#validateSearchElectionResearchLikeAdmin", () => {
+    describe("#validateSearchElectionResearchLikeAdmin: year", () => {
 
         it("Must throw an error for year size smaller than 4 digits", () => {
             year = "200";
@@ -177,6 +177,42 @@ describe("AdminAvaliation", () => {
 
         it("Must throw an error for year size greater than 4 digits", () => {
             year = "20000";
+
+            expect(
+                () => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+            ).to.throw(IncorrectInformationReceived);
+        });
+
+    });
+
+    describe("#validateSearchElectionResearchLikeAdmin: month", () => {
+        
+        it("Must throw an error for month size smaller than 2 digits", () => {
+            month = "1";
+
+            expect(
+                () => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+            ).to.throw(IncorrectInformationReceived);
+        });
+
+        it("Must throw an error for month size greater than 2 digits", () => {
+            month = "011";
+
+            expect(
+                () => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+            ).to.throw(IncorrectInformationReceived);
+        });
+
+        it("Must throw error for month smaller than 01", () => {
+            month = "00";
+
+            expect(
+                () => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+            ).to.throw(IncorrectInformationReceived);
+        });
+
+        it("Must throw error for month greather than 12", () => {
+            month = "13";
 
             expect(
                 () => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
