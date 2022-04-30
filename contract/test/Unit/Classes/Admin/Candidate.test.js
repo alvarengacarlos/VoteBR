@@ -28,4 +28,16 @@ describe("Candidate", () => {
         
     });
 
+    describe("#mountsCandidateObjectRetrievedFromTheBlockchain", () => {
+        
+        it("Must mount an Candidate Object", () => {
+            const candidate = Candidate.makeCandidate("Fulano", "10");
+
+            const c = Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(candidate)
+
+            expect(c).to.eql(candidate);
+        });
+        
+    });
+
 });

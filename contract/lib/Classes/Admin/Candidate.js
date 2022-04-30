@@ -10,6 +10,16 @@ class Candidate {
 		return new Candidate(name, numberOfCandidate);			
 	}
 
+	static mountsCandidateObjectRetrievedFromTheBlockchain(candidateObject) {
+		const candidate = new Candidate(null, null);
+		
+		candidate.id = candidateObject.id;
+		candidate.name = candidateObject.name;
+		candidate.totalOfVotes = candidateObject.totalOfVotes;
+
+		return candidate;
+	}
+
 	getId() {
 		return this.id;
 	}
