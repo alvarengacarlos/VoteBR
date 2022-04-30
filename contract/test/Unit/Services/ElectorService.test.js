@@ -147,21 +147,21 @@ describe("ElectorServive", () => {
     describe("#searchElectionResearch", () => {
 
         it("Must return an election research", async () => {
-            const election = ElectionResearch.makeElectionResearch("2000", "01");
+            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
                         
-            await chaincodeStub.putState(election.getId(), election.serializerInBuffer());
+            await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
 
-            electorRepository.retrieveElector.callsFake(async () => {
-                return await chaincodeStub.getState(election.getId());
+            adminRepository.retrieveElectionResearch.callsFake(async () => {
+                return await chaincodeStub.getState(electionResearch.getId());
             });
 
             const electorService = new ElectorService();
             electorService.VOTE_LIMIT = 10;                                    
-            electorService.electorRepository = electorRepository;
+            electorService.adminRepository = adminRepository;
 
             const electionObject = await electorService.searchElectionResearch(transactionContext, "2000", "01");
 
-            expect(electionObject).to.eql(election);
+            expect(electionObject).to.eql(electionResearch);
         });
 
     });

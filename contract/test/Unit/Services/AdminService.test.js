@@ -24,7 +24,8 @@ const AdminRepository = require("../../../lib/Repository/AdminRepository");
 describe("AdminService", () => {
     
 	let transactionContext, chaincodeStub;
-    
+	let adminRepository;
+	
 	beforeEach(() => {
 		transactionContext = new Context();
         
@@ -46,6 +47,8 @@ describe("AdminService", () => {
 			return Promise.resolve(ret);
 		});
 
+		adminRepository = sinon.createStubInstance(AdminRepository);
+
 	});
 
     describe("#createElectionResearch", () => {
@@ -53,11 +56,12 @@ describe("AdminService", () => {
         it("Must throw exception to ElectionResearchWithoutStartingExist", async () => {			
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 
-			const adminRepository = sinon.createStubInstance(AdminRepository);
 			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => [electionResearch]);
 			
 			const adminService = new AdminService();
-			await adminService.createElectionResearch(transactionContext, adminRepository, "2000", "01").should.be.rejectedWith(ElectionResearchWithoutStartingExist);
+			adminService.adminRepository = adminRepository;
+
+			await adminService.createElectionResearch(transactionContext, "2000", "01").should.be.rejectedWith(ElectionResearchWithoutStartingExist);
 		});
 
 		it("Must throw exception to ElectionResearchInProgress", async () => {			
@@ -65,32 +69,31 @@ describe("AdminService", () => {
 			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
 			electionResearch.beginCollectingVotes();			
 			
-			const adminRepository = sinon.createStubInstance(AdminRepository);
 			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => []);
 			adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => [electionResearch]);
 
 			const adminService = new AdminService();
-			await adminService.createElectionResearch(transactionContext, adminRepository, "2000", "01").should.be.rejectedWith(ElectionResearchInProgress);
-			
+			adminService.adminRepository = adminRepository;
+
+			await adminService.createElectionResearch(transactionContext, "2000", "01").should.be.rejectedWith(ElectionResearchInProgress);
 		});
 		
 		it("Must successfully execute the createElectionResearch method", async () => {
-			const adminRepository = sinon.createStubInstance(AdminRepository);
-            
 			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => []);			
 			adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => []);
 
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			adminRepository.createElectionResearch.withArgs(transactionContext, electionResearch)
-				.callsFake(async () => await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer()));
+			adminRepository.createElectionResearch.callsFake(async () => await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer()));
 			
 			const adminService = new AdminService();
-            await adminService.createElectionResearch(transactionContext, adminRepository, "2000", "01");
+			adminService.adminRepository = adminRepository;
+			
+            await adminService.createElectionResearch(transactionContext, "2000", "01");
 
-            const eBuffer = await chaincodeStub.getState("2000-01");			
-            const e = JSON.parse(eBuffer.toString());
+            const electionResearchBuffer = await chaincodeStub.getState("2000-01");			
+            const electionResearchObject = JSON.parse(electionResearchBuffer.toString());
 
-            expect(e).to.instanceOf(Object);
+            expect(electionResearchObject).to.eql(electionResearch);
         });		
     });
 
@@ -101,47 +104,50 @@ describe("AdminService", () => {
 			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
 			electionResearch.beginCollectingVotes();			
 			
-			const adminRepository = sinon.createStubInstance(AdminRepository);
 			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => []);
 
 			const adminService = new AdminService();
+			adminService.adminRepository = adminRepository;
+
 			await adminService.insertCandidateInTheElectionResearch(transactionContext, adminRepository, "Fulano", "01").should.be.rejectedWith(ElectionResearchNotFound);
 		});
 
 		it("Must successfully execute the insertCandidateInTheElectionResearch method", async () => {
-			const adminRepository = sinon.createStubInstance(AdminRepository);
+			
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");			
 
-			adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => []);
+			adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => []);			
 			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => [electionResearch]);
-			adminRepository.updateElectionResearch.withArgs(transactionContext, electionResearch).callsFake(async () => {
+			
+			adminRepository.updateElectionResearch.callsFake(async () => {				
 				await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
 			});
 			
 			const adminService = new AdminService();
+			adminService.adminRepository = adminRepository;
+
 			await adminService.insertCandidateInTheElectionResearch(transactionContext, adminRepository, "Fulano", "01");
 			
-			const eBuffer = await chaincodeStub.getState(electionResearch.getId());
-			const e = JSON.parse(eBuffer.toString());
+			const electionResearchBuffer = await chaincodeStub.getState(electionResearch.getId());
+			const electionResearchObject = JSON.parse(electionResearchBuffer.toString());
 			
-			expect(e).to.eql(electionResearch);
+			expect(electionResearchObject.candidatesList.length).to.eql(1);
 		});
 	});
 
 	describe("#beginCollectingVotes", () => {
 
-		it("Must throw exception to ElectionResearchNotFound", async () => {
-			const adminRepository = sinon.createStubInstance(AdminRepository);
-
+		it("Must throw exception to ElectionResearchNotFound", async () => {			
 			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => []);
 			
 			const adminService = new AdminService();
-			await adminService.beginCollectingVotes(transactionContext, adminRepository)
+			adminService.adminRepository = adminRepository;
+
+			await adminService.beginCollectingVotes(transactionContext)
 				.should.be.rejectedWith(ElectionResearchNotFound);			
 		});
 
-		it("Must successfully execute beginCollectingVotes", async () => {
-			const adminRepository = sinon.createStubInstance(AdminRepository);
+		it("Must successfully execute beginCollectingVotes", async () => {			
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");	
 			
 			const candidate = Candidate.makeCandidate("Fulano", "01");
@@ -149,9 +155,22 @@ describe("AdminService", () => {
 			electionResearch.insertCandidate(candidate);
 
 			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => [electionResearch]);
-			
+			adminRepository.updateElectionResearch.callsFake(async () => {
+				electionResearch.beginCollectingVotes();
+				await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+			});
+
 			const adminService = new AdminService();
-			await adminService.beginCollectingVotes(transactionContext, adminRepository);
+			adminService.adminRepository = adminRepository;
+			
+			await adminService.beginCollectingVotes(transactionContext);
+
+			const electionResearchBuffer = await chaincodeStub.getState(electionResearch.getId());
+			const electionResearchObject = JSON.parse(electionResearchBuffer.toString());
+
+			expect(electionResearchObject.isStart).to.eql(true);
+			expect(electionResearchObject.totalOfVotes).to.eql(0);
+			expect(electionResearchObject.isClose).to.eql(false);
 		});
 
 	});
@@ -159,16 +178,15 @@ describe("AdminService", () => {
 	describe("#finishElectionResearch", () => {
 		
 		it("Must throw exception for ElectionResearchNotFound", async () => {
-			const adminRepository = sinon.createStubInstance(AdminRepository);
-
 			adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => []);
 			
 			const adminService = new AdminService();
-			await adminService.finishElectionResearch(transactionContext, adminRepository).should.be.rejectedWith(ElectionResearchNotFound);
+			adminService.adminRepository = adminRepository;
+
+			await adminService.finishElectionResearch(transactionContext).should.be.rejectedWith(ElectionResearchNotFound);
 		});
 
-		it("Must successfully execute finishElectionResearch", async () => {
-			const adminRepository = sinon.createStubInstance(AdminRepository);
+		it("Must successfully execute finishElectionResearch", async () => {			
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 
 			const candidate = Candidate.makeCandidate("Fulano", "01");
@@ -177,13 +195,45 @@ describe("AdminService", () => {
 			electionResearch.beginCollectingVotes();
 
 			adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => [electionResearch]);
+			adminRepository.updateElectionResearch.callsFake(async () => {
+				electionResearch.finishElectionResearch();
+				await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+			});
 
 			const adminService = new AdminService();
-			await adminService.finishElectionResearch(transactionContext, adminRepository);
+			adminService.adminRepository = adminRepository;
 
-			expect().to.eql();
+			await adminService.finishElectionResearch(transactionContext);
+
+			const electionResearchBuffer = await chaincodeStub.getState(electionResearch.getId());
+			const electionResearchObject = JSON.parse(electionResearchBuffer.toString());
+
+			expect(electionResearchObject.isStart).to.eql(true);
+			expect(electionResearchObject.totalOfVotes).to.eql(0);
+			expect(electionResearchObject.isClose).to.eql(true);			
 		});
 
 	});
+
+	describe("#searchElectionResearch", () => {
+
+        it("Must return an election research", async () => {
+            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+                        
+            await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+
+            adminRepository.retrieveElectionResearch.callsFake(async () => {
+                return await chaincodeStub.getState(electionResearch.getId());
+            });
+
+            const adminService = new AdminService();                        
+            adminService.adminRepository = adminRepository;
+
+            const electionResearchObject = await adminService.searchElectionResearch(transactionContext, "2000", "01");
+
+            expect(electionResearchObject).to.eql(electionResearch);
+        });
+
+    });
 
 });
