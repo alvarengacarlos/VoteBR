@@ -23,8 +23,7 @@ class ElectorRepository {
             throw new NotExistsRecord();
         }
 
-        const e = await ctx.stub.getState(elector.getId());
-		return e;
+        return await ctx.stub.getState(elector.getId());
 	}
 
 }

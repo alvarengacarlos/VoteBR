@@ -23,8 +23,7 @@ class AdminRepository {
             throw new NotExistsRecord();
         }
 
-        const e = await ctx.stub.getState(electionResearch.getId());
-        return e;
+        return await ctx.stub.getState(electionResearch.getId());        
     }
 
     async updateElectionResearch(ctx, electionResearch) {
