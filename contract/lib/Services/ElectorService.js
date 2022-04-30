@@ -19,12 +19,12 @@ class ElectorService {
 	}
 
 	async vote(ctx, cpf, numberOfCandidate) {
-		const electionResearchInProgressArray = await this.adminRepository.retrieveElectionResearchInProgress(ctx);
-        if (electionResearchInProgressArray.length == 0) {
+		const electionResearchInProgressList = await this.adminRepository.retrieveElectionResearchInProgress(ctx);
+        if (electionResearchInProgressList.length == 0) {
             throw new ElectionResearchNotFound();
         }
 		
-		const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchInProgressArray[0]);
+		const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchInProgressList[0]);
 		
 		if (electionResearch.getTotalOfVotes() > this.VOTE_LIMIT) {
 			throw new TotalVotesAchieved();

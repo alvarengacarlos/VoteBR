@@ -29,12 +29,12 @@ class AdminService {
     }
 
     async insertCandidateInTheElectionResearch(ctx, name, numberOfCandidate) {
-        const electionResearchWithoutStarting = this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
-        if (electionResearchWithoutStarting.length == 0) {
+        const electionResearchWithoutStartingList = this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
+        if (electionResearchWithoutStartingList.length == 0) {
             throw new ElectionResearchNotFound();
         }        
 
-        const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchWithoutStarting[0]);
+        const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchWithoutStartingList[0]);
         
         const candidate = Candidate.makeCandidate(name, numberOfCandidate);
         electionResearch.insertCandidate(candidate);
@@ -43,12 +43,12 @@ class AdminService {
     }
 
     async beginCollectingVotes(ctx) {
-        const electionResearchWithoutStarting = this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
-        if (electionResearchWithoutStarting.length == 0) {
+        const electionResearchWithoutStartingList = this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
+        if (electionResearchWithoutStartingList.length == 0) {
             throw new ElectionResearchNotFound();
         } 
 
-        const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchWithoutStarting[0]);
+        const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchWithoutStartingList[0]);
 
         electionResearch.beginCollectingVotes();
 
@@ -56,12 +56,12 @@ class AdminService {
     }
 
     async finishElectionResearch(ctx) {
-        const electionResearchInProgress = await this.adminRepository.retrieveElectionResearchInProgress(ctx);
-        if (electionResearchInProgress.length == 0) {
+        const electionResearchInProgressList = await this.adminRepository.retrieveElectionResearchInProgress(ctx);
+        if (electionResearchInProgressList.length == 0) {
             throw new ElectionResearchNotFound();
         }
 
-        const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchInProgress[0]);
+        const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchInProgressList[0]);
 
         electionResearch.finishElectionResearch();
 
