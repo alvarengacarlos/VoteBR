@@ -42,6 +42,20 @@ class AdminService {
 		await this.adminRepository.updateElectionResearch(ctx, electionResearch);
 	}
 
+	async removeCandidateOfElectionResearch(ctx, numberOfCandidate) {
+		const electionResearchWithoutStartingList = await this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
+		if (electionResearchWithoutStartingList.length == 0) {
+			throw new ElectionResearchNotFound();
+		}        
+
+		const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchWithoutStartingList[0]);
+        
+		const candidate = Candidate.makeCandidate(null, numberOfCandidate);
+		electionResearch.removeCandidate(candidate);
+        
+		await this.adminRepository.updateElectionResearch(ctx, electionResearch);
+	}
+
 	async beginCollectingVotes(ctx) {
 		const electionResearchWithoutStartingList = await this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
 		if (electionResearchWithoutStartingList.length == 0) {
