@@ -1,5 +1,5 @@
 {
-  "name": "vote-br",
+  "name": "vote-br-contract",
   "version": "0.0.0",
   "description": "VoteBr is my TCC",
   "main": "index.js",
