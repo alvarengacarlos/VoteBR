@@ -52,7 +52,7 @@ class VoteBr extends Contract {
 		adminValidation.validateSearchElectionResearchLikeAdmin(year, month);
 
 		const adminService = new AdminService();
-		return await adminService.searchElectionResearch(ctx);
+		return await adminService.searchElectionResearch(ctx, year, month);
 	}
 
 	_checkAuthorityAdmin(ctx) {
