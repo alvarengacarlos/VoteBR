@@ -1,28 +1,36 @@
-# Candidate
+# __Documentação dos Objetos__
+Abaixo estão os objetos utilizados no contrato inteligente.
+
+## Candidate
 Este representa o candidato ao cargo eleitoral, ou seja, são as pessoas em quem os eleitores irão votar. Seu objeto é representado da seguinte forma:
 ```json
 {
-    "name": "Fulano de Tal",
-	"numberOfCandidate": "1",
+    "id": "01",
+    "name": "Fulano de Tal",	
 	"totalOfVotes": 0
 }
 ```
-# BirthDate
-Este representa a data de nascimento do eleitor. Seu objeto é representado da seguinte forma:
+
+## Elector
+Este representa o usuário final eleitor. Este tem associação com o objeto Candidate. Seu o objeto é representado da seguinte forma:
 ```json
 {
-    "year": "yyyy",
-	"month": "mm",
-	"day": "dd"
+    "id": "2000-01_a9ce3f1ad25d4deee9393c74e5b98f28ac74946a29dfebd24217910b73d234ba", 
+    "candidate": {}
 }
 ```
 
-# Elector
-Este representa o usuário final eleitor que é responsável por fazer o voto. O objeto Elector tem associação com Birthdate e Candidate. Seu o objeto é representado da seguinte forma:
+## ElectionResearch
+Este representa uma pesquisa eleitoral. Este tem associação com o objeto Candidate. Seu objeto é representado da seguinte forma:
 ```json
 {
-    "cpf": "00000000000",  
-    "birthDate": {},
-    "candidate": {}
+    "id": "2000-01",
+    "candidatesList": [{}],
+    "isStart": false,
+    "isClose": false,
+    "createIn": "Date",
+    "startIn": "Date",
+    "finishIn": "Date",
+    "totalOfVotes": 0
 }
 ```

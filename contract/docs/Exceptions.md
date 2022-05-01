@@ -1,5 +1,5 @@
-# Exceptions
-|InternalCode|HttpCode|Message|
+# __Documentação das Exceções__
+|internalCode|httpCode|message|
 |:---:|:---:|:---:|
 |ELECTION_RESEARCH_IN_PROGRESS|400|There is already an election research in progress|
 |ELECTION_RESEARCH_CLOSED|400|Election research already closed|
