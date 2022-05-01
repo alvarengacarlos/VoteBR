@@ -31,6 +31,16 @@ class VoteBr extends Contract {
 		await adminService.insertCandidateInTheElectionResearch(ctx, name, numberOfCandidate);
 	}
 
+	async removeCandidateOfElectionResearch(ctx, numberOfCandidate) {
+		this._checkAuthorityAdmin(ctx);
+
+		const adminValidation = new AdminValidation();
+		adminValidation.validateRemoveCandidateOfElectionResearch(numberOfCandidate);
+
+		const adminService = new AdminService();
+		await adminService.removeCandidateOfElectionResearch(ctx, numberOfCandidate);
+	}
+
 	async beginCollectingVotes(ctx) {
 		this._checkAuthorityAdmin(ctx);
 
