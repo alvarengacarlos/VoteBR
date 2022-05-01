@@ -1,8 +1,8 @@
+const ElectorController = require("../App/Controller/Elector");
+
 const electorRoutes = (app) => {
 
-    app.get("/hello", (req, res, next) => {
-        res.send("Hello World. Elector");
-    });
+    app.get("/index", ElectorController.index);
 
 };
 
