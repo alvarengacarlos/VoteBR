@@ -38,8 +38,8 @@ class AdminRepository {
 	async retrieveElectionResearchWithoutStarting(ctx) {
 		let queryString = {};
 		queryString.selector = {};
-		queryString.selector.start = false;
-		queryString.selector.close = false;        
+		queryString.selector.isStart = false;
+		queryString.selector.isClose = false;        
 
 		const resultsArray = await this._getQueryResultForQueryString(ctx, JSON.stringify(queryString));
 
@@ -76,8 +76,8 @@ class AdminRepository {
 	async retrieveElectionResearchInProgress(ctx) {
 		let queryString = {};
 		queryString.selector = {};
-		queryString.selector.start = true;
-		queryString.selector.close = false;        
+		queryString.selector.isStart = true;
+		queryString.selector.isClose = false;        
 
 		const resultsArray = await this._getQueryResultForQueryString(ctx, JSON.stringify(queryString));
 
