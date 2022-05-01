@@ -29,7 +29,7 @@ class AdminService {
 	}
 
 	async insertCandidateInTheElectionResearch(ctx, name, numberOfCandidate) {
-		const electionResearchWithoutStartingList = this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
+		const electionResearchWithoutStartingList = await this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
 		if (electionResearchWithoutStartingList.length == 0) {
 			throw new ElectionResearchNotFound();
 		}        
@@ -43,7 +43,7 @@ class AdminService {
 	}
 
 	async beginCollectingVotes(ctx) {
-		const electionResearchWithoutStartingList = this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
+		const electionResearchWithoutStartingList = await this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
 		if (electionResearchWithoutStartingList.length == 0) {
 			throw new ElectionResearchNotFound();
 		} 
