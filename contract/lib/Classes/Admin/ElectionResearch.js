@@ -64,8 +64,10 @@ class ElectionResearch extends Serializer {
 			throw new ElectionResearchClosed();
 		}
 
-		for (const c of this.candidatesList) {                         
-			if(c.getId() == candidate.getId()) {
+		for (const c of this.candidatesList) {
+			let candidateMounted = Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(c);                         
+			
+			if(candidateMounted.getId() == candidate.getId()) {
 				throw new ExistingRecord();
 			}
 		}      
@@ -90,7 +92,9 @@ class ElectionResearch extends Serializer {
 	getCandidateIndex(candidate) {
 		let i = 0;
 		for (let c of this.candidatesList) {
-			if (c.getId() == candidate.getId()) {
+			let candidateMounted = Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(c); 
+
+			if (candidateMounted.getId() == candidate.getId()) {
 				return i;
 			}
 
