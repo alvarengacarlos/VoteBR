@@ -187,6 +187,50 @@ describe("ElectionResearch", () => {
 
 	});
 
+	describe("#updateCandidate", () => {
+
+		it("Must be successfully in update candidate", () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+            
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+
+			electionResearch.insertCandidate(candidate);
+
+			candidate.name = "Fulano 2";
+			electionResearch.updateCandidate(candidate); 
+            
+			const c = electionResearch.getCandidateByNumber("01");
+
+			expect(electionResearch.candidatesList[0]).to.eql(c);
+		});
+
+		it("Must throw exception to ElectionResearchInProgress", () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+            
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+
+			electionResearch.insertCandidate(candidate);
+			electionResearch.beginCollectingVotes();
+                                    
+			expect(() => electionResearch.updateCandidate(candidate)).to.throw(ElectionResearchInProgress);
+		});
+
+
+		it("Must throw exception to ElectionResearchClosed", () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+            
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+
+			electionResearch.insertCandidate(candidate);
+			electionResearch.beginCollectingVotes();
+			electionResearch.isStart = false;
+			electionResearch.isClose = true;
+                                    
+			expect(() => electionResearch.updateCandidate(candidate)).to.throw(ElectionResearchClosed);
+		});
+
+	});
+
 	describe("#getCandidateByNumber", () => {
 
 		it("Must throw excepction NotExistRecord", () => {

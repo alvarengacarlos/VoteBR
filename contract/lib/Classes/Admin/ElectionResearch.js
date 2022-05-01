@@ -104,10 +104,26 @@ class ElectionResearch extends Serializer {
 		throw new NotExistingRecord();
 	}
 
+	updateCandidate(candidate) {
+		if (this.isStart == true) {
+			throw new ElectionResearchInProgress();
+		}
+
+		if (this.isClose == true) {
+			throw new ElectionResearchClosed();
+		}
+
+		const index = this.getCandidateIndex(candidate);
+
+		this.candidatesList[index] = candidate;
+	}
+
 	getCandidateByNumber(numberOfCandidate) {
-		for (let c of this.candidatesList) {                   
-			if(numberOfCandidate == c.getId()) {
-				return Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(c);
+		for (let c of this.candidatesList) {  
+			const candidateMounted = Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(c);                 
+			
+			if(numberOfCandidate == candidateMounted.getId()) {
+				return candidateMounted;
 			}
 		}  
         
