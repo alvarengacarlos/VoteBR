@@ -33,6 +33,7 @@ class ElectorService {
 		const candidate = electionResearch.getCandidateByNumber(numberOfCandidate);
 		candidate.addOneVote();
 		electionResearch.addOneVote();
+		electionResearch.updateCandidate(candidate);
 
 		await this.adminRepository.updateElectionResearch(ctx, electionResearch);
 		
