@@ -204,18 +204,6 @@ describe("ElectionResearch", () => {
 			expect(electionResearch.candidatesList[0]).to.eql(c);
 		});
 
-		it("Must throw exception to ElectionResearchInProgress", () => {
-			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            
-			const candidate = Candidate.makeCandidate("Fulano", "01");
-
-			electionResearch.insertCandidate(candidate);
-			electionResearch.beginCollectingVotes();
-                                    
-			expect(() => electionResearch.updateCandidate(candidate)).to.throw(ElectionResearchInProgress);
-		});
-
-
 		it("Must throw exception to ElectionResearchClosed", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             

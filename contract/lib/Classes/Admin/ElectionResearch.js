@@ -104,10 +104,7 @@ class ElectionResearch extends Serializer {
 		throw new NotExistingRecord();
 	}
 
-	updateCandidate(candidate) {
-		if (this.isStart == true) {
-			throw new ElectionResearchInProgress();
-		}
+	updateCandidate(candidate) {		
 
 		if (this.isClose == true) {
 			throw new ElectionResearchClosed();
