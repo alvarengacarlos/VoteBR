@@ -43,13 +43,13 @@ describe("AdminRepository", () => {
 		});
 	});
 
-    describe("AdminRepository", () => {
+	describe("AdminRepository", () => {
 
-        describe("#electionResearchExists", () => {
+		describe("#electionResearchExists", () => {
 
 			it("Must return true", async () => {
 				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-                await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+				await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
 
 				const adminRepository = new AdminRepository(); 
 				const response = await adminRepository.electionResearchExists(transactionContext, electionResearch.getId());
@@ -70,36 +70,36 @@ describe("AdminRepository", () => {
 
 		describe("#createElectionResearch", () => {
             
-            it("Must throw an error for existing electoral research", async () => {
-                const electionResearch1 = ElectionResearch.makeElectionResearch("2000", "01");
-                await chaincodeStub.putState(electionResearch1.getId(), electionResearch1.serializerInBuffer());
+			it("Must throw an error for existing electoral research", async () => {
+				const electionResearch1 = ElectionResearch.makeElectionResearch("2000", "01");
+				await chaincodeStub.putState(electionResearch1.getId(), electionResearch1.serializerInBuffer());
 
-                const electionResearch2 = ElectionResearch.makeElectionResearch("2000", "01");
-                const adminRepository = new AdminRepository();                
+				const electionResearch2 = ElectionResearch.makeElectionResearch("2000", "01");
+				const adminRepository = new AdminRepository();                
                                 
-                await adminRepository.createElectionResearch(transactionContext, electionResearch2).should.be.rejectedWith(ExistingRecord);                
-            });
+				await adminRepository.createElectionResearch(transactionContext, electionResearch2).should.be.rejectedWith(ExistingRecord);                
+			});
 
-            it("Must success in creating election research", async () => {
-                const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-                const adminRepository = new AdminRepository();                
+			it("Must success in creating election research", async () => {
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+				const adminRepository = new AdminRepository();                
                 
-                await adminRepository.createElectionResearch(transactionContext, electionResearch);
+				await adminRepository.createElectionResearch(transactionContext, electionResearch);
                 
-                const eBuffer = await chaincodeStub.getState(electionResearch.getId());
-                const e = JSON.parse(eBuffer.toString());
+				const eBuffer = await chaincodeStub.getState(electionResearch.getId());
+				const e = JSON.parse(eBuffer.toString());
                 
-                expect(e).to.eql(electionResearch);
-            });
+				expect(e).to.eql(electionResearch);
+			});
 
-        });
+		});
 
 		describe("#retrieveElectionResearch", () => {
 			
 			it("Must throw NotExistsRecord exception", async () => {
 				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
                 
-                const adminRepository = new AdminRepository();
+				const adminRepository = new AdminRepository();
 				await adminRepository.retrieveElectionResearch(transactionContext, electionResearch)
 					.should.be.rejectedWith(NotExistingRecord);                                
 			});
@@ -129,7 +129,7 @@ describe("AdminRepository", () => {
 
 			it("Must update an electoral research", async () => {
 				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-                await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+				await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
 
 				const eBuffer = await chaincodeStub.getState(electionResearch.getId());
 				const eObject = JSON.parse(eBuffer.toString());
@@ -147,7 +147,7 @@ describe("AdminRepository", () => {
 
 			it("Must return an array with election researches", async () => {
 				
-				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01")
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 				const electionResearchBuffer = Buffer.from(JSON.stringify(electionResearch));
 				
 				const arrayOfElectionResearch = [
@@ -164,15 +164,15 @@ describe("AdminRepository", () => {
 						 		{done: true};
 						},
 						close: () => {
-							return {done: true}
+							return {done: true};
 						}
-					}
+					};
 				}
 
 				const iterator = makeIterator(arrayOfElectionResearch);
 
 				const adminRepository = new AdminRepository();				
-                const result = await adminRepository._getAllResults(iterator);				
+				const result = await adminRepository._getAllResults(iterator);				
 
 				expect(result[0]).to.eql(electionResearch);
 			});
@@ -182,7 +182,7 @@ describe("AdminRepository", () => {
 		describe("#_getQueryResultForQueryString", () => {
 
 			it("Must return an array with election researches", async () => {
-				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01")
+				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 				const electionResearchBuffer = Buffer.from(JSON.stringify(electionResearch));
 				
 				const arrayOfElectionResearch = [
@@ -199,12 +199,12 @@ describe("AdminRepository", () => {
 						 		{done: true};
 						},
 						close: () => {
-							return {done: true}
+							return {done: true};
 						}
-					}
+					};
 				}
 
-				const iterator = makeIterator(arrayOfElectionResearch)
+				const iterator = makeIterator(arrayOfElectionResearch);
 
 				let queryString = {};
 				queryString.selector = {};
@@ -214,7 +214,7 @@ describe("AdminRepository", () => {
 				chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);				
 							
 				const adminRepository = new AdminRepository();				
-                const result = await adminRepository._getQueryResultForQueryString(transactionContext, JSON.stringify(queryString));
+				const result = await adminRepository._getQueryResultForQueryString(transactionContext, JSON.stringify(queryString));
 
 				expect(result[0]).to.eql(electionResearch);
 			});
@@ -241,12 +241,12 @@ describe("AdminRepository", () => {
 						 		{done: true};
 						},
 						close: () => {
-							return {done: true}
+							return {done: true};
 						}
-					}
+					};
 				}
 
-				const iterator = makeIterator(arrayOfElectionResearch)
+				const iterator = makeIterator(arrayOfElectionResearch);
 
 				let queryString = {};
 				queryString.selector = {};
@@ -256,7 +256,7 @@ describe("AdminRepository", () => {
 				chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);
 
 				const adminRepository = new AdminRepository();				
-                const result = await adminRepository.retrieveElectionResearchWithoutStarting(transactionContext);
+				const result = await adminRepository.retrieveElectionResearchWithoutStarting(transactionContext);
 				
 				expect(result[0]).to.eql(electionResearch);
 			});
@@ -285,12 +285,12 @@ describe("AdminRepository", () => {
 						 		{done: true};
 						},
 						close: () => {
-							return {done: true}
+							return {done: true};
 						}
-					}
+					};
 				}
 
-				const iterator = makeIterator(arrayOfElectionResearch)
+				const iterator = makeIterator(arrayOfElectionResearch);
 
 				let queryString = {};
 				queryString.selector = {};
@@ -300,11 +300,11 @@ describe("AdminRepository", () => {
 				chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);
 
 				const adminRepository = new AdminRepository();				
-                const result = await adminRepository.retrieveElectionResearchInProgress(transactionContext);
+				const result = await adminRepository.retrieveElectionResearchInProgress(transactionContext);
 				
 				expect(result[0]).to.eql(electionResearch);
 			});
 
 		});
-    });
+	});
 });

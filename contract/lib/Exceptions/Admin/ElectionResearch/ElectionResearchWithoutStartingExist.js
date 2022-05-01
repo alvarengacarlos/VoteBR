@@ -1,7 +1,7 @@
 const Exception = require("../../Exception");
 
 class ElectionResearchWithoutStartingExist extends Exception {
-    constructor() {
+	constructor() {
 		super("ELECTION_RESEARCH_WITHOUT_STARTING_EXIST", 400, "Electoral research without starting exist");
 	}
 }

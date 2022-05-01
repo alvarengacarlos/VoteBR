@@ -9,33 +9,33 @@ const Candidate = require("../../../../lib/Classes/Admin/Candidate");
 
 describe("Elector", () => {
 
-    let electionResearch, candidate;
+	let electionResearch, candidate;
 
-    beforeEach(() => {
-        electionResearch = ElectionResearch.makeElectionResearch("2022", "01");
-        candidate = Candidate.makeCandidate("Fulano", "01");
-    });
+	beforeEach(() => {
+		electionResearch = ElectionResearch.makeElectionResearch("2022", "01");
+		candidate = Candidate.makeCandidate("Fulano", "01");
+	});
 
-    describe("#makeElector", () => {
+	describe("#makeElector", () => {
 
-        it("Must return an Elector instance", () => {
-            const elector = Elector.makeElector("01234567890", electionResearch, candidate);
+		it("Must return an Elector instance", () => {
+			const elector = Elector.makeElector("01234567890", electionResearch, candidate);
 
-            expect(elector).to.be.an.instanceOf(Elector);
-        });
+			expect(elector).to.be.an.instanceOf(Elector);
+		});
 
-    });    
+	});    
 
-    describe("#mountsElectorObjectRetrievedFromTheBlockchain", () => {
+	describe("#mountsElectorObjectRetrievedFromTheBlockchain", () => {
 
-        it("Must return elector object", () => {
-            const elector = Elector.makeElector("01234567890", electionResearch, candidate);
+		it("Must return elector object", () => {
+			const elector = Elector.makeElector("01234567890", electionResearch, candidate);
 
-            const e = Elector.mountsElectorObjectRetrievedFromTheBlockchain(elector);
+			const e = Elector.mountsElectorObjectRetrievedFromTheBlockchain(elector);
             
-            expect(e).to.eql(elector);
-        });
+			expect(e).to.eql(elector);
+		});
 
-    });
+	});
 
 });

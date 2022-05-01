@@ -10,136 +10,136 @@ const UninitiatedElectionResearch = require("../../Exceptions/Admin/ElectionRese
 
 class ElectionResearch extends Serializer {
     
-    constructor(id) {
-        super();
-        this.id = id;
-        this.candidatesList = [];
-        this.isStart = false;
-        this.isClose = false;
-        this.createIn = new Date().toString();
-        this.startIn = null;
-        this.finishIn = null;
-        this.totalOfVotes = 0;
-    }
+	constructor(id) {
+		super();
+		this.id = id;
+		this.candidatesList = [];
+		this.isStart = false;
+		this.isClose = false;
+		this.createIn = new Date().toString();
+		this.startIn = null;
+		this.finishIn = null;
+		this.totalOfVotes = 0;
+	}
 
-    static makeElectionResearch(year, month) {        
-        const id = `${year}-${month}`;        
+	static makeElectionResearch(year, month) {        
+		const id = `${year}-${month}`;        
         
-        return new ElectionResearch(id);
-    }
+		return new ElectionResearch(id);
+	}
 
-    static mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchObject) {
-        const electionResearch = new ElectionResearch(null);
+	static mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchObject) {
+		const electionResearch = new ElectionResearch(null);
         
-        electionResearch.id = electionResearchObject.id;
-        electionResearch.candidatesList = electionResearchObject.candidatesList;
-        electionResearch.isStart = electionResearchObject.isStart;
-        electionResearch.isClose = electionResearchObject.isClose;
-        electionResearch.createIn = electionResearchObject.createIn;
-        electionResearch.startIn = electionResearchObject.startIn;
-        electionResearch.finishIn = electionResearchObject.finishIn;
-        electionResearch.totalOfVotes = electionResearchObject.totalOfVotes;
+		electionResearch.id = electionResearchObject.id;
+		electionResearch.candidatesList = electionResearchObject.candidatesList;
+		electionResearch.isStart = electionResearchObject.isStart;
+		electionResearch.isClose = electionResearchObject.isClose;
+		electionResearch.createIn = electionResearchObject.createIn;
+		electionResearch.startIn = electionResearchObject.startIn;
+		electionResearch.finishIn = electionResearchObject.finishIn;
+		electionResearch.totalOfVotes = electionResearchObject.totalOfVotes;
 
-        return electionResearch;
-    }
+		return electionResearch;
+	}
 
-    getId() {
-        return this.id;
-    }
+	getId() {
+		return this.id;
+	}
 
-    addOneVote() {
-        this.totalOfVotes++; 
-    }
+	addOneVote() {
+		this.totalOfVotes++; 
+	}
 
-    getTotalOfVotes() {
-        return this.totalOfVotes;
-    }
+	getTotalOfVotes() {
+		return this.totalOfVotes;
+	}
 
-    insertCandidate(candidate) {
-        if (this.isStart == true) {
-            throw new ElectionResearchInProgress();
-        }
+	insertCandidate(candidate) {
+		if (this.isStart == true) {
+			throw new ElectionResearchInProgress();
+		}
 
-        if (this.isClose == true) {
-            throw new ElectionResearchClosed();
-        }
+		if (this.isClose == true) {
+			throw new ElectionResearchClosed();
+		}
 
-        for (const c of this.candidatesList) {                         
-            if(c.getId() == candidate.getId()) {
-                throw new ExistingRecord();
-            }
-        }      
+		for (const c of this.candidatesList) {                         
+			if(c.getId() == candidate.getId()) {
+				throw new ExistingRecord();
+			}
+		}      
 
-        this.candidatesList.push(candidate);
-    }
+		this.candidatesList.push(candidate);
+	}
 
-    removeCandidate(candidate) {
-        if (this.isStart == true) {
-            throw new ElectionResearchInProgress();
-        }
+	removeCandidate(candidate) {
+		if (this.isStart == true) {
+			throw new ElectionResearchInProgress();
+		}
 
-        if (this.isClose == true) {
-            throw new ElectionResearchClosed();
-        }
+		if (this.isClose == true) {
+			throw new ElectionResearchClosed();
+		}
 
-        const index = this.getCandidateIndex(candidate);
+		const index = this.getCandidateIndex(candidate);
 
-        this.candidatesList.splice(index, 1);
-    }
+		this.candidatesList.splice(index, 1);
+	}
 
-    getCandidateIndex(candidate) {
-        let i = 0;
-        for (let c of this.candidatesList) {
-            if (c.getId() == candidate.getId()) {
-                return i;
-            }
+	getCandidateIndex(candidate) {
+		let i = 0;
+		for (let c of this.candidatesList) {
+			if (c.getId() == candidate.getId()) {
+				return i;
+			}
 
-            i += 1;
-        }
+			i += 1;
+		}
 
-        throw new NotExistingRecord();
-    }
+		throw new NotExistingRecord();
+	}
 
-    getCandidateByNumber(numberOfCandidate) {
-        for (let c of this.candidatesList) {                   
-            if(numberOfCandidate == c.getId()) {
-                return Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(c);
-            }
-        }  
+	getCandidateByNumber(numberOfCandidate) {
+		for (let c of this.candidatesList) {                   
+			if(numberOfCandidate == c.getId()) {
+				return Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(c);
+			}
+		}  
         
-        throw new NotExistingRecord();
-    }
+		throw new NotExistingRecord();
+	}
 
-    beginCollectingVotes() {        
-        if (this.isStart == true) {
-            throw new ElectionResearchInProgress();
-        }
+	beginCollectingVotes() {        
+		if (this.isStart == true) {
+			throw new ElectionResearchInProgress();
+		}
         
-        if (this.candidatesList.length == 0) {
-            throw new TotalOfCandidatesIsZero();
-        }
+		if (this.candidatesList.length == 0) {
+			throw new TotalOfCandidatesIsZero();
+		}
 
-        if (this.isClose == true) {
-            throw new ElectionResearchClosed();
-        }
+		if (this.isClose == true) {
+			throw new ElectionResearchClosed();
+		}
 
-        this.isStart = true;
-        this.totalOfVotes = 0;
-        this.startIn = new Date().toString();
-    }
+		this.isStart = true;
+		this.totalOfVotes = 0;
+		this.startIn = new Date().toString();
+	}
 
-    finishElectionResearch() {
-        if (this.isClose == true) {
-            throw new ElectionResearchClosed();
-        }
+	finishElectionResearch() {
+		if (this.isClose == true) {
+			throw new ElectionResearchClosed();
+		}
 
-        if (this.isStart == false) {
-            throw new UninitiatedElectionResearch();
-        }
+		if (this.isStart == false) {
+			throw new UninitiatedElectionResearch();
+		}
 
-        this.isClose = true;
-        this.finishIn = new Date().toString();
-    }
+		this.isClose = true;
+		this.finishIn = new Date().toString();
+	}
 
 }
 

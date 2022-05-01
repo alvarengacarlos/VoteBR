@@ -6,38 +6,38 @@ const Candidate = require("../../../../lib/Classes/Admin/Candidate");
 
 describe("Candidate", () => {
 
-    describe("#makeCandidate", () => {
+	describe("#makeCandidate", () => {
 
-        it("Must return an instance of Candidate", () => {
-            const candidate = Candidate.makeCandidate("Fulano", "10");
+		it("Must return an instance of Candidate", () => {
+			const candidate = Candidate.makeCandidate("Fulano", "10");
 
-            expect(candidate).to.instanceOf(Candidate);
-        });
+			expect(candidate).to.instanceOf(Candidate);
+		});
 
-    });
+	});
 
-    describe("#addOneVote", () => {
+	describe("#addOneVote", () => {
 
-        it("Must add a vote", () => {
-            const candidate = Candidate.makeCandidate("Fulano", "10");
+		it("Must add a vote", () => {
+			const candidate = Candidate.makeCandidate("Fulano", "10");
 
-            candidate.addOneVote();
+			candidate.addOneVote();
 
-            expect(candidate.totalOfVotes).to.eql(1);
-        });
+			expect(candidate.totalOfVotes).to.eql(1);
+		});
         
-    });
+	});
 
-    describe("#mountsCandidateObjectRetrievedFromTheBlockchain", () => {
+	describe("#mountsCandidateObjectRetrievedFromTheBlockchain", () => {
         
-        it("Must mount an Candidate Object", () => {
-            const candidate = Candidate.makeCandidate("Fulano", "10");
+		it("Must mount an Candidate Object", () => {
+			const candidate = Candidate.makeCandidate("Fulano", "10");
 
-            const c = Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(candidate)
+			const c = Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(candidate);
 
-            expect(c).to.eql(candidate);
-        });
+			expect(c).to.eql(candidate);
+		});
         
-    });
+	});
 
 });

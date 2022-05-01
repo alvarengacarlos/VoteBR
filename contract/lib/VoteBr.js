@@ -9,7 +9,7 @@ const AdminService = require("./Services/AdminService");
 const ElectorService = require("./Services/ElectorService");
 
 class VoteBr extends Contract {
-    //Admin Features
+	//Admin Features
 	async createElectionResearch(ctx, year, month) {
 		this._checkAuthorityAdmin(ctx);
 
@@ -65,7 +65,7 @@ class VoteBr extends Contract {
 	}
 
 	//User Features
-    async vote(ctx, cpf, numberOfCandidate) {
+	async vote(ctx, cpf, numberOfCandidate) {
 		this._checkAuthorityElector(ctx);
 
 		const electorValidation = new ElectorValidation();

@@ -20,9 +20,9 @@ class ElectorService {
 
 	async vote(ctx, cpf, numberOfCandidate) {
 		const electionResearchInProgressList = await this.adminRepository.retrieveElectionResearchInProgress(ctx);
-        if (electionResearchInProgressList.length == 0) {
-            throw new ElectionResearchNotFound();
-        }
+		if (electionResearchInProgressList.length == 0) {
+			throw new ElectionResearchNotFound();
+		}
 		
 		const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchInProgressList[0]);
 		

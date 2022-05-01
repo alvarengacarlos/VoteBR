@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "test": "mocha --recursive test",
-    "start": "fabric-chaincode-node start"
+    "start": "fabric-chaincode-node start",
+    "lint": "eslint ./lib && eslint ./test"
   },
   "repository": {
     "type": "git",

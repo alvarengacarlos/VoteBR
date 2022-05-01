@@ -1,7 +1,7 @@
 const Exception = require("./Exception");
 
 class NotExistingRecord extends Exception {
-    constructor() {
+	constructor() {
 		super("NOT_EXISTING_RECORD", 404, "This record not exists");
 	}  
 }

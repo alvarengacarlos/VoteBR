@@ -22,13 +22,13 @@ const Elector = require("../../../lib/Classes/Elector/Elector");
 
 describe("ElectorServive", () => {
 
-    let transactionContext, chaincodeStub;
-    let cpf = "01234567890";
-    let adminRepository;
+	let transactionContext, chaincodeStub;
+	let cpf = "01234567890";
+	let adminRepository;
 	let electorRepository;
 
-    beforeEach(() => {
-        transactionContext = new Context();
+	beforeEach(() => {
+		transactionContext = new Context();
         
 		chaincodeStub = sinon.createStubInstance(ChaincodeStub);
 		transactionContext.setChaincodeStub(chaincodeStub);
@@ -48,122 +48,122 @@ describe("ElectorServive", () => {
 			return Promise.resolve(ret);
 		});
 
-        adminRepository = sinon.createStubInstance(AdminRepository);
+		adminRepository = sinon.createStubInstance(AdminRepository);
 		electorRepository = sinon.createStubInstance(ElectorRepository);
-    });
+	});
 
-    describe("#Vote", () => {
+	describe("#Vote", () => {
 
-        it("Must throw ElectionResearchNotFound exception", async () => {            
-            adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => []);
+		it("Must throw ElectionResearchNotFound exception", async () => {            
+			adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => []);
 
-            const electorService = new ElectorService();            
-            electorService.adminRepository = adminRepository;
+			const electorService = new ElectorService();            
+			electorService.adminRepository = adminRepository;
 
-            await electorService.vote(transactionContext, cpf, "01")
-                .should.be.rejectedWith(ElectionResearchNotFound);
-        });
+			await electorService.vote(transactionContext, cpf, "01")
+				.should.be.rejectedWith(ElectionResearchNotFound);
+		});
 
-        it("Must throw TotalVotesAchieved", async () => {
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "02");
-            electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
-            electionResearch.beginCollectingVotes();
-            electionResearch.addOneVote();
+		it("Must throw TotalVotesAchieved", async () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "02");
+			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
+			electionResearch.beginCollectingVotes();
+			electionResearch.addOneVote();
             
-            adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => [electionResearch]);
+			adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => [electionResearch]);
 
-            const electorService = new ElectorService();
-            electorService.VOTE_LIMIT = 0;                        
-            electorService.adminRepository = adminRepository;
+			const electorService = new ElectorService();
+			electorService.VOTE_LIMIT = 0;                        
+			electorService.adminRepository = adminRepository;
 
-            await electorService.vote(transactionContext, "01")
-                .should.be.rejectedWith(TotalVotesAchieved);
-        });
+			await electorService.vote(transactionContext, "01")
+				.should.be.rejectedWith(TotalVotesAchieved);
+		});
 
-        it("Must register the elector vote", async () => {
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "02");
-            const candidate = Candidate.makeCandidate("Fulano", "01");
-            electionResearch.insertCandidate(candidate);
-            electionResearch.beginCollectingVotes();
+		it("Must register the elector vote", async () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "02");
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			electionResearch.insertCandidate(candidate);
+			electionResearch.beginCollectingVotes();
 
-            adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => [electionResearch]);
+			adminRepository.retrieveElectionResearchInProgress.withArgs(transactionContext).callsFake(() => [electionResearch]);
             
-            adminRepository.updateElectionResearch.callsFake(async () => {              
-                electionResearch.addOneVote();
-                await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
-            })
+			adminRepository.updateElectionResearch.callsFake(async () => {              
+				electionResearch.addOneVote();
+				await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+			});
 
-            const elector = Elector.makeElector(cpf, electionResearch.getId(), candidate);
+			const elector = Elector.makeElector(cpf, electionResearch.getId(), candidate);
 
-            electorRepository.registerElector.callsFake(async () => {
-                await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
-            });
+			electorRepository.registerElector.callsFake(async () => {
+				await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
+			});
             
-            const electorService = new ElectorService();
-            electorService.VOTE_LIMIT = 10;                        
-            electorService.adminRepository = adminRepository;
-            electorService.electorRepository = electorRepository;
+			const electorService = new ElectorService();
+			electorService.VOTE_LIMIT = 10;                        
+			electorService.adminRepository = adminRepository;
+			electorService.electorRepository = electorRepository;
             
-            await electorService.vote(transactionContext, cpf, "01");
+			await electorService.vote(transactionContext, cpf, "01");
 
-            const electionResearchBuffer = await chaincodeStub.getState(electionResearch.getId());
-            const electorBuffer = await chaincodeStub.getState(elector.getId());
+			const electionResearchBuffer = await chaincodeStub.getState(electionResearch.getId());
+			const electorBuffer = await chaincodeStub.getState(elector.getId());
                         
-            expect(
-                JSON.parse(electionResearchBuffer.toString()).totalOfVotes
-            ).to.eql(1);
+			expect(
+				JSON.parse(electionResearchBuffer.toString()).totalOfVotes
+			).to.eql(1);
             
-            expect(
-                JSON.parse(electorBuffer.toString())
-            ).to.eql(elector);
-        });
+			expect(
+				JSON.parse(electorBuffer.toString())
+			).to.eql(elector);
+		});
 
-    });
+	});
 
-    describe("#searchElector", () => {
+	describe("#searchElector", () => {
 
-        it("Must return an elector", async () => {
-            const election = ElectionResearch.makeElectionResearch("2000", "01");
-            const candidate = Candidate.makeCandidate("Fulano", "01");
-            const elector = Elector.makeElector(cpf, election.getId(), candidate);
+		it("Must return an elector", async () => {
+			const election = ElectionResearch.makeElectionResearch("2000", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const elector = Elector.makeElector(cpf, election.getId(), candidate);
             
-            await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
+			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
-            electorRepository.retrieveElector.callsFake(async () => {
-                return await chaincodeStub.getState(elector.getId());
-            });
+			electorRepository.retrieveElector.callsFake(async () => {
+				return await chaincodeStub.getState(elector.getId());
+			});
 
-            const electorService = new ElectorService();
-            electorService.VOTE_LIMIT = 10;                                    
-            electorService.electorRepository = electorRepository;
+			const electorService = new ElectorService();
+			electorService.VOTE_LIMIT = 10;                                    
+			electorService.electorRepository = electorRepository;
 
-            const electorObject = await electorService.searchElector(transactionContext, "2000", "01", cpf);
+			const electorObject = await electorService.searchElector(transactionContext, "2000", "01", cpf);
 
-            expect(electorObject).to.eql(elector);
-        });
+			expect(electorObject).to.eql(elector);
+		});
 
-    });
+	});
 
-    describe("#searchElectionResearch", () => {
+	describe("#searchElectionResearch", () => {
 
-        it("Must return an election research", async () => {
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+		it("Must return an election research", async () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
                         
-            await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+			await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
 
-            adminRepository.retrieveElectionResearch.callsFake(async () => {
-                return await chaincodeStub.getState(electionResearch.getId());
-            });
+			adminRepository.retrieveElectionResearch.callsFake(async () => {
+				return await chaincodeStub.getState(electionResearch.getId());
+			});
 
-            const electorService = new ElectorService();
-            electorService.VOTE_LIMIT = 10;                                    
-            electorService.adminRepository = adminRepository;
+			const electorService = new ElectorService();
+			electorService.VOTE_LIMIT = 10;                                    
+			electorService.adminRepository = adminRepository;
 
-            const electionObject = await electorService.searchElectionResearch(transactionContext, "2000", "01");
+			const electionObject = await electorService.searchElectionResearch(transactionContext, "2000", "01");
 
-            expect(electionObject).to.eql(electionResearch);
-        });
+			expect(electionObject).to.eql(electionResearch);
+		});
 
-    });
+	});
 
 });

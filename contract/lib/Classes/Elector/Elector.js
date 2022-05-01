@@ -2,17 +2,17 @@ const Serializer = require("../Serializer");
 
 class Elector extends Serializer {
 
-    constructor(cpf, electionResearchId, candidate) {      
+	constructor(cpf, electionResearchId, candidate) {      
 		super();
-        this.id = `${electionResearchId}_${cpf}`;  
-        this.candidate = candidate;
-    }
+		this.id = `${electionResearchId}_${cpf}`;  
+		this.candidate = candidate;
+	}
 
-    static makeElector(cpf, electionResearchId, candidate) {
+	static makeElector(cpf, electionResearchId, candidate) {
 		const elector = new Elector(cpf, electionResearchId, candidate);
 
-        return elector;
-    }
+		return elector;
+	}
 
 	static mountsElectorObjectRetrievedFromTheBlockchain(electorObject) {
 		const elector = new Elector(null, null, null);

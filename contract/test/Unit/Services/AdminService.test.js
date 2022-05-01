@@ -51,9 +51,9 @@ describe("AdminService", () => {
 
 	});
 
-    describe("#createElectionResearch", () => {
+	describe("#createElectionResearch", () => {
 
-        it("Must throw exception to ElectionResearchWithoutStartingExist", async () => {			
+		it("Must throw exception to ElectionResearchWithoutStartingExist", async () => {			
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 
 			adminRepository.retrieveElectionResearchWithoutStarting.withArgs(transactionContext).callsFake(() => [electionResearch]);
@@ -88,14 +88,14 @@ describe("AdminService", () => {
 			const adminService = new AdminService();
 			adminService.adminRepository = adminRepository;
 			
-            await adminService.createElectionResearch(transactionContext, "2000", "01");
+			await adminService.createElectionResearch(transactionContext, "2000", "01");
 
-            const electionResearchBuffer = await chaincodeStub.getState("2000-01");			
-            const electionResearchObject = JSON.parse(electionResearchBuffer.toString());
+			const electionResearchBuffer = await chaincodeStub.getState("2000-01");			
+			const electionResearchObject = JSON.parse(electionResearchBuffer.toString());
 
-            expect(electionResearchObject).to.eql(electionResearch);
-        });		
-    });
+			expect(electionResearchObject).to.eql(electionResearch);
+		});		
+	});
 
 	describe("#insertCandidateInTheElectionResearch", () => {
 		
@@ -217,23 +217,23 @@ describe("AdminService", () => {
 
 	describe("#searchElectionResearch", () => {
 
-        it("Must return an election research", async () => {
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+		it("Must return an election research", async () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
                         
-            await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
+			await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
 
-            adminRepository.retrieveElectionResearch.callsFake(async () => {
-                return await chaincodeStub.getState(electionResearch.getId());
-            });
+			adminRepository.retrieveElectionResearch.callsFake(async () => {
+				return await chaincodeStub.getState(electionResearch.getId());
+			});
 
-            const adminService = new AdminService();                        
-            adminService.adminRepository = adminRepository;
+			const adminService = new AdminService();                        
+			adminService.adminRepository = adminRepository;
 
-            const electionResearchObject = await adminService.searchElectionResearch(transactionContext, "2000", "01");
+			const electionResearchObject = await adminService.searchElectionResearch(transactionContext, "2000", "01");
 
-            expect(electionResearchObject).to.eql(electionResearch);
-        });
+			expect(electionResearchObject).to.eql(electionResearch);
+		});
 
-    });
+	});
 
 });

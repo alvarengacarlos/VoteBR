@@ -45,103 +45,103 @@ describe("AdminRepository", () => {
 		});
 	});
 
-    describe("#electorExists", () => {
+	describe("#electorExists", () => {
 
-        it("Must return true", async () => {
-            const candidate = Candidate.makeCandidate("Fulano", "01");
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            electionResearch.insertCandidate(candidate);            
+		it("Must return true", async () => {
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+			electionResearch.insertCandidate(candidate);            
             
-            const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
             
-            await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
+			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
-            const electorRepository = new ElectorRepository(); 
-            const response = await electorRepository.electorExists(transactionContext, elector.getId());
+			const electorRepository = new ElectorRepository(); 
+			const response = await electorRepository.electorExists(transactionContext, elector.getId());
 
-            expect(response).to.eql(true);
-        });
+			expect(response).to.eql(true);
+		});
 
-        it("Must return false", async () => {
-            const candidate = Candidate.makeCandidate("Fulano", "01");
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            electionResearch.insertCandidate(candidate); 
+		it("Must return false", async () => {
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+			electionResearch.insertCandidate(candidate); 
 
-            const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
 
-            const electorRepository = new ElectorRepository(); 
-            const response = await electorRepository.electorExists(transactionContext, elector.getId());
+			const electorRepository = new ElectorRepository(); 
+			const response = await electorRepository.electorExists(transactionContext, elector.getId());
 
-            expect(response).to.eql(false);
-        });
+			expect(response).to.eql(false);
+		});
 
-    });
+	});
 
-    describe("#registerVote", () => {
+	describe("#registerVote", () => {
 
-        it("Must throw ExistingRecord", async () => {
-            const candidate = Candidate.makeCandidate("Fulano", "01");
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            electionResearch.insertCandidate(candidate);            
+		it("Must throw ExistingRecord", async () => {
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+			electionResearch.insertCandidate(candidate);            
             
-            const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
             
-            await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
+			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
-            const electorRepository = new ElectorRepository(); 
-            await electorRepository.registerElector(transactionContext, elector)
-                .should.be.rejectedWith(ExistingRecord);
-        });
+			const electorRepository = new ElectorRepository(); 
+			await electorRepository.registerElector(transactionContext, elector)
+				.should.be.rejectedWith(ExistingRecord);
+		});
 
-        it("Must register an elector", async () => {
-            const candidate = Candidate.makeCandidate("Fulano", "01");
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            electionResearch.insertCandidate(candidate);            
+		it("Must register an elector", async () => {
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+			electionResearch.insertCandidate(candidate);            
             
-            const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
 
-            const electorRepository = new ElectorRepository(); 
-            await electorRepository.registerElector(transactionContext, elector);
+			const electorRepository = new ElectorRepository(); 
+			await electorRepository.registerElector(transactionContext, elector);
 
-            const elBuffer = await chaincodeStub.getState(elector.getId());
-            const el = JSON.parse(elBuffer.toString());
+			const elBuffer = await chaincodeStub.getState(elector.getId());
+			const el = JSON.parse(elBuffer.toString());
 
-            expect(el).to.eql(elector);
-        });
+			expect(el).to.eql(elector);
+		});
 
-    });
+	});
 
-    describe("#retrieveElector", () => {
+	describe("#retrieveElector", () => {
 
-        it("Must throw NotExistsRecord", async () => {
-            const candidate = Candidate.makeCandidate("Fulano", "01");
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            electionResearch.insertCandidate(candidate); 
+		it("Must throw NotExistsRecord", async () => {
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+			electionResearch.insertCandidate(candidate); 
 
-            const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
 
-            const electorRepository = new ElectorRepository(); 
-            await electorRepository.retrieveElector(transactionContext, elector)
-                .should.be.rejectedWith(NotExistingRecord);
-        });
+			const electorRepository = new ElectorRepository(); 
+			await electorRepository.retrieveElector(transactionContext, elector)
+				.should.be.rejectedWith(NotExistingRecord);
+		});
 
-        it("Must return an elector", async () => {
-            const candidate = Candidate.makeCandidate("Fulano", "01");
-            const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            electionResearch.insertCandidate(candidate);            
+		it("Must return an elector", async () => {
+			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+			electionResearch.insertCandidate(candidate);            
             
-            const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
             
-            await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
+			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
-            const electorRepository = new ElectorRepository(); 
-            const elBuffer = await electorRepository.retrieveElector(transactionContext, elector);
+			const electorRepository = new ElectorRepository(); 
+			const elBuffer = await electorRepository.retrieveElector(transactionContext, elector);
                    
-            const el = JSON.parse(elBuffer.toString());
+			const el = JSON.parse(elBuffer.toString());
 
-            expect(el).to.eql(elector);
-        });
+			expect(el).to.eql(elector);
+		});
 
-    });
+	});
 
 });

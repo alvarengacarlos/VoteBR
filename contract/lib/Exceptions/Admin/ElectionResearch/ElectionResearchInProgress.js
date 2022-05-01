@@ -1,7 +1,7 @@
 const Exception = require("../../Exception");
 
 class ElectionResearchInProgress extends Exception {
-    constructor() {
+	constructor() {
 		super("ELECTION_RESEARCH_IN_PROGRESS", 400, "There is already an election research in progress");
 	}
 }
