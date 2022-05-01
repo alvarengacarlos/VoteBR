@@ -155,6 +155,43 @@ describe("AdminValidation", () => {
 
 });
 
+
+describe("AdminValidation", () => {
+	
+	let adminValidation;
+	let numberOfCandidate = "01";
+
+	beforeEach(() => {
+		adminValidation = new AdminValidation();
+	});
+
+	describe("#validateRemoveCandidateOfElectionResearch: numberOfCandidate", () => {
+		
+		it("Must be sucessfull", () => {
+			const value = adminValidation.validateRemoveCandidateOfElectionResearch(numberOfCandidate);
+
+			expect({numberOfCandidate}).to.eql(value);
+		});
+		
+		it("Must throw an error for numberOfCandidate size smaller than 2 digits", () => {
+			numberOfCandidate = "1";
+	
+			expect(
+				() => adminValidation.validateRemoveCandidateOfElectionResearch(numberOfCandidate)
+			).to.throw(IncorrectInformationReceived);
+		});
+		
+		it("Must throw an error for numberOfCandidate size greater than 2 digits", () => {
+			numberOfCandidate = "100";
+
+			expect(
+				() => adminValidation.validateRemoveCandidateOfElectionResearch(numberOfCandidate)
+			).to.throw(IncorrectInformationReceived);
+		});
+	});	
+
+});
+
 describe("AdminAvaliation", () => {
     
 	let adminValidation;

@@ -33,6 +33,20 @@ class AdminValidation {
 		return value;		
 	}
 
+	validateRemoveCandidateOfElectionResearch(numberOfCandidate) {
+		const schema = Joi.object({
+			numberOfCandidate: Joi.string().pattern(/^[0-9]+$/).min(2).max(2).required()
+		});
+		
+		const {error, value} = schema.validate({numberOfCandidate});
+		
+		if (error) {
+			throw new IncorrectInformationReceived();
+		}
+
+		return value;
+	}
+
 	validateSearchElectionResearchLikeAdmin(year, month) {
 		const schema = Joi.object({			
 			year: Joi.string().pattern(/^[0-9]+$/).min(4).max(4).required(),
