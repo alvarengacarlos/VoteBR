@@ -250,8 +250,8 @@ describe("AdminRepository", () => {
 
 				let queryString = {};
 				queryString.selector = {};
-				queryString.selector.start = false;
-				queryString.selector.close = false; 
+				queryString.selector.isStart = false;
+				queryString.selector.isClose = false; 
 
 				chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);
 
@@ -294,8 +294,8 @@ describe("AdminRepository", () => {
 
 				let queryString = {};
 				queryString.selector = {};
-				queryString.selector.start = true;
-				queryString.selector.close = false; 
+				queryString.selector.isStart = true;
+				queryString.selector.isClose = false; 
 
 				chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);
 
