@@ -1,5 +1,5 @@
 const process = require("dotenv").config();
-let serverPort = process.parsed.SERVER_PORT;
+let serverPort = process.parsed.API_SERVER_PORT;
 const app = require("./app");
 
 if (!serverPort) {
