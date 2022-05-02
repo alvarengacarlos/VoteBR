@@ -12,6 +12,7 @@ const config = (app, express) => {
 
     //Middleware for json
     app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
 };
 
 module.exports = config;
