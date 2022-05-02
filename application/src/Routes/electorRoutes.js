@@ -1,8 +1,8 @@
-const ElectorController = require("../App/Controller/Elector");
+const electorController = require("../App/Controller/Elector");
 
 const electorRoutes = (app) => {
 
-    app.get("/index", ElectorController.index);
+    app.get("/index", electorController.index);
 
 };
 
