@@ -106,6 +106,27 @@ class Elector extends ApiSearchCpf {
 		return cpfHashing.digest("hex")
 	}
 
+	async searchElector(payload) {
+		const yearElection = payload.yearElection;
+		const monthElection = payload.monthElection;
+		const cpf = payload.cpf;
+
+		this.cpfIsValid(cpf);
+		if (!cpfIsValid) {
+            throw new InvalidCpf();
+        }
+
+		const cpfHash = this.encryptCpf(cpf);
+
+		//Chama contrato
+	}
+
+	async searchElectionResearchLikeElector(payload) {
+		const year = payload.year;
+		const month = payload.month;
+
+		//Chamar contrato
+	}
 }
 
 module.exports = Elector;
