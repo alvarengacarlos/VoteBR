@@ -1,33 +1,33 @@
 class Admin {
-    async createElectionResearch(payload) {
+    async createElectionResearchInBlockchain(payload) {
         const year = payload.year;
         const month = payload.month;
 
         //Chamar contrato
     }
 
-    async insertCandidateInTheElectionResearch(payload) {
+    async insertCandidateInTheElectionResearchInBlockchain(payload) {
         const nameOfCandidate = payload.nameOfCandidate;
         const numberOfCandidate = payload.numberOfCandidate;
 
         //Chamar contrato
     }
 
-    async removeCandidateOfElectionResearch(payload) {
+    async removeCandidateOfElectionResearchInBlockchain(payload) {
         const numberOfCandidate = payload.numberOfCandidate;
 
         //Chamar contrato
     }
 
-    async beginCollectingVotes(payload) {
+    async beginCollectingVotesInBlockchain(payload) {
         //Chamar contrato
     }
 
-    async finishElectionResearch(payload) {
+    async finishElectionResearchInBlockchain(payload) {
         //Chamar contrato
     }
 
-    async searchElectionResearchLikeAdmin(payload) {
+    async searchElectionResearchLikeAdminInBlockchain(payload) {
         const year = payload.year;
         const month = payload.month;
         //Chamar contrato
