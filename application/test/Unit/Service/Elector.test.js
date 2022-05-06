@@ -11,7 +11,7 @@ const ElectorService = require("../../../src/App/Service/Elector");
 const InvalidCpf = require("../../../src/App/Exception/Elector/InvalidCpf");
 const InvalidAge = require("../../../src/App/Exception/Elector/InvalidAge");
 
-describe("Elector", () => {
+describe("ElectorService", () => {
     
     let electorService, requestLibFake;
 
@@ -96,7 +96,7 @@ describe("Elector", () => {
 
     });
 
-    describe("#vote", () => {
+    describe("#voteInBlockchain", () => {
 
         it("Must throw invalid cpf", async () => {
             const payload = {
@@ -104,7 +104,7 @@ describe("Elector", () => {
                 birthDate: "2000-06-23"
             };
             
-            await electorService.vote(payload).should.be.rejectedWith(InvalidCpf);
+            await electorService.voteInBlockchain(payload).should.be.rejectedWith(InvalidCpf);
         });
 
         it("Must throw invalid age", async () => {
@@ -118,7 +118,7 @@ describe("Elector", () => {
                 birthDate: birthDateString
             };
             
-            await electorService.vote(payload).should.be.rejectedWith(InvalidAge);
+            await electorService.voteInBlockchain(payload).should.be.rejectedWith(InvalidAge);
         });
 
         it("Must be successfull", async () => {
@@ -138,11 +138,55 @@ describe("Elector", () => {
             };
             
             
-            const result = await electorService.vote(payload);
+            const result = await electorService.voteInBlockchain(payload);
             
             expect(result).to.eql({
                 cpf: payload.cpf, 
                 numberOfCandidate: payload.numberOfCandidate
+            });
+        });
+
+    });
+
+    describe("#searchElectorInBlockchain", () => {
+
+        it("Must throw invalid cpdf", async () => {
+            const payload = {
+                cpf: "01234567891",
+                yearElection: "2000",
+                monthElection: "02"
+            };
+            
+            await electorService.searchElectorInBlockchain(payload).should.be.rejectedWith(InvalidCpf);
+        });
+
+        it("Must be successfully", async () => {
+            const payload = {
+                cpf: "01234567890",
+                yearElection: "2000",
+                monthElection: "02"
+            };
+            
+            const result = await electorService.searchElectorInBlockchain(payload);
+
+            expect(result).to.eql(payload.cpf);
+        });
+
+    });
+
+    describe("#searchElectionResearchLikeElector", () => {
+        
+        it("Must be successfully", async () => {
+            const payload = {                
+                yearElection: "2000",
+                monthElection: "02"
+            };
+            
+            const result = await electorService.searchElectionResearchLikeElectorInBlockchain(payload);
+
+            expect(result).to.eql({
+                "yearElection": payload.yearElection, 
+                "monthElection": payload.monthElection
             });
         });
 

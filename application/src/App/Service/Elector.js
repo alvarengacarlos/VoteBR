@@ -5,22 +5,22 @@ const crypto = require("crypto");
 
 class Elector extends ApiSearchCpf {
 
-	async vote(payload) {		
-        const cpf = payload.cpf;
-        const birthDate = payload.birthDate;
-        const numberOfCandidate = payload.numberOfCandidate;
+	async voteInBlockchain(payload) {		
+        const cpf = String(payload.cpf);		
+        const birthDate = String(payload.birthDate);
+        const numberOfCandidate = String(payload.numberOfCandidate);
 
 		const birthDateObject = this.getBirthDateObject(birthDate);
+		
+		const ageIsValid = this.ageIsValid(birthDateObject);
+        if (!ageIsValid) {
+            throw new InvalidAge();
+        }
 
         const cpfIsValid = this.cpfIsValid(cpf);
         if (!cpfIsValid) {
             throw new InvalidCpf();
-        }
-
-        const ageIsValid = this.ageIsValid(birthDateObject);
-        if (!ageIsValid) {
-            throw new InvalidAge();
-        }
+        }        
 		
 		await this.validatesIfElectorIsReal(cpf, birthDateObject);        
 		
@@ -106,12 +106,12 @@ class Elector extends ApiSearchCpf {
 		return cpfHashing.digest("hex")
 	}
 
-	async searchElector(payload) {
-		const yearElection = payload.yearElection;
-		const monthElection = payload.monthElection;
-		const cpf = payload.cpf;
+	async searchElectorInBlockchain(payload) {
+		const yearElection = String(payload.yearElection);
+		const monthElection = String(payload.monthElection);
+		const cpf = String(payload.cpf);
 
-		this.cpfIsValid(cpf);
+		const cpfIsValid = this.cpfIsValid(cpf);
 		if (!cpfIsValid) {
             throw new InvalidCpf();
         }
@@ -119,13 +119,16 @@ class Elector extends ApiSearchCpf {
 		const cpfHash = this.encryptCpf(cpf);
 
 		//Chama contrato
+		return cpf;
 	}
 
-	async searchElectionResearchLikeElector(payload) {
-		const year = payload.year;
-		const month = payload.month;
+	async searchElectionResearchLikeElectorInBlockchain(payload) {
+		const yearElection = String(payload.yearElection);
+		const monthElection = String(payload.monthElection);
 
 		//Chamar contrato
+
+		return {yearElection, monthElection};
 	}
 }
 
