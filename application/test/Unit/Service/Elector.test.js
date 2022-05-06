@@ -122,7 +122,7 @@ describe("Elector", () => {
         });
 
         it("Must be successfull", async () => {
-            requestLibFake.get.callsFake(async () => {
+            electorService.requestLib.get.callsFake(async () => {
                 const response = {
                     status: 200,
                     data: {code: 0}
