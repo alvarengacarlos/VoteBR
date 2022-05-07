@@ -312,7 +312,7 @@ describe("AdminRepository", () => {
 
 		it("Must return an array with election researches closed", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			const candidate = new Candidate("Fulano", 01);
+			const candidate = Candidate.makeCandidate("Fulano", 01);
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
 			electionResearch.finishElectionResearch();
