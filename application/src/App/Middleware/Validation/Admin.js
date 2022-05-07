@@ -2,6 +2,21 @@ const Joi = require("joi");
 
 class Admin {
 
+    validateLogin(req, res, next) {
+        const schema = Joi.object({
+            email: Joi.string().email().required(),
+            password: Joi.string().required()
+        });
+
+        const value = schema.validate(req.body);
+
+        if (value.error) {
+            return res.send(value.error.message);
+        }
+
+        next();
+    }
+
     validateCreateElectionResearchInBlockchain(req, res, next) {
         const schema = Joi.object({
             monthElection: Joi.required().integer().positive(), 
