@@ -27,5 +27,8 @@ Este método grava um voto para um eleitor. Os dois parâmetros são necessário
 ## _searchElector(ctx, yearElectionResearch, monthElectionResearch, cpf)_
 Este método busca o eleitor e as informações gravadas depois do voto. Os três parâmetros são necessários pois os dois primeiros identificam a pesquisa eleitoral e o terceiro o eleitor.
 
-## _searchElectionResearchLikeElector(ctx, year, month)_
-Este método busca uma pesquisa eleitoral. Os dois parâmetros são necessários pois os mesmos identificam uma pesquisa eleitoral.
+## _searchElectionResearchInProgressLikeElector(ctx)_
+Este método busca uma pesquisa eleitoral em andamento e retorna um array. Não há necessidade de passar parâmentros.
+
+## _searchElectionResearchClosedLikeElector(ctx)_
+Este método busca pesquisas eleitorais fechadas e retorna um array. Não há necessidade de passar parâmentros.

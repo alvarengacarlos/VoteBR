@@ -51,14 +51,6 @@ class ElectorService {
 		return JSON.parse(electorBuffer.toString());
 	}
 
-	async searchElectionResearch(ctx, yearElectionResearch, monthElectionResearch) {
-		const electionResearch = ElectionResearch.makeElectionResearch(yearElectionResearch, monthElectionResearch);
-		
-		const electionResearchBuffer = await this.adminRepository.retrieveElectionResearch(ctx, electionResearch);
-		
-		return JSON.parse(electionResearchBuffer.toString());		
-	}
-
 	async searchElectionResearchInProgress(ctx) {
 		const electionResearchInProgressList = await this.adminRepository.retrieveElectionResearchInProgress(ctx);
 

@@ -95,16 +95,6 @@ class VoteBr extends Contract {
 		return await electorService.searchElector(ctx, yearElectionResearch, monthElectionResearch, cpfHashing);
 	}
 
-	async searchElectionResearchLikeElector(ctx, year, month) {
-		this._checkAuthorityElector(ctx);
-
-		const electorValidation = new ElectorValidation();
-		electorValidation.validateSearchElectionResearchLikeElector(year, month);
-
-		const electorService = new ElectorService();
-		return await electorService.searchElectionResearch(ctx, year, month);
-	}
-
 	async searchElectionResearchInProgressLikeElector(ctx) {
 		this._checkAuthorityElector(ctx);
 
