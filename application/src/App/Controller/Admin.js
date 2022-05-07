@@ -22,16 +22,34 @@ class Admin {
         }
     }
 
-    dashboardPage(req, res) {        
-        return res.render("Admin/dashboard", { pageTitle: "Admin" });
-    }
-
-    createElectionResearch(req, res) {
+    async mountDashboardPage(req, res) {      
         try {
             const adminService = new AdminService();
-            adminService.createElectionResearchInBlockchain(req.body);
+            const electionResearchWithoutStartingList = await adminService.searchElectionResearchWithoutStartingLikeAdminInBlockchain();
+            const electionResearchInProgressList = await adminService.searchElectionResearchInProgressLikeAdminInBlockchain();
+            const electionResearchClosedList = await adminService.searchElectionResearchClosedLikeAdminInBlockchain();
+        
+            return res.render("Admin/dashboard", { 
+                pageTitle: "Admin",
+                electionResearchWithoutStartingList: electionResearchWithoutStartingList,
+                electionResearchInProgressList: electionResearchInProgressList,
+                electionResearchClosedList: electionResearchClosedList
+            });
+
+        } catch(exception) {
+            const ef = ExceptionFormatter.returnsFormattedApiExceptions(exception);
             
-            return res.status(200).render("Admin/dashboard", { pageTitle: "Admin" });
+            return res.status(ef.httpStatusCode).render("Admin/dashboard", { pageTitle: "Admin" });
+        }
+        
+    }
+
+    async createElectionResearch(req, res) {
+        try {
+            const adminService = new AdminService();
+            await adminService.createElectionResearchInBlockchain(req.body);
+            
+            return res.redirect(200, "/admin/dashboard-page");
 
         } catch (exception) {
             const ef = ExceptionFormatter.returnsFormattedApiExceptions(exception);

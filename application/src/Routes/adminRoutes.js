@@ -10,7 +10,7 @@ const adminRoutes = (app) => {
     
     app.post(`${prefix}/auth`, adminValidation.validateLogin, adminController.auth);
 
-    app.get(`${prefix}/dashboard-page`, validateToken.validateTokenForAnyRoutes, adminController.dashboardPage);    
+    app.get(`${prefix}/dashboard-page`, validateToken.validateTokenForAnyRoutes, adminController.mountDashboardPage);    
 
     app.post(`${prefix}/create-election-research`, validateToken.validateTokenForAnyRoutes, 
         adminValidation.validateCreateElectionResearchInBlockchain, adminController.createElectionResearch);
@@ -24,10 +24,6 @@ const adminRoutes = (app) => {
     app.post(`${prefix}/finish-election-research`);
 
     app.get(`${prefix}/search-election-research`);
-
-    app.get(`${prefix}/search-election-research-in-progress`);
-
-    app.get(`${prefix}/search-election-research-closed`);
 };
 
 module.exports = adminRoutes;

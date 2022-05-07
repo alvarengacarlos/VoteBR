@@ -4,10 +4,25 @@
 //- iniciar coleta de votos - um botão
 //- finalizar pesquisa eleitoral - um botão
 extends base.pug
+block head
+    title Dashboard
+    
 block content
+    h2 Criar pesquisa eleitoral
     form(action="/admin/create-election-research", method="post")
         label(for="yearElection") Ano:
         input(type="number", name="yearElection", id="yearElection")
         label(for="monthElection") Mês:
         input(type="number", name="monthElection", id="monthElection")        
         input(type="submit", value="Criar")
+
+    h2 Pesquisa sem Iniciar
+    p= electionResearchWithoutStartingList[0].name
+
+    h2 Pequisa em Andamento
+    p= electionResearchInProgressList[0].name 
+
+    h2 Pesquisas Encerradas
+    p= electionResearchClosedList[0].name
+
+    

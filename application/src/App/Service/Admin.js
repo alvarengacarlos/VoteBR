@@ -1,4 +1,5 @@
 class Admin {
+
     async createElectionResearchInBlockchain(payload) {
         const year = String(payload.year);
         const month = String(payload.month);
@@ -31,6 +32,21 @@ class Admin {
         const year = payload.year;
         const month = payload.month;
         //Chamar contrato
+    }
+
+    async searchElectionResearchWithoutStartingLikeAdminInBlockchain() {
+        //Chamar contrato
+        return [{name: "Sem iniciar"}];
+    }
+
+    async searchElectionResearchInProgressLikeAdminInBlockchain() {
+        //Chamar contrato
+        return [{name: "em progresso"}];
+    }
+
+    async searchElectionResearchClosedLikeAdminInBlockchain() {
+        //Chamar contrato
+        return [{name: "Fechada"}];
     }
 }
 
