@@ -3,13 +3,13 @@ const IncorrectInformationReceived = require("../Exceptions/IncorrectInformation
 
 class ElectorValidation {
 
-	validateVote(cpf, candidateNumber) {
+	validateVote(cpfHashing, candidateNumber) {
 		const schema = Joi.object({
-			cpf: Joi.string().pattern(/^[0-9]+$/).min(11).max(11).required(),			
+			cpfHashing: Joi.string().alphanum().required(),			
 			candidateNumber: Joi.string().pattern(/^[0-9]+$/).min(2).max(2).required()
 		});
 
-		const {error, value} = schema.validate({cpf, candidateNumber});
+		const {error, value} = schema.validate({cpfHashing, candidateNumber});
 
 		if (error) {
 			throw new IncorrectInformationReceived();
@@ -18,14 +18,14 @@ class ElectorValidation {
 		return value;
 	}
 
-	validateSearchElector(yearElectionResearch, monthElectionResearch, cpf) {
+	validateSearchElector(yearElectionResearch, monthElectionResearch, cpfHashing) {
 		const schema = Joi.object({
-			cpf: Joi.string().pattern(/^[0-9]+$/).min(11).max(11).required(),			
+			cpfHashing: Joi.string().alphanum().required(),			
 			yearElectionResearch: Joi.string().pattern(/^[0-9]+$/).min(4).max(4).required(),
 			monthElectionResearch: Joi.string().pattern(/^0[1-9]|1[0-2]$/).min(2).max(2).required()
 		});
 
-		const {error, value} = schema.validate({yearElectionResearch, monthElectionResearch, cpf});
+		const {error, value} = schema.validate({yearElectionResearch, monthElectionResearch, cpfHashing});
 
 		if (error) {
 			throw new IncorrectInformationReceived();

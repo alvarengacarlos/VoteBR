@@ -15,7 +15,7 @@ describe("ElectorValidation", () => {
 
 	beforeEach(() => {
 		electorValidation = new ElectorValidation();
-		cpf = "00000000000";
+		cpf = "adfsdfs00000fsdfdf000000";
 		candidateNumber = "01";
 	});
 
@@ -24,28 +24,20 @@ describe("ElectorValidation", () => {
 		it("Must be successful, because values is correct", () => {
 			const value = electorValidation.validateVote(cpf, candidateNumber);
             
-			expect({cpf, candidateNumber}).to.eql(value);     
+			expect({cpfHashing: cpf, candidateNumber}).to.eql(value);     
 		});
 
 	});
 
 	describe("#validateVote: cpf", () => {        
         
-		it("Must throw error for cpf less than 11 digits", () => {
-			cpf = "0000000000";            
+		it("Must throw error for no cpf hashing", () => {
+			cpf = "#0##000000000";            
             
 			expect(
 				() => electorValidation.validateVote(cpf, candidateNumber)
 			).to.throw(IncorrectInformationReceived);     
 		});
-
-		it("Must throw error for cpf greather than 11 digits", () => {
-			cpf = "000000000000";
-            
-			expect(
-				() => electorValidation.validateVote(cpf, candidateNumber)
-			).to.throw(IncorrectInformationReceived);
-		});     
 
 	});
 
@@ -83,21 +75,13 @@ describe("ElectorValidation", () => {
 
 	describe("#validateSearchElector: cpf", () => {        
         
-		it("Must throw error for cpf less than 11 digits", () => {
-			cpf = "0000000000";            
+		it("Must throw error for no cpf hashing", () => {
+			cpf = "0$$###000000000";            
             
 			expect(
 				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf)
 			).to.throw(IncorrectInformationReceived);     
-		});
-
-		it("Must throw error for cpf greather than 11 digits", () => {
-			cpf = "000000000000";
-            
-			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf)
-			).to.throw(IncorrectInformationReceived);
-		});     
+		});    
 
 	});
 
