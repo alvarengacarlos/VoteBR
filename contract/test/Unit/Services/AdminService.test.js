@@ -276,6 +276,26 @@ describe("AdminService", () => {
 
 	});
 
+	describe("#searchElectionResearchWithoutStarting", () => {
+
+		it("Must return election research list without starting", async () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+            
+			adminRepository.retrieveElectionResearchWithoutStarting.callsFake(async () => {
+				return [electionResearch];
+			});
+
+			const adminService = new AdminService();
+			adminService.VOTE_LIMIT = 10;                                    
+			adminService.adminRepository = adminRepository;
+
+			const electionList = await adminService.searchElectionResearchWithoutStarting(transactionContext);
+
+			expect(electionList[0]).to.eql(electionResearch);
+		});
+
+	});
+
 	describe("#searchElectionResearchInProgress", () => {
 
 		it("Must return an election research in progress", async () => {

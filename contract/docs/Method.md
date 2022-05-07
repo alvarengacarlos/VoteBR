@@ -20,6 +20,9 @@ Este método finaliza uma pesquisa eleitoral não recebendo mais votos dos eleit
 ## _searchElectionResearchLikeAdmin(ctx, year, month)_
 Este método busca uma pesquisa eleitoral. Os dois parâmetros são necessários pois os mesmos identificam uma pesquisa eleitoral.
 
+## _searchElectionResearchWithoutStartingLikeAdmin(ctx)_
+Este método busca uma pesquisa eleitoral sem ser iniciada a coleta de votos. Não há necessidade de passar parâmentros.
+
 ## _searchElectionResearchInProgressLikeAdmin(ctx)_
 Este método busca uma pesquisa eleitoral em andamento e retorna um array. Não há necessidade de passar parâmentros.
 

@@ -90,6 +90,12 @@ class AdminService {
 		return JSON.parse(electionResearchBuffer.toString());		
 	}
 
+	async searchElectionResearchWithoutStarting(ctx) {
+		const electionResearchWithoutStartingList = await this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
+		
+		return electionResearchWithoutStartingList;
+	}
+
 	async searchElectionResearchInProgress(ctx) {
 		const electionResearchInProgressList = await this.adminRepository.retrieveElectionResearchInProgress(ctx);
 
