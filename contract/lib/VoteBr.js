@@ -75,24 +75,24 @@ class VoteBr extends Contract {
 	}
 
 	//User Features
-	async vote(ctx, cpf, numberOfCandidate) {
+	async vote(ctx, cpfHashing, numberOfCandidate) {
 		this._checkAuthorityElector(ctx);
 
 		const electorValidation = new ElectorValidation();
-		electorValidation.validateVote(cpf, numberOfCandidate);
+		electorValidation.validateVote(cpfHashing, numberOfCandidate);
 
 		const electorService = new ElectorService();
-		await electorService.vote(ctx, cpf, numberOfCandidate);
+		await electorService.vote(ctx, cpfHashing, numberOfCandidate);
 	}
 
-	async searchElector(ctx, yearElectionResearch, monthElectionResearch, cpf) {
+	async searchElector(ctx, yearElectionResearch, monthElectionResearch, cpfHashing) {
 		this._checkAuthorityElector(ctx);
 
 		const electorValidation = new ElectorValidation();
-		electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf);
+		electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpfHashing);
 	
 		const electorService = new ElectorService();
-		return await electorService.searchElector(ctx, yearElectionResearch, monthElectionResearch, cpf);
+		return await electorService.searchElector(ctx, yearElectionResearch, monthElectionResearch, cpfHashing);
 	}
 
 	async searchElectionResearchLikeElector(ctx, year, month) {
@@ -103,6 +103,20 @@ class VoteBr extends Contract {
 
 		const electorService = new ElectorService();
 		return await electorService.searchElectionResearch(ctx, year, month);
+	}
+
+	async searchElectionResearchInProgressLikeElector(ctx) {
+		this._checkAuthorityElector(ctx);
+
+		const electorService = new ElectorService();
+		return await electorService.searchElectionResearchInProgress(ctx);
+	}
+
+	async searchElectionResearchClosedLikeElector(ctx) {
+		this._checkAuthorityElector(ctx);
+
+		const electorService = new ElectorService();
+		return await electorService.searchElectionResearchClosed(ctx);
 	}
 
 	_checkAuthorityElector(ctx) {
