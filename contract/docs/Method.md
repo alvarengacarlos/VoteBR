@@ -20,6 +20,12 @@ Este método finaliza uma pesquisa eleitoral não recebendo mais votos dos eleit
 ## _searchElectionResearchLikeAdmin(ctx, year, month)_
 Este método busca uma pesquisa eleitoral. Os dois parâmetros são necessários pois os mesmos identificam uma pesquisa eleitoral.
 
+## _searchElectionResearchInProgressLikeAdmin(ctx)_
+Este método busca uma pesquisa eleitoral em andamento e retorna um array. Não há necessidade de passar parâmentros.
+
+## _searchElectionResearchClosedLikeAdmin(ctx)_
+Este método busca pesquisas eleitorais fechadas e retorna um array. Não há necessidade de passar parâmentros.
+
 # Métodos do Elector
 ## _vote(ctx, cpf, numberOfCandidate)_
 Este método grava um voto para um eleitor. Os dois parâmetros são necessários pois o primeiro identifica o eleitor e o segundo o candidato a quem o eleitor vota.
