@@ -1,6 +1,15 @@
 const path = require("path");
+const cookieSession = require("cookie-session");
+const process = require("dotenv").config();
 
 const config = (app, express) => {
+    //Cokies
+    app.use(cookieSession({
+        name: "session",
+        maxAge: 1 * 60 * 60 * 1000,
+        secret: process.parsed.API_COOKIE_PRIVATE_KEY
+    }));
+    
     //Views dir
     app.set('views', path.join(__dirname, '/App/View'));    
     

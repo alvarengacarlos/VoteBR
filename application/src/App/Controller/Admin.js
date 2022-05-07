@@ -1,6 +1,5 @@
 const AdminService = require("../Service/Admin");
 const AuthService = require("../Service/Auth");
-const ExceptionFormatterService = require("../Service/ExceptionFormatter");
 
 class Admin {
 
@@ -10,16 +9,15 @@ class Admin {
 
     auth(req, res) {
         try {
-            const adminService = new AuthService();
-            const token = adminService.authenticateAdmin(req.body);
+            const authService = new AuthService();
+            const token = authService.authenticateAdmin(req.body);
             
-            return res.status(200).render("Admin/dashboard", { pageTitle: "Dashboard" });
+            req.session.token = token;
+                      
+            return res.redirect(200, "/admin/dashboard-page");
 
         } catch (exception) {
-            const ef = new ExceptionFormatterService();
-            const formattedException = ef.returnsFormattedApiExceptions(exception);
-
-            return res.status(formattedException.httpStatusCode).render("Admin/login", { pageTitle: "Login" });
+            return res.redirect(exception.httpStatusCode, "/admin/login-page");
         }
     }
 

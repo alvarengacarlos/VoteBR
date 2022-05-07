@@ -1,0 +1,6 @@
+extends base.pug
+block content
+    form(action="/admin/auth", method="post")
+        input(type="email", name="email")
+        input(type="password", name="password")
+        input(type="submit", value="login")
