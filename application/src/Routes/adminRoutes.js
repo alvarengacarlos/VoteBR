@@ -6,11 +6,11 @@ const adminRoutes = (app) => {
 
     const prefix = "/admin";
     
-    app.get(`${prefix}/login-page`, adminController.loginPage);
+    app.get(`${prefix}/login-page`, validateToken.validateTokenForLoginPage, adminController.loginPage);
     
     app.post(`${prefix}/auth`, adminValidation.validateLogin, adminController.auth);
 
-    app.get(`${prefix}/dashboard-page`, validateToken.validate, adminController.dashboardPage);    
+    app.get(`${prefix}/dashboard-page`, validateToken.validateTokenForAnyRoutes, adminController.dashboardPage);    
 
     app.post(`${prefix}/create-election-research`);
 
