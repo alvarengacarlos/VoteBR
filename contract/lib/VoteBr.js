@@ -65,6 +65,20 @@ class VoteBr extends Contract {
 		return await adminService.searchElectionResearch(ctx, year, month);
 	}
 
+	async searchElectionResearchInProgressLikeAdmin(ctx) {
+		this._checkAuthorityAdmin(ctx);
+
+		const adminService = new AdminService();
+		return await adminService.searchElectionResearchInProgress(ctx);
+	}
+
+	async searchElectionResearchClosedLikeAdmin(ctx) {
+		this._checkAuthorityAdmin(ctx);
+
+		const adminService = new AdminService();
+		return await adminService.searchElectionResearchClosed(ctx);
+	}
+
 	_checkAuthorityAdmin(ctx) {
 		const identity = ctx.clientIdentity;
 		
