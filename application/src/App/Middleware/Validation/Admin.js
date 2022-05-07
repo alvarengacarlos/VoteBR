@@ -19,8 +19,8 @@ class Admin {
 
     validateCreateElectionResearchInBlockchain(req, res, next) {
         const schema = Joi.object({
-            monthElection: Joi.required().integer().positive(), 
-            yearElection: Joi.required().integer().positive(),
+            yearElection: Joi.number().integer().positive().required(),
+            monthElection: Joi.number().integer().positive().required(),             
         });
     
         const value = schema.validate(req.body);
@@ -63,8 +63,8 @@ class Admin {
 
     searchElectionResearchLikeAdminInBlockchain(req, res, next) {
         const schema = Joi.object({
-            monthElection: Joi.required().integer().positive(), 
-            yearElection: Joi.required().integer().positive(),
+            monthElection: Joi.number().integer().positive().required(), 
+            yearElection: Joi.number().integer().positive().required(),
         });
     
         const value = schema.validate(req.body);

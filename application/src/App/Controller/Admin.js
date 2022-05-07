@@ -1,5 +1,6 @@
 const AdminService = require("../Service/Admin");
 const AuthService = require("../Service/Auth");
+const ExceptionFormatter = require("../Service/ExceptionFormatter");
 
 class Admin {
 
@@ -25,6 +26,19 @@ class Admin {
         return res.render("Admin/dashboard", { pageTitle: "Admin" });
     }
 
+    createElectionResearch(req, res) {
+        try {
+            const adminService = new AdminService();
+            adminService.createElectionResearchInBlockchain(req.body);
+            
+            return res.status(200).render("Admin/dashboard", { pageTitle: "Admin" });
+
+        } catch (exception) {
+            const ef = ExceptionFormatter.returnsFormattedApiExceptions(exception);
+            
+            return res.status(ef.httpStatusCode).render("Admin/dashboard", { pageTitle: "Admin" });
+        }
+    }
 }
 
 module.exports = new Admin();

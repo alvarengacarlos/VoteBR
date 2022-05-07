@@ -1,7 +1,7 @@
 class Admin {
     async createElectionResearchInBlockchain(payload) {
-        const year = payload.year;
-        const month = payload.month;
+        const year = String(payload.year);
+        const month = String(payload.month);
 
         //Chamar contrato
     }

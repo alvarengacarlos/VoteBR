@@ -12,7 +12,8 @@ const adminRoutes = (app) => {
 
     app.get(`${prefix}/dashboard-page`, validateToken.validateTokenForAnyRoutes, adminController.dashboardPage);    
 
-    app.post(`${prefix}/create-election-research`);
+    app.post(`${prefix}/create-election-research`, validateToken.validateTokenForAnyRoutes, 
+        adminValidation.validateCreateElectionResearchInBlockchain, adminController.createElectionResearch);
 
     app.post(`${prefix}/insert-candidate-in-the-election-research`);
 

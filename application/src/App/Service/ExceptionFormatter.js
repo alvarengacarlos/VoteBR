@@ -1,6 +1,6 @@
 class ExceptionFormatter {
 
-    returnsFormattedApiExceptions(exception) {
+    static returnsFormattedApiExceptions(exception) {
         return {
             message: exception.message,
             internalCode: exception.internalCode,
@@ -8,7 +8,7 @@ class ExceptionFormatter {
         };
     }
 
-    returnsFormattedContractExceptions(exception) {
+    static returnsFormattedContractExceptions(exception) {
         return {
             message: exception.message,
             internalCode: exception.internalCode,

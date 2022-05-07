@@ -3,4 +3,11 @@
 //- adicionar e Remover candidato, 
 //- iniciar coleta de votos - um botão
 //- finalizar pesquisa eleitoral - um botão
-extends base.pug    
+extends base.pug
+block content
+    form(action="/admin/create-election-research", method="post")
+        label(for="yearElection") Ano:
+        input(type="number", name="yearElection", id="yearElection")
+        label(for="monthElection") Mês:
+        input(type="number", name="monthElection", id="monthElection")        
+        input(type="submit", value="Criar")
