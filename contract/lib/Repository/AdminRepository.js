@@ -83,6 +83,17 @@ class AdminRepository {
 
 		return resultsArray;
 	}
+
+	async retrieveElectionResearchClosed(ctx) {
+		let queryString = {};
+		queryString.selector = {};
+		queryString.selector.isStart = true;
+		queryString.selector.isClose = true;        
+
+		const resultsArray = await this._getQueryResultForQueryString(ctx, JSON.stringify(queryString));
+
+		return resultsArray;
+	}
 }
 
 module.exports = AdminRepository;

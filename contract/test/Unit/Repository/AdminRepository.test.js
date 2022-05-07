@@ -307,4 +307,52 @@ describe("AdminRepository", () => {
 
 		});
 	});
+
+	describe("#retrieveElectionResearchClosed", () => {
+
+		it("Must return an array with election researches closed", async () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+			const candidate = new Candidate("Fulano", 01);
+			electionResearch.insertCandidate(candidate);
+			electionResearch.beginCollectingVotes();
+			electionResearch.finishElectionResearch();
+
+			const electionResearchBuffer = Buffer.from(JSON.stringify(electionResearch));
+			
+
+			const arrayOfElectionResearch = [
+				{value: electionResearchBuffer}
+			];
+
+			function makeIterator(array) {
+				let nextIndex = 0;
+
+				return {
+					next: async () => {
+						return nextIndex < array.length ?
+							 {value: array[nextIndex++], done: false} :
+							 {done: true};
+					},
+					close: () => {
+						return {done: true};
+					}
+				};
+			}
+
+			const iterator = makeIterator(arrayOfElectionResearch);
+
+			let queryString = {};
+			queryString.selector = {};
+			queryString.selector.isStart = true;
+			queryString.selector.isClose = true; 
+
+			chaincodeStub.getQueryResult.withArgs(JSON.stringify(queryString)).callsFake(() => iterator);
+
+			const adminRepository = new AdminRepository();				
+			const result = await adminRepository.retrieveElectionResearchClosed(transactionContext);
+			
+			expect(result[0]).to.eql(electionResearch);
+		});
+		
+	});
 });
