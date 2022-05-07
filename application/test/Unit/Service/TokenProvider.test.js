@@ -5,7 +5,7 @@ const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 const expect = chai.expect;
-chai.should();
+
 
 const TokenProvider = require("../../../src/App/Service/TokenProvider");
 const TokenExpired = require("../../../src/App/Exception/TokenExpired");
