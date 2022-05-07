@@ -1,6 +1,24 @@
+const Exception = require("../Exception/Exception");
+
 class ExceptionFormatter {
 
-    static returnsFormattedApiExceptions(exception) {
+    static formatApiException(exception) {
+        if (exception instanceof Exception) {
+            return {                
+                message: exception.message,
+                internalCode: exception.internalCode,
+                httpStatusCode: exception.httpStatusCode
+            };
+        }
+
+        return {
+            message: exception.message,
+            internalCode: "SERVER_ERROR",
+            httpStatusCode: 500
+        };
+    }
+
+    static formatContractExceptions(exception) {
         return {
             message: exception.message,
             internalCode: exception.internalCode,
@@ -8,11 +26,11 @@ class ExceptionFormatter {
         };
     }
 
-    static returnsFormattedContractExceptions(exception) {
+    static formatJoiException(error) {
         return {
-            message: exception.message,
-            internalCode: exception.internalCode,
-            httpStatusCode: exception.httpStatusCode
+            message: error.message,
+            internalCode: "CLIENT_ERROR",
+            httpStatusCode: 400
         };
     }
 

@@ -1,8 +1,9 @@
 const Joi = require("joi");
+const ExceptionFormatter = require("../../Service/ExceptionFormatter");
 
 class Admin {
 
-    validateLogin(req, res, next) {
+    validateAuth(req, res, next) {
         const schema = Joi.object({
             email: Joi.string().email().required(),
             password: Joi.string().required()
@@ -10,71 +11,72 @@ class Admin {
 
         const value = schema.validate(req.body);
 
-        if (value.error) {
-            return res.send(value.error.message);
+        if (value.error) {            
+            const ef = ExceptionFormatter.formatJoiException(value.error);            
+            return res.status(ef.httpStatusCode).json(ef);
         }
-
+        
         next();
     }
 
-    validateCreateElectionResearchInBlockchain(req, res, next) {
-        const schema = Joi.object({
-            yearElection: Joi.number().integer().positive().required(),
-            monthElection: Joi.number().integer().positive().required(),             
-        });
+    // validateCreateElectionResearchInBlockchain(req, res, next) {
+    //     const schema = Joi.object({
+    //         yearElection: Joi.number().integer().positive().required(),
+    //         monthElection: Joi.number().integer().positive().required(),             
+    //     });
     
-        const value = schema.validate(req.body);
+    //     const value = schema.validate(req.body);
     
-        if (value.error) {
-            return res.send(value.error.message);
-        }
+    //     if (value.error) {
+    //         return res.send(value.error.message);
+    //     }
     
-        next();
-    }
+    //     next();
+    // }
 
-    validateInsertCandidateInTheElectionResearchInBlockchain(req, res, next) {
-        const schema = Joi.object({
-            name: Joi.string().min(4).max(30).required(),
-            numberOfCandidate: Joi.number().integer().positive().less(100).required()
-        });
+    // validateInsertCandidateInTheElectionResearchInBlockchain(req, res, next) {
+    //     const schema = Joi.object({
+    //         name: Joi.string().min(4).max(30).required(),
+    //         numberOfCandidate: Joi.number().integer().positive().less(100).required()
+    //     });
     
-        const value = schema.validate(req.body);
+    //     const value = schema.validate(req.body);
     
-        if (value.error) {
-            return res.send(value.error.message);
-        }
+    //     if (value.error) {
+    //         return res.send(value.error.message);
+    //     }
     
-        next();
-    }
+    //     next();
+    // }
     
-    validateRemoveCandidateOfElectionResearchInBlockchain(req, res, next) {
-        const schema = Joi.object({            
-            numberOfCandidate: Joi.number().integer().positive().less(100).required()
-        });
+    // validateRemoveCandidateOfElectionResearchInBlockchain(req, res, next) {
+    //     const schema = Joi.object({            
+    //         numberOfCandidate: Joi.number().integer().positive().less(100).required()
+    //     });
     
-        const value = schema.validate(req.body);
+    //     const value = schema.validate(req.body);
     
-        if (value.error) {
-            return res.send(value.error.message);
-        }
+    //     if (value.error) {
+    //         return res.send(value.error.message);
+    //     }
     
-        next();
-    }
+    //     next();
+    // }
 
-    searchElectionResearchLikeAdminInBlockchain(req, res, next) {
-        const schema = Joi.object({
-            monthElection: Joi.number().integer().positive().required(), 
-            yearElection: Joi.number().integer().positive().required(),
-        });
+    // searchElectionResearchLikeAdminInBlockchain(req, res, next) {
+    //     const schema = Joi.object({
+    //         monthElection: Joi.number().integer().positive().required(), 
+    //         yearElection: Joi.number().integer().positive().required(),
+    //     });
     
-        const value = schema.validate(req.body);
+    //     const value = schema.validate(req.body);
     
-        if (value.error) {
-            return res.send(value.error.message);
-        }
+    //     if (value.error) {
+    //         return res.send(value.error.message);
+    //     }
     
-        next();
-    }
+    //     next();
+    // }
     
 }
 

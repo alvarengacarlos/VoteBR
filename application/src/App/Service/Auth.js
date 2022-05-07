@@ -16,7 +16,7 @@ class Auth {
         const password = String(payload.password);
 
         if (this.email == email && this.password == password) {
-            const token = new TokenProvider().generateToken(email);
+            const token = new TokenProvider().generateTokenAdmin(email);
             return token;
         }
 
