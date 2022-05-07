@@ -90,6 +90,18 @@ class AdminService {
 		return JSON.parse(electionResearchBuffer.toString());		
 	}
 
+	async searchElectionResearchInProgress(ctx) {
+		const electionResearchInProgressList = await this.adminRepository.retrieveElectionResearchInProgress(ctx);
+
+		return electionResearchInProgressList;
+	}
+
+	async searchElectionResearchClosed(ctx) {
+		const electionResearchClosedList = await this.adminRepository.retrieveElectionResearchClosed(ctx);
+
+		return electionResearchClosedList;
+	}
+
 }
 
 module.exports = AdminService;

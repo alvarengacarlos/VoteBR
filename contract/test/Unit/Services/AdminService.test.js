@@ -276,4 +276,52 @@ describe("AdminService", () => {
 
 	});
 
+	describe("#searchElectionResearchInProgress", () => {
+
+		it("Must return an election research in progress", async () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+            const candidate = Candidate.makeCandidate("Fulano", "01");
+			electionResearch.insertCandidate(candidate);
+			electionResearch.beginCollectingVotes();
+
+			adminRepository.retrieveElectionResearchInProgress.callsFake(async () => {
+				return [electionResearch];
+			});
+
+			const adminService = new AdminService();
+			adminService.VOTE_LIMIT = 10;                                    
+			adminService.adminRepository = adminRepository;
+
+			const electionList = await adminService.searchElectionResearchInProgress(transactionContext);
+
+			expect(electionList[0]).to.eql(electionResearch);
+		});
+
+	});
+
+
+	describe("#searchElectionResearchClosed", () => {
+
+		it("Must return an election research closed", async () => {
+			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
+            const candidate = Candidate.makeCandidate("Fulano", "01");
+			electionResearch.insertCandidate(candidate);
+			electionResearch.beginCollectingVotes();
+			electionResearch.finishElectionResearch();
+			
+			adminRepository.retrieveElectionResearchClosed.callsFake(async () => {
+				return [electionResearch];
+			});
+
+			const adminService = new AdminService();
+			adminService.VOTE_LIMIT = 10;                                    
+			adminService.adminRepository = adminRepository;
+
+			const electionList = await adminService.searchElectionResearchClosed(transactionContext);
+
+			expect(electionList[0]).to.eql(electionResearch);
+		});
+
+	});
+
 });
