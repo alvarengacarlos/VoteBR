@@ -10,19 +10,20 @@ const ContractConnectionError = require("../../App/Exception/Chaincode/ContractC
 class ConnectionChaincode {
 	constructor() {
 		this.ccp = buildCCPOrg();
+		this.gateway = null;
 	}
 
 	async connect(walletInstance, identity) {
-		const gateway = new Gateway();
+		this.gateway = new Gateway();
 
 		try {
-			await gateway.connect(this.ccp, {
+			await this.gateway.connect(this.ccp, {
 				wallet: walletInstance,
 				identity: identity,
 				discovery: { enabled: true, asLocalhost: true },
 			});
 
-			const network = await gateway.getNetwork(channelName);
+			const network = await this.gateway.getNetwork(channelName);
 
 			const chaincode = network.getContract(chaincodeName);
 
@@ -32,6 +33,10 @@ class ConnectionChaincode {
 			console.error(error);
 			throw new ContractConnectionError();
 		}
+	}
+
+	disconnect() {
+		this.gateway.disconnect();
 	}
 }
 
