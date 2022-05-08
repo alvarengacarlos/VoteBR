@@ -124,6 +124,10 @@ class Elector extends ApiSearchCpf {
 	async searchElectionResearchInProgressLikeElectorInBlockchain() {	
 		//Chamar contrato
 	}
+
+	async searchElectionResearchClosedLikeElectorInBlockchain() {
+		//Chamar contrato
+	}
 }
 
 module.exports = Elector;

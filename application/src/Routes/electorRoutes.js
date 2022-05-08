@@ -14,6 +14,9 @@ const electorRoutes = (app) => {
     app.get(`${prefix}/search-election-research-in-process`, validateToken.validateTokenForElector,
         electorController.searchElectionResearchInProgress);
 
+    app.get(`${prefix}/search-election-research-closed`, validateToken.validateTokenForElector,
+        electorController.searchElectionResearchClosed);
+
 };
 
 module.exports = electorRoutes;
