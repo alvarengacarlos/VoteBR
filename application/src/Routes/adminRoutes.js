@@ -22,7 +22,8 @@ const adminRoutes = (app) => {
     app.post(`${prefix}/begin-collecting-votes`, validateToken.validateTokenForAdmin,
         adminController.beginCollectingVotes);
 
-    // app.post(`${prefix}/finish-election-research`);
+    app.post(`${prefix}/finish-election-research`, validateToken.validateTokenForAdmin,
+        adminController.finishElectionResearch);
 
     // app.get(`${prefix}/search-election-research`);
 };

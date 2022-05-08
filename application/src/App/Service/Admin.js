@@ -24,7 +24,7 @@ class Admin {
         //Chamar contrato
     }
 
-    async finishElectionResearchInBlockchain(payload) {
+    async finishElectionResearchInBlockchain() {
         //Chamar contrato
     }
 
