@@ -8,8 +8,8 @@ const adminRoutes = (app) => {
         
     app.post(`${prefix}/auth`, adminValidation.validateAuth, adminController.auth);
 
-    // app.post(`${prefix}/create-election-research`, validateToken.validateTokenForAnyRoutes, 
-    //     adminValidation.validateCreateElectionResearchInBlockchain, adminController.createElectionResearch);
+    app.post(`${prefix}/create-election-research`, validateToken.validateTokenForAdmin, 
+        adminValidation.validateCreateElectionResearch, adminController.createElectionResearch);
 
     // app.post(`${prefix}/insert-candidate-in-the-election-research`);
 

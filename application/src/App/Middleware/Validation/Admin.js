@@ -19,20 +19,21 @@ class Admin {
         next();
     }
 
-    // validateCreateElectionResearchInBlockchain(req, res, next) {
-    //     const schema = Joi.object({
-    //         yearElection: Joi.number().integer().positive().required(),
-    //         monthElection: Joi.number().integer().positive().required(),             
-    //     });
+    validateCreateElectionResearch(req, res, next) {
+        const schema = Joi.object({
+            yearElection: Joi.number().integer().positive().required(),
+            monthElection: Joi.number().integer().positive().required()           
+        });
     
-    //     const value = schema.validate(req.body);
+        const value = schema.validate(req.body);
     
-    //     if (value.error) {
-    //         return res.send(value.error.message);
-    //     }
+        if (value.error) {
+            const ef = ExceptionFormatter.formatJoiException(value.error);            
+            return res.status(ef.httpStatusCode).json(ef);
+        }
     
-    //     next();
-    // }
+        next();
+    }
 
     // validateInsertCandidateInTheElectionResearchInBlockchain(req, res, next) {
     //     const schema = Joi.object({
