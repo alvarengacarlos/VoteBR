@@ -28,6 +28,14 @@ Route::name("elector.")->prefix("/elector")->group(function () {
     Route::get("/dashboard", [ElectorController::class, "dashboard"])
         ->middleware("verify-elector-api-token")
         ->name("dashboard");
+    
+    Route::post("/vote", [ElectorController::class, "vote"])
+        ->middleware("verify-elector-api-token")
+        ->name("vote");
+    
+    Route::post("/search-elector", [ElectorController::class, "searchElector"])
+        ->middleware("verify-elector-api-token")
+        ->name("search-elector");
 
 });
 

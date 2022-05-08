@@ -22,4 +22,45 @@ class ElectorController extends Controller
     public function dashboard() {
         return view("elector.dashboard");
     }
+
+    public function vote(Request $request) {
+        $validatedData = $request->validate([
+            "cpf" => ["required", "string", "size:11"],
+            "birthDate" => ["required", "date:Y-m-d"],
+            "numberOfCandidate" => ["required", "string", "size:2"],
+        ]);
+
+        $cpf = $request->input("cpf");
+        $birthDate = $request->input("birthDate");
+        $numberOfCandidate = $request->input("numberOfCandidate");
+
+        echo $cpf;
+        echo $birthDate;
+        echo $numberOfCandidate;  
+    }
+
+    public function searchElector(Request $request) {
+        $validatedData = $request->validate([
+            "yearElection" => ["required", "string", "size:4"],
+            "monthElection" => ["required", "string", "size:2"],
+            "cpf" => ["required", "string", "size:11"],            
+        ]);
+
+        $cpf = $request->input("cpf");
+        $year = $request->input("yearElection");
+        $month = $request->input("monthElection");
+
+        echo $cpf;
+        echo $year;
+        echo $month;        
+    }
+
+    private function searchElectionResearchInProgress() {
+        echo [];
+    }
+
+    private function searchElectionResearchClosed() {
+        echo [];
+    }
+
 }
