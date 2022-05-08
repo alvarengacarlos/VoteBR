@@ -32,4 +32,27 @@ class AdminController extends Controller
         return view("admin.dashboard");
     }
         
+    public function createElectionResearch(Request $request) {
+        $validatedData = $request->validate([
+            "year" => ["required", "integer"],
+            "month" => ["required", "integer"],
+        ]);
+
+        $year = $request->input("year");
+        $month = $request->input("month");
+
+        echo $year;
+        echo $month;
+    }
+
+    /*
+        insertCandidateInTheElectionResearch
+        removeCandidateOfElectionResearch
+        beginCollectingVotes
+        finishElectionResearch
+        searchElectionResearch
+        searchElectionResearchWithoutStarting
+        searchElectionResearchInProgress
+        searchElectionResearchClosed
+     */
 }
