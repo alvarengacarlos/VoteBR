@@ -58,8 +58,17 @@ class AdminController extends Controller
         echo $numberOfCandidate;
     }
 
-    /*        
-        removeCandidateOfElectionResearch
+    public function removeCandidate(Request $request) {
+        $validatedData = $request->validate([            
+            "numberOfCandidate" => ["required", "string", "size:2"],
+        ]);
+
+        $numberOfCandidate = $request->input("numberOfCandidate");
+        
+        echo $numberOfCandidate;
+    }
+
+    /*  
         beginCollectingVotes
         finishElectionResearch
         searchElectionResearch

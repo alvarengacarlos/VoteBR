@@ -35,6 +35,15 @@
         <input type="text" name="numberOfCandidate" id="numberOfCandidate" minlength="2" maxlength="2">
         <input type="submit" value="Inserir">
     </form>
+
+    <h4>Remover candidato</h4>
+    <form action="{{ route('admin.remove-candidate') }}" method="post">
+        @csrf
+        @method("DELETE")
+        <label for="numberOfCandidate">Número do candidato</label>
+        <input type="text" name="numberOfCandidate" id="numberOfCandidate" minlength="2" maxlength="2">
+        <input type="submit" value="Inserir">
+    </form>
 </div>
 
 @endsection
