@@ -26,7 +26,7 @@ class OrganizationOneCertificateAuthority extends CertificateAuthorityMain {
 			enrollmentSecret: secret,
 			maxEnrollments: 0,
 			role: "client",
-			attrs: [{ name: "ELECTOR", value: "false", ecert: true }],
+			attrs: [{ name: "ELECTOR", value: "true", ecert: true }],
 		};
 
 		await caClientInstance.register(info, adminUser);
