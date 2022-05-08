@@ -1,12 +1,11 @@
 const { Gateway } = require("fabric-network");
-const pathLib = require("path");
 const { buildCCPOrg } = require("./AppUtil");
-const dotenv = require("dotenv").config({
-	path: `${pathLib.resolve(__dirname, "..", "..", "..")}/.env`,
-});
+const process = require("dotenv").config();
 
-const chaincodeName = dotenv.parsed.CHAINCODE_NAME;
-const channelName = dotenv.parsed.CHANNEL_NAME;
+const chaincodeName = process.parsed.CHAINCODE_NAME;
+const channelName = process.parsed.CHANNEL_NAME;
+
+const ContractConnectionError = require("../../App/Exception/Chaincode/ContractConnectionError");
 
 class ConnectionChaincode {
 	constructor() {
@@ -28,8 +27,10 @@ class ConnectionChaincode {
 			const chaincode = network.getContract(chaincodeName);
 
 			return chaincode;
+
 		} catch (error) {
-			throw new Error(`Connection cannot be made: ${error}`);
+			console.error(error);
+			throw new ContractConnectionError();
 		}
 	}
 }
