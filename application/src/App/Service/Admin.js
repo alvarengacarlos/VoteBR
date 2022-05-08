@@ -43,8 +43,7 @@ class Admin {
     }
 
     async searchElectionResearchClosedLikeAdminInBlockchain() {
-        //Chamar contrato
-        return [{name: "Fechada"}];
+        //Chamar contrato       
     }
 }
 

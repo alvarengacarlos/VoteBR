@@ -131,12 +131,19 @@ class Admin {
         }          
     }
 
-    // async searchElectionResearchClosed(req, res) {
-    //     const adminService = new AdminService();
-    //     const electionResearchClosedList = await adminService.searchElectionResearchClosedLikeAdminInBlockchain();
+    async searchElectionResearchClosed(req, res) {
+        try {
+            const adminService = new AdminService();
+            const result = await adminService.searchElectionResearchClosedLikeAdminInBlockchain();    
+            
+            return res.status(200).json({result: result});
 
-    //     return res.status();
-    // }
+        } catch(exception) {
+            const ef = ExceptionFormatter.formatContractExceptions(exception);
+            
+            return res.status(ef.httpStatusCode).json(ef);
+        }    
+    }
 }
 
 module.exports = new Admin();

@@ -34,6 +34,9 @@ const adminRoutes = (app) => {
 
     app.get(`${prefix}/search-election-research-in-progress`, validateToken.validateTokenForAdmin,
         adminController.searchElectionResearchInProgress);
+
+    app.get(`${prefix}/search-election-research-closed`, validateToken.validateTokenForAdmin,
+        adminController.searchElectionResearchClosed);
 };
 
 module.exports = adminRoutes;
