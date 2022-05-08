@@ -52,21 +52,6 @@ class Elector {
     //     next();
     // }
 
-    // searchElectionResearchLikeElector(req, res, next) {
-    //     const schema = Joi.object({
-    //         monthElection: Joi.required().integer().positive(), 
-    //         yearElection: Joi.required().integer().positive()           
-    //     });
-
-    //     const value = schema.validate(req.body);
-
-    //     if (value.error) {
-    //         return res.send(value.error.message);
-    //     }
-
-    //     next();
-    // }
-
 }
 
 module.exports = new Elector();
