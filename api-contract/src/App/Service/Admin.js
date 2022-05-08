@@ -44,7 +44,17 @@ class Admin {
     async removeCandidateOfElectionResearchInBlockchain(payload) {
         const numberOfCandidate = String(payload.numberOfCandidate);
 
-        //Chamar contrato
+        const wallet = await buildWallet();
+
+        const connection = new ConnectionChaincode();
+        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+
+        try {
+            await chaincode.submitTransaction("removeCandidateOfElectionResearch", numberOfCandidate);
+        
+        } catch (exception) {
+            throw new GeneralContractException(exception);
+        }
     }
 
     async beginCollectingVotesInBlockchain() {
