@@ -56,32 +56,30 @@ class TokenProvider {
     }
 
     verifyTokenAdmin(token) {
+        let decoded;
         try {
-            const decoded = this.tokenLib.verify(token, this.privateKey);
+            decoded = this.tokenLib.verify(token, this.privateKey);
             
-            if (decoded.admin != true) {
-                throw new Forbidden();
-            }
-            
-            return decoded;
+        } catch (error) {          
+            throw new TokenExpired();
+        }
+
+        if (decoded.admin != true) {
+            throw new Forbidden();
+        }
+    }
+
+    verifyTokenElector(token) {        
+        let decoded;
+        try {
+            decoded = this.tokenLib.verify(token, this.privateKey);
 
         } catch (error) {          
             throw new TokenExpired();
         }
-    }
-
-    verifyTokenElector(token) {
-        try {
-            const decoded = this.tokenLib.verify(token, this.privateKey);
-            
-            if (decoded.elector != true) {
-                throw new Forbidden();
-            }
-            
-            return decoded;
-
-        } catch (error) {          
-            throw new TokenExpired();
+   
+        if (decoded.elector != true) {
+            throw new Forbidden();
         }
     }
 }
