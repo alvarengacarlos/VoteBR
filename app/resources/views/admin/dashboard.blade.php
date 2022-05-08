@@ -48,7 +48,12 @@
     <form action="{{ route('admin.begin-collecting-votes') }}" method="post">
         @csrf        
         <input type="submit" value="Iniciar coleta de votos">
-    </form>    
+    </form>   
+    
+    <form action="{{ route('admin.finish-election-research') }}" method="post">
+        @csrf        
+        <input type="submit" value="Finalizar pesquisa eleitoral">
+    </form>       
 </div>
 
 @endsection
