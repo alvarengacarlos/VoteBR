@@ -20,7 +20,7 @@ class Admin {
         //Chamar contrato
     }
 
-    async beginCollectingVotesInBlockchain(payload) {
+    async beginCollectingVotesInBlockchain() {
         //Chamar contrato
     }
 
