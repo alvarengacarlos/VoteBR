@@ -19,21 +19,22 @@ class Elector {
         next();
     }
 
-    // validateVote(req, res, next) {
-    //     const schema = Joi.object({
-    //         cpf: Joi.number().integer().positive().less(99999999999).required(),
-    //         birthDate: Joi.date().less("now").required(),
-    //         numberOfCandidate: Joi.number().integer().positive().less(100).required()
-    //     });
+    validateVote(req, res, next) {
+        const schema = Joi.object({
+            cpf: Joi.number().integer().positive().less(99999999999).required(),
+            birthDate: Joi.date().less("now").required(),
+            numberOfCandidate: Joi.number().integer().positive().less(100).required()
+        });
 
-    //     const value = schema.validate(req.body);
+        const value = schema.validate(req.body);
 
-    //     if (value.error) {
-    //         return res.send(value.error.message);
-    //     }
+        if (value.error) {
+            const ef = ExceptionFormatter.formatJoiException(value.error);            
+            return res.status(ef.httpStatusCode).json(ef);
+        }
 
-    //     next();
-    // }
+        next();
+    }
 
     // validateSearchElector(req, res, next) {
     //     const schema = Joi.object({

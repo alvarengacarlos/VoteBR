@@ -25,8 +25,7 @@ class Elector extends ApiSearchCpf {
 		await this.validatesIfElectorIsReal(cpf, birthDateObject);        
 		
 		const cpfHash = this.encryptCpf(cpf);
-		//TODO: SmartContract connection
-		return {cpf, numberOfCandidate};        
+		//TODO: SmartContract connection	        
     }
 
 	getBirthDateObject(birthDate) {

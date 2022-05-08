@@ -18,14 +18,17 @@ class Elector {
         }
     }
 
-    vote(req, res) {       
+    async vote(req, res) {       
         try {                        
-            const electorService = new ElectorService()
-            const result = electorService.vote(req.body);
+            const electorService = new ElectorService();
+            await electorService.voteInBlockchain(req.body);
             
-            return res.send(result);        
-        } catch (error) {
-            return error;
+            return res.status(200).json();  
+
+        } catch (exception) {            
+            const ef = ExceptionFormatter.formatApiException(exception);
+            
+            return res.status(ef.httpStatusCode).json(ef);
         }
     }
 
