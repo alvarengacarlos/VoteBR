@@ -2,8 +2,8 @@ const { Gateway } = require("fabric-network");
 const { buildCCPOrg } = require("./AppUtil");
 const process = require("dotenv").config();
 
-const chaincodeName = process.parsed.CHAINCODE_NAME;
-const channelName = process.parsed.CHANNEL_NAME;
+const chaincodeName = process.parsed.CONTRACT_CHAINCODE_NAME;
+const channelName = process.parsed.CONTRACT_CHANNEL_NAME;
 
 const ContractConnectionError = require("../../App/Exception/Chaincode/ContractConnectionError");
 
