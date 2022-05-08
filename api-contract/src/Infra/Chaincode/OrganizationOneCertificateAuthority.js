@@ -9,7 +9,7 @@ class OrganizationOneCertificateAuthority extends CertificateAuthorityMain {
 		const caHostName = process.parsed.CONTRACT_CA_HOSTNAME;
 		const orgMspId = process.parsed.CONTRACT_ORG_MSP_ID;
 		const affiliationName = process.parsed.CONTRACT_AFFILIATION_NAME;
-		const adminUserId = process.parsed.ACONTRACT_ORG_ADMIN_USER;
+		const adminUserId = process.parsed.CONTRACT_ORG_ADMIN_USER;
 		const adminUserPasswd = process.parsed.CONTRACT_ORG_ADMIN_PASSWD;
 
 		super(caHostName, orgMspId, affiliationName, adminUserId, adminUserPasswd);
