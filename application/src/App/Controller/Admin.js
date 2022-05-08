@@ -117,10 +117,19 @@ class Admin {
         
     }
 
-    // async searchElectionResearchInProgress(req, res) {
-    //     const adminService = new AdminService();
-    //     const electionResearchInProgressList = await adminService.searchElectionResearchInProgressLikeAdminInBlockchain();        
-    // }
+    async searchElectionResearchInProgress(req, res) {
+        try {
+            const adminService = new AdminService();
+            const result = await adminService.searchElectionResearchInProgressLikeAdminInBlockchain();    
+            
+            return res.status(200).json({result: result});
+
+        } catch(exception) {
+            const ef = ExceptionFormatter.formatContractExceptions(exception);
+            
+            return res.status(ef.httpStatusCode).json(ef);
+        }          
+    }
 
     // async searchElectionResearchClosed(req, res) {
     //     const adminService = new AdminService();

@@ -39,8 +39,7 @@ class Admin {
     }
 
     async searchElectionResearchInProgressLikeAdminInBlockchain() {
-        //Chamar contrato
-        return [{name: "em progresso"}];
+        //Chamar contrato        
     }
 
     async searchElectionResearchClosedLikeAdminInBlockchain() {
