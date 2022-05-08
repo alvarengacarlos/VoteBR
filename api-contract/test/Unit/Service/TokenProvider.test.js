@@ -17,31 +17,47 @@ describe("TokenProvider", () => {
         tokenProvider = new TokenProvider();
     });
     
-    describe("#generateToken", () => {
+    describe("#generateTokenAdmin", () => {
 
         it("Must generate a token", () => {
             const email = "admin@email.com";
 
-            const token = tokenProvider.generateToken(email);
+            const token = tokenProvider.generateTokenAdmin(email);
 
             expect(token).to.string;
         });
 
     });
 
-    describe("#verifyToken", () => {
+    describe("#verifyTokenAdmin", () => {
 
         it("Must verify a token", () => {
             const email = "admin@email.com";
-            const token = tokenProvider.generateToken(email);
+            const token = tokenProvider.generateTokenAdmin(email);
             
-            expect(() => tokenProvider.verifyToken(token)).to.not.throw();
+            expect(() => tokenProvider.verifyTokenAdmin(token)).to.not.throw();
         });
 
         it("Must throw expired token", () => {
             const token = "aaaaaaa";
             
-            expect(() => tokenProvider.verifyToken(token)).to.throw(TokenExpired);
+            expect(() => tokenProvider.verifyTokenAdmin(token)).to.throw(TokenExpired);
+        });
+
+    });
+
+    describe("#verifyTokenElector", () => {
+
+        it("Must verify a token", () => {
+            const token = tokenProvider.generateTokenElector();
+            
+            expect(() => tokenProvider.verifyTokenElector(token)).to.not.throw();
+        });
+
+        it("Must throw expired token", () => {
+            const token = "aaaaaaa";
+            
+            expect(() => tokenProvider.verifyTokenElector(token)).to.throw(TokenExpired);
         });
 
     });

@@ -121,31 +121,6 @@ describe("ElectorService", () => {
             await electorService.voteInBlockchain(payload).should.be.rejectedWith(InvalidAge);
         });
 
-        it("Must be successfull", async () => {
-            electorService.requestLib.get.callsFake(async () => {
-                const response = {
-                    status: 200,
-                    data: {code: 0}
-                };
-
-                return response;
-            });         
-            
-            const payload = {
-                cpf: "01234567890",
-                birthDate: "2000-06-23",
-                numberOfCandidate: "01"
-            };
-            
-            
-            const result = await electorService.voteInBlockchain(payload);
-            
-            expect(result).to.eql({
-                cpf: payload.cpf, 
-                numberOfCandidate: payload.numberOfCandidate
-            });
-        });
-
     });
 
     describe("#searchElectorInBlockchain", () => {
@@ -158,36 +133,6 @@ describe("ElectorService", () => {
             };
             
             await electorService.searchElectorInBlockchain(payload).should.be.rejectedWith(InvalidCpf);
-        });
-
-        it("Must be successfully", async () => {
-            const payload = {
-                cpf: "01234567890",
-                yearElection: "2000",
-                monthElection: "02"
-            };
-            
-            const result = await electorService.searchElectorInBlockchain(payload);
-
-            expect(result).to.eql(payload.cpf);
-        });
-
-    });
-
-    describe("#searchElectionResearchLikeElector", () => {
-        
-        it("Must be successfully", async () => {
-            const payload = {                
-                yearElection: "2000",
-                monthElection: "02"
-            };
-            
-            const result = await electorService.searchElectionResearchLikeElectorInBlockchain(payload);
-
-            expect(result).to.eql({
-                "yearElection": payload.yearElection, 
-                "monthElection": payload.monthElection
-            });
         });
 
     });
