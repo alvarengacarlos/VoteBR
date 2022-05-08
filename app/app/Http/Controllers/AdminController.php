@@ -34,8 +34,8 @@ class AdminController extends Controller
         
     public function createElectionResearch(Request $request) {
         $validatedData = $request->validate([
-            "year" => ["required", "integer"],
-            "month" => ["required", "integer"],
+            "year" => ["required", "string", "size:4"],
+            "month" => ["required", "string", "size:2"],
         ]);
 
         $year = $request->input("year");
@@ -45,8 +45,20 @@ class AdminController extends Controller
         echo $month;
     }
 
-    /*
-        insertCandidateInTheElectionResearch
+    public function insertCandidate(Request $request) {
+        $validatedData = $request->validate([
+            "nameOfCandidate" => ["required", "string"],
+            "numberOfCandidate" => ["required", "string", "size:2"],
+        ]);
+
+        $nameOfCandidate = $request->input("nameOfCandidate");
+        $numberOfCandidate = $request->input("numberOfCandidate");
+
+        echo $nameOfCandidate;
+        echo $numberOfCandidate;
+    }
+
+    /*        
         removeCandidateOfElectionResearch
         beginCollectingVotes
         finishElectionResearch

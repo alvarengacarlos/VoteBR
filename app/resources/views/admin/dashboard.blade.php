@@ -25,6 +25,16 @@
         <input type="text" name="month" id="month" minlength="2" maxlength="2">
         <input type="submit" value="Criar">
     </form>
+
+    <h4>Inserir candidato</h4>
+    <form action="{{ route('admin.insert-candidate') }}" method="post">
+        @csrf
+        <label for="nameOfCandidate">Nome do candidato</label>
+        <input type="text" name="nameOfCandidate" id="nameOfCandidate">
+        <label for="numberOfCandidate">Número do candidato</label>
+        <input type="text" name="numberOfCandidate" id="numberOfCandidate" minlength="2" maxlength="2">
+        <input type="submit" value="Inserir">
+    </form>
 </div>
 
 @endsection

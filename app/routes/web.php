@@ -44,4 +44,8 @@ Route::name("admin.")->prefix("/admin")->group(function () {
     Route::post("/create-election-research", [AdminController::class, "createElectionResearch"])
         ->middleware("verify-admin-api-token")
         ->name("create-election-research");
+    
+    Route::post("/insert-candidate", [AdminController::class, "insertCandidate"])
+        ->middleware("verify-admin-api-token")
+        ->name("insert-candidate");
 });
