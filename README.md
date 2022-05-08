@@ -31,7 +31,7 @@ O projeto é divido em duas partes. Uma compões o contrato inteligênte e a out
 
 Clique no link e leia a [documentação oficial do contrato](./contract/docs/Index.md).
 
-Clique no link e leia a [documentação oficial da aplicação](./api-contract/docs/Index.md).
+Clique no link e leia a [documentação oficial da api do contrato](./api-contract/docs/Index.md).
 
 
 ## __Linceça__
