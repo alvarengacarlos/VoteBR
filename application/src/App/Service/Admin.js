@@ -8,8 +8,8 @@ class Admin {
     }
 
     async insertCandidateInTheElectionResearchInBlockchain(payload) {
-        const nameOfCandidate = payload.nameOfCandidate;
-        const numberOfCandidate = payload.numberOfCandidate;
+        const nameOfCandidate = String(payload.nameOfCandidate);
+        const numberOfCandidate = String(payload.numberOfCandidate);
 
         //Chamar contrato
     }
@@ -35,8 +35,19 @@ class Admin {
     }
 
     async searchElectionResearchWithoutStartingLikeAdminInBlockchain() {
-        //Chamar contrato
-        return [{name: "Sem iniciar"}];
+        //Chamar contrato                
+        return [
+            {
+            "candidatesList": [{"id":"01","name":"Fulano","totalOfVotes":0}, {"id":"01","name":"Fulano","totalOfVotes":0}],
+            "createIn":"Sat May 07 2022 20:35:39 GMT+0000 (Coordinated Universal Time)",
+            "finishIn":null,
+            "id":"2000-01",
+            "isClose":false,
+            "isStart":false,
+            "startIn":null,
+            "totalOfVotes":0
+            },
+        ];
     }
 
     async searchElectionResearchInProgressLikeAdminInBlockchain() {

@@ -35,20 +35,21 @@ class Admin {
         next();
     }
 
-    // validateInsertCandidateInTheElectionResearchInBlockchain(req, res, next) {
-    //     const schema = Joi.object({
-    //         name: Joi.string().min(4).max(30).required(),
-    //         numberOfCandidate: Joi.number().integer().positive().less(100).required()
-    //     });
+    validateInsertCandidateInTheElectionResearch(req, res, next) {
+        const schema = Joi.object({
+            name: Joi.string().min(4).max(30).required(),
+            numberOfCandidate: Joi.number().integer().positive().less(100).required()
+        });
     
-    //     const value = schema.validate(req.body);
+        const value = schema.validate(req.body);
     
-    //     if (value.error) {
-    //         return res.send(value.error.message);
-    //     }
+        if (value.error) {
+            const ef = ExceptionFormatter.formatJoiException(value.error);            
+            return res.status(ef.httpStatusCode).json(ef);
+        }
     
-    //     next();
-    // }
+        next();
+    }
     
     // validateRemoveCandidateOfElectionResearchInBlockchain(req, res, next) {
     //     const schema = Joi.object({            

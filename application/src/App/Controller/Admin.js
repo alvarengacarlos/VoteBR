@@ -32,6 +32,20 @@ class Admin {
         }
     }
 
+    async insertCandidateInTheElectionResearch(req, res) {
+        try {
+            const adminService = new AdminService();
+            await adminService.insertCandidateInTheElectionResearchInBlockchain(req.body);
+
+            return res.status(200).json();
+        
+        } catch(exception) {
+            const ef = ExceptionFormatter.formatContractExceptions(exception);
+            
+            return res.status(ef.httpStatusCode).json(ef);
+        }
+    }
+
     // async searchElectionResearchWithoutStarting(req, res) {
     //     const adminService = new AdminService();
     //     const electionResearchWithoutStartingList = await adminService.searchElectionResearchWithoutStartingLikeAdminInBlockchain();
