@@ -72,7 +72,17 @@ class Admin {
     }
 
     async finishElectionResearchInBlockchain() {
-        //Chamar contrato
+        const wallet = await buildWallet();
+
+        const connection = new ConnectionChaincode();
+        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+
+        try {
+            await chaincode.submitTransaction("finishElectionResearch");
+        
+        } catch (exception) {
+            throw new GeneralContractException(exception);
+        }
     }
 
     async searchElectionResearchLikeAdminInBlockchain(payload) {
