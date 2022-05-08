@@ -86,9 +86,22 @@ class Admin {
     }
 
     async searchElectionResearchLikeAdminInBlockchain(payload) {
-        const year = String(payload.year);
-        const month = String(payload.month);
-        //Chamar contrato
+        const year = String(payload.yearElection);
+        const month = String(payload.monthElection);
+
+        const wallet = await buildWallet();
+
+        const connection = new ConnectionChaincode();
+        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+
+        try {            
+            const result = await chaincode.submitTransaction("searchElectionResearchLikeAdmin", year, month);
+            
+            return JSON.parse(result.toString());
+
+        } catch (exception) {
+            throw new GeneralContractException(exception);
+        }
     }
 
     async searchElectionResearchWithoutStartingLikeAdminInBlockchain() {
