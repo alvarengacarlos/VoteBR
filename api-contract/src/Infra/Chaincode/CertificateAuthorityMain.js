@@ -1,91 +1,81 @@
-const FabricCAServices = require('fabric-ca-client')
-const { buildCCPOrg } = require('./AppUtil')
+const FabricCAServices = require("fabric-ca-client");
+const { buildCCPOrg } = require("./AppUtil");
 
 class CertificateAuthorityMain {
-  constructor(caHostName, orgMspId, affiliation, adminUserId, adminUserPasswd) {
-    this.caHostName = caHostName
-    this.orgMspId = orgMspId
-    this.affiliationName = affiliation
-    this.adminUserId = adminUserId
-    this.adminUserPasswd = adminUserPasswd
-    this.ccp = buildCCPOrg()
-  }
+	constructor(caHostName, orgMspId, affiliation, adminUserId, adminUserPasswd) {
+		this.caHostName = caHostName;
+		this.orgMspId = orgMspId;
+		this.affiliationName = affiliation;
+		this.adminUserId = adminUserId;
+		this.adminUserPasswd = adminUserPasswd;
+		this.ccp = buildCCPOrg();
+	}
 
-  async enrollAdmin(walletInstance) {
-    const caClientInstance = this.buildCAClient()
+	async enrollAdmin(walletInstance) {
+		const caClientInstance = this.buildCAClient();
 
-    // Check to see if we've already enrolled the admin user.
-    const identity = await walletInstance.get(this.adminUserId)
+		const identity = await walletInstance.get(this.adminUserId);
 
-    if (identity) {
-      console.log('An identity for the admin user already exists in the wallet')
-      return
-    }
+		if (identity) {      
+			return;
+		}
 
-    // Enroll the admin user, and import the new identity into the wallet.
-    const enrollment = await caClientInstance.enroll({
-      enrollmentID: this.adminUserId,
-      enrollmentSecret: this.adminUserPasswd,
-    })
-    const x509Identity = {
-      credentials: {
-        certificate: enrollment.certificate,
-        privateKey: enrollment.key.toBytes(),
-      },
-      mspId: this.orgMspId,
-      type: 'X.509',
-    }
 
-    await walletInstance.put(this.adminUserId, x509Identity)
-    console.log(
-      'Successfully enrolled admin user and imported it into the wallet'
-    )
-  }
+		const enrollment = await caClientInstance.enroll({
+			enrollmentID: this.adminUserId,
+			enrollmentSecret: this.adminUserPasswd,
+		});
 
-  buildCAClient() {
-    const caInfo = this.ccp.certificateAuthorities[this.caHostName]
-    const caTLSCACerts = caInfo.tlsCACerts.pem
+		const x509Identity = {
+			credentials: {
+				certificate: enrollment.certificate,
+				privateKey: enrollment.key.toBytes(),
+			},
+			mspId: this.orgMspId,
+			type: "X.509",
+		};
 
-    const caClientInstance = new FabricCAServices(
-      caInfo.url,
-      { trustedRoots: caTLSCACerts, verify: false },
-      caInfo.caName
-    )
+		await walletInstance.put(this.adminUserId, x509Identity);    
+	}
 
-    console.log(`Built a CA Client named ${caInfo.caName}`)
-    return caClientInstance
-  }
+	buildCAClient() {
+		const caInfo = this.ccp.certificateAuthorities[this.caHostName];
+		const caTLSCACerts = caInfo.tlsCACerts.pem;
 
-  async enrollUser(walletInstance, userId, secret) {
-    const caClientInstance = this.buildCAClient()
+		const caClientInstance = new FabricCAServices(
+			caInfo.url,
+			{ trustedRoots: caTLSCACerts, verify: false },
+			caInfo.caName
+		);
 
-    const userIdentity = await walletInstance.get(userId)
+		return caClientInstance;
+	}
 
-    if (userIdentity) {
-      console.log(
-        `An identity for the user ${userId} already exists in the wallet`
-      )
-      return
-    }
+	async enrollUser(walletInstance, userId, secret) {
+		const caClientInstance = this.buildCAClient();
 
-    const enrollment = await caClientInstance.enroll({
-      enrollmentID: userId,
-      enrollmentSecret: secret,
-    })
-    const x509Identity = {
-      credentials: {
-        certificate: enrollment.certificate,
-        privateKey: enrollment.key.toBytes(),
-      },
-      mspId: this.orgMspId,
-      type: 'X.509',
-    }
+		const userIdentity = await walletInstance.get(userId);
 
-    await walletInstance.put(userId, x509Identity)
-    console.log(
-      `Successfully enrolled user ${userId} and imported it into the wallet`
-    )
-  }
+		if (userIdentity) {      
+			return;
+		}
+
+		const enrollment = await caClientInstance.enroll({
+			enrollmentID: userId,
+			enrollmentSecret: secret,
+		});
+
+		const x509Identity = {
+			credentials: {
+				certificate: enrollment.certificate,
+				privateKey: enrollment.key.toBytes(),
+			},
+			mspId: this.orgMspId,
+			type: "X.509",
+		};
+
+		await walletInstance.put(userId, x509Identity);    
+	}
 }
 
-module.exports = CertificateAuthorityMain
+module.exports = CertificateAuthorityMain;

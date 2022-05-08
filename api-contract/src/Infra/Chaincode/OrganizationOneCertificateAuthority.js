@@ -1,92 +1,72 @@
-const CertificateAuthorityMain = require('./CertificateAuthorityMain')
+const CertificateAuthorityMain = require("./CertificateAuthorityMain");
+const process = require("dotenv").config();
 
-const pathLib = require('path')
-const dotenv = require('dotenv').config({
-  path: `${pathLib.resolve(__dirname, '..', '..', '..')}/.env`,
-})
+const IdentityAlreadyExists = require("../../App/Exception/Chaincode/IdentityAlreadyExists");
+const AdminIdentityDoesNotExistsInTheWallet = require("../../App/Exception/Chaincode/AdminIdentityDoesNotExistInTheWallet");
 
 class OrganizationOneCertificateAuthority extends CertificateAuthorityMain {
-  constructor() {
-    const caHostName = dotenv.parsed.CA_HOSTNAME
-    const orgMspId = dotenv.parsed.ORG_MSP_ID
-    const affiliationName = dotenv.parsed.AFFILIATION_NAME
-    const adminUserId = dotenv.parsed.ADMIN_USER_ID
-    const adminUserPasswd = dotenv.parsed.ADMIN_USER_PASSWD
-    super(caHostName, orgMspId, affiliationName, adminUserId, adminUserPasswd)
-  }
+	constructor() {
+		const caHostName = process.parsed.CONTRACT_CA_HOSTNAME;
+		const orgMspId = process.parsed.CONTRACT_ORG_MSP_ID;
+		const affiliationName = process.parsed.CONTRACT_AFFILIATION_NAME;
+		const adminUserId = process.parsed.ACONTRACT_ORG_ADMIN_USER;
+		const adminUserPasswd = process.parsed.CONTRACT_ORG_ADMIN_PASSWD;
 
-  async registerNewUser(walletInstance, userId, secret) {
-    const caClientInstance = this.buildCAClient()
+		super(caHostName, orgMspId, affiliationName, adminUserId, adminUserPasswd);
+	}
 
-    const adminUser = await this.checkWalletAndReturnAdminIdentity(
-      walletInstance,
-      userId
-    )
+	async registerNewElector(walletInstance, userId, secret) {
+		const caClientInstance = this.buildCAClient();
 
-    //Register user in CA
-    await caClientInstance.register(
-      {
-        affiliation: this.affiliationName,
-        enrollmentID: userId,
-        enrollmentSecret: secret,
-        role: 'client',
-        attrs: [{ name: 'HR', value: 'false', ecert: true }],
-      },
-      adminUser
-    )
+		const adminUser = await this.checkWalletAndReturnAdminIdentity(walletInstance, userId);
 
-    console.log(`User ${userId} created`)
-  }
+		const info = {
+			affiliation: this.affiliationName,
+			enrollmentID: userId,
+			enrollmentSecret: secret,
+			maxEnrollments: 0,
+			role: "client",
+			attrs: [{ name: "ELECTOR", value: "false", ecert: true }],
+		};
 
-  async checkWalletAndReturnAdminIdentity(walletInstance, userId) {
-    const userIdentity = await walletInstance.get(userId)
-    if (userIdentity) {
-      throw new Error(
-        `An identity for the user ${userId} already exists in the wallet`
-      )
-    }
+		await caClientInstance.register(info, adminUser);
+	}
 
-    const adminIdentity = await walletInstance.get(this.adminUserId)
-    if (!adminIdentity) {
-      console.log('An identity for the admin user does not exist in the wallet')
-      console.log('Enroll the admin user before retrying')
-      throw new Error(
-        'An identity for the admin user does not exist in the wallet'
-      )
-    }
+	async checkWalletAndReturnAdminIdentity(walletInstance, userId) {
+		const userIdentity = await walletInstance.get(userId);
+		if (userIdentity) {
+			throw new IdentityAlreadyExists();
+		}
 
-    const provider = walletInstance
-      .getProviderRegistry()
-      .getProvider(adminIdentity.type)
-    const adminUser = await provider.getUserContext(
-      adminIdentity,
-      this.adminUserId
-    )
+		const adminIdentity = await walletInstance.get(this.adminUserId);
+		if (!adminIdentity) {      
+			throw new AdminIdentityDoesNotExistsInTheWallet();
+		}
 
-    return adminUser
-  }
+		const provider = walletInstance.getProviderRegistry()
+			.getProvider(adminIdentity.type);
 
-  async registerNewHrUser(walletInstance, userId, secret) {
-    const caClientInstance = this.buildCAClient()
+		const adminUser = await provider.getUserContext(adminIdentity, this.adminUserId);
 
-    const adminUser = await this.checkWalletAndReturnAdminIdentity(
-      walletInstance,
-      userId
-    )
+		return adminUser;
+	}
 
-    //Register user in CA
-    await caClientInstance.register(
-      {
-        affiliation: this.affiliationName,
-        enrollmentID: userId,
-        enrollmentSecret: secret,
-        role: 'client',
-        attrs: [{ name: 'HR', value: 'true', ecert: true }],
-      },
-      adminUser
-    )
-    console.log(`RH User ${userId} created`)
-  }
+	async registerNewElectionResearchAdmin(walletInstance, userId, secret) {
+		const caClientInstance = this.buildCAClient();
+
+		const adminUser = await this.checkWalletAndReturnAdminIdentity(walletInstance, userId);
+    
+		const info = {
+			affiliation: this.affiliationName,
+			enrollmentID: userId,
+			enrollmentSecret: secret,
+			maxEnrollments: 0,
+			role: "client",
+			attrs: [{ name: "ADMIN", value: "true", ecert: true }],
+		};
+
+		await caClientInstance.register(info, adminUser);
+	}
 }
 
-module.exports = OrganizationOneCertificateAuthority
+module.exports = OrganizationOneCertificateAuthority;

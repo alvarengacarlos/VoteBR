@@ -1,36 +1,36 @@
-const { Wallets } = require('fabric-network');
-const path = require('path');
-const fs = require('fs');
-const process = require('dotenv').config();
+const { Wallets } = require("fabric-network");
+const path = require("path");
+const fs = require("fs");
+const process = require("dotenv").config();
 
 const CcpNotFound = require("../../App/Exception/Bootstrap/CcpNotFound");
 
 const buildCCPOrg = () => {  
-  const absolutePathCcp = process.parsed.CONTRACT_CCP_ABSOLUTE_PATH;  
+	const absolutePathCcp = process.parsed.CONTRACT_CCP_ABSOLUTE_PATH;  
 
-  const ccpPath = path.resolve(absolutePathCcp);
+	const ccpPath = path.resolve(absolutePathCcp);
   
-  const fileExists = fs.existsSync(ccpPath);
+	const fileExists = fs.existsSync(ccpPath);
   
 
-  if (!fileExists) {
-    throw new CcpNotFound();
-  }
+	if (!fileExists) {
+		throw new CcpNotFound();
+	}
 
-  const contents = fs.readFileSync(ccpPath, 'utf8');
+	const contents = fs.readFileSync(ccpPath, "utf8");
 
-  const ccp = JSON.parse(contents);
+	const ccp = JSON.parse(contents);
 
-  return ccp;
-}
+	return ccp;
+};
 
 const buildWallet = async () => {
   
-  const walletPath = path.join(__dirname, '..', '..', '..', 'wallet');  
+	const walletPath = path.join(__dirname, "..", "..", "..", "wallet");  
 
-  const wallet = await Wallets.newFileSystemWallet(walletPath);
+	const wallet = await Wallets.newFileSystemWallet(walletPath);
 
-  return wallet;
-}
+	return wallet;
+};
 
-module.exports = { buildCCPOrg, buildWallet }
+module.exports = { buildCCPOrg, buildWallet };
