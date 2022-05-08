@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ElectorController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +17,28 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->name("welcome");
+
+Route::name("elector.")->prefix("/elector")->group(function () {
+
+    Route::get("/login", [ElectorController::class, "login"])->name("login");
+
+    Route::post("/auth", [ElectorController::class, "auth"])->name("auth");
+
+    Route::get("/dashboard", [ElectorController::class, "dashboard"])
+        ->middleware("verify-elector-api-token")
+        ->name("dashboard");
+
+});
+
+Route::name("admin.")->prefix("/admin")->group(function () {
+
+    Route::get("/login", [AdminController::class, "login"])->name("login");
+
+    Route::post("/auth", [AdminController::class, "auth"])->name("auth");
+
+    Route::get("/dashboard", [AdminController::class, "dashboard"])
+        ->middleware("verify-admin-api-token")
+        ->name("dashboard");
+
 });
