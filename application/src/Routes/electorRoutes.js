@@ -11,7 +11,8 @@ const electorRoutes = (app) => {
     app.post(`${prefix}/vote`, validateToken.validateTokenForElector,
         electorValidation.validateVote, electorController.vote);
     
-        // //app.get("/research-results", () => {});
+    app.get(`${prefix}/search-election-research-in-process`, validateToken.validateTokenForElector,
+        electorController.searchElectionResearchInProgress);
 
 };
 

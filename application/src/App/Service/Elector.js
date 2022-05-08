@@ -121,13 +121,8 @@ class Elector extends ApiSearchCpf {
 		return cpf;
 	}
 
-	async searchElectionResearchLikeElectorInBlockchain(payload) {
-		const yearElection = String(payload.yearElection);
-		const monthElection = String(payload.monthElection);
-
+	async searchElectionResearchInProgressLikeElectorInBlockchain() {	
 		//Chamar contrato
-
-		return {yearElection, monthElection};
 	}
 }
 
