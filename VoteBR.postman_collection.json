@@ -1,0 +1,537 @@
+{
+	"info": {
+		"_postman_id": "78de08cc-51d3-4a9b-bc7c-eb5f5eed64be",
+		"name": "VoteBR",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "/auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@email.com\",\n    \"password\": \"adminpw\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/admin/auth",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/create-election-research",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"yearElection\": \"2000\",\n    \"monthElection\": \"01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/admin/create-election-research",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"create-election-research"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/insert-candidate-in-the-election-research",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nameOfCandidate\": \"Fulano\",\n    \"numberOfCandidate\": \"01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/admin/insert-candidate-in-the-election-research",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"insert-candidate-in-the-election-research"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/remove-candidate-of-election-research",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMjA5MjgsImV4cCI6MTY1MjAyNDUyOCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.WOi-EBXGHMTd6Wiee0rR-Afo9NVdiZkK1WgtRY_z1Ds",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numberOfCandidate\": \"02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/admin/remove-candidate-of-election-research",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"remove-candidate-of-election-research"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/begin-collecting-votes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/admin/begin-collecting-votes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"begin-collecting-votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/finish-election-research",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMjA5MjgsImV4cCI6MTY1MjAyNDUyOCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.WOi-EBXGHMTd6Wiee0rR-Afo9NVdiZkK1WgtRY_z1Ds",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/admin/finish-election-research",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"finish-election-research"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search-election-research",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"yearElection\": \"2000\",\n    \"monthElection\": \"01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/admin/search-election-research",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"search-election-research"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search-election-research-without-starting",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/admin/search-election-research-without-starting",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"search-election-research-without-starting"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search-election-research-in-progress",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"yearElection\": \"2000\",\n    \"monthElection\": \"02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/admin/search-election-research-in-progress",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"search-election-research-in-progress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search-election-research-closed",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"yearElection\": \"2000\",\n    \"monthElection\": \"02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/admin/search-election-research-closed",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"admin",
+								"search-election-research-closed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Elector",
+			"item": [
+				{
+					"name": "/auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"elector@email.com\",\n    \"password\": \"electorpw\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/elector/auth",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"elector",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/vote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTIwMzIzOTQsImV4cCI6MTY1MjAzNTk5NCwic3ViIjoiNmU5MDM0MWYtNDNmNi00Nzc2LWE0YTAtOGJlNWUwY2M5M2VlIn0.nO8LteB5t80w0MzMuA9sd_keaoYOxyRMvqmia2oFfvQ",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cpf\": \"01234567890\",\n    \"birthDate\": \"2000-01-01\",\n    \"numberOfCandidate\": \"01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/elector/vote",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"elector",
+								"vote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search-elector",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTIwMzMzMzEsImV4cCI6MTY1MjAzNjkzMSwic3ViIjoiYWU0ZDc1OTUtOWVjYi00ZmI1LWI1ZTgtNzg5N2JkYjU3MWM3In0.KDEUttB4cM9EP5UpSOLj6_wydmQrIiwgaLk0fm6uqcM",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"yearElection\": \"2000\",\n    \"monthElection\": \"01\",\n    \"cpf\": \"01234567890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/elector/search-elector",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"elector",
+								"search-elector"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search-election-research-in-process",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTIwMzMzMzEsImV4cCI6MTY1MjAzNjkzMSwic3ViIjoiYWU0ZDc1OTUtOWVjYi00ZmI1LWI1ZTgtNzg5N2JkYjU3MWM3In0.KDEUttB4cM9EP5UpSOLj6_wydmQrIiwgaLk0fm6uqcM",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/elector/search-election-research-in-progress",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"elector",
+								"search-election-research-in-progress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/search-election-research-closed",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTIwMzMzMzEsImV4cCI6MTY1MjAzNjkzMSwic3ViIjoiYWU0ZDc1OTUtOWVjYi00ZmI1LWI1ZTgtNzg5N2JkYjU3MWM3In0.KDEUttB4cM9EP5UpSOLj6_wydmQrIiwgaLk0fm6uqcM",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/elector/search-election-research-closed",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"elector",
+								"search-election-research-closed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Api-search-cpf-fake",
+			"item": [
+				{
+					"name": "/search-cpf",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:5000/search-cpf?token=test&cpf=01234567890&data-nascimento=23062000&plugin=CPF",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"search-cpf"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "test"
+								},
+								{
+									"key": "cpf",
+									"value": "01234567890"
+								},
+								{
+									"key": "data-nascimento",
+									"value": "23062000"
+								},
+								{
+									"key": "plugin",
+									"value": "CPF"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost:4000",
+			"type": "default"
+		}
+	]
+}
