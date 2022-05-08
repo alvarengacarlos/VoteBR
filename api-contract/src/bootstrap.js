@@ -1,5 +1,6 @@
 const {buildCCPOrg, buildWallet} = require("./Infra/Chaincode/AppUtil");
 const OrganizationOneCertificateAuthority = require("./Infra/Chaincode/OrganizationOneCertificateAuthority");
+const ConnectionChaincode = require("./Infra/Chaincode/ConnectionChaincode");
 const process = require("dotenv").config();
 
 const contractAdminIdenitityUsername = process.parsed.CONTRACT_ADMIN_IDENTITY_USERNAME;
@@ -36,6 +37,11 @@ const boot = async () => {
             throw error;
         }
     }
+
+    const connection = new ConnectionChaincode();
+    await connection.connect(wallet, contractAdminIdenitityUsername);
+
+    connection.disconnect();
 };
 
 const bootstrap = (() => {
