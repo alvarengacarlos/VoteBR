@@ -31,6 +31,31 @@ class AdminController extends Controller
     public function dashboard() {        
         return view("admin.dashboard");
     }
+
+    private function searchElectionResearchWithoutStarting() {
+        echo [];
+    }
+
+    private function searchElectionResearchInProgress() {
+        echo [];
+    }
+
+    private function searchElectionResearchClosed() {
+        echo [];
+    }
+
+    private function searchElectionResearch(Request $request) {
+        $validatedData = $request->validate([
+            "year" => ["required", "string", "size:4"],
+            "month" => ["required", "string", "size:2"],
+        ]);
+
+        $year = $request->input("year");
+        $month = $request->input("month");
+
+        echo $year;
+        echo $month;        
+    }
         
     public function createElectionResearch(Request $request) {
         $validatedData = $request->validate([
@@ -75,10 +100,5 @@ class AdminController extends Controller
     public function finishElectionResearch() {
         echo "Finalizou coleta de votos e pesquisa eleitoral";
     }
-    /*  
-        searchElectionResearch
-        searchElectionResearchWithoutStarting
-        searchElectionResearchInProgress
-        searchElectionResearchClosed
-     */
+
 }
