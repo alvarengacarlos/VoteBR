@@ -1,4 +1,4 @@
-const Exception = require("./Exception");
+const Exception = require("../Exception");
 
 class ContractConnectionError extends Exception {
     constructor() {
