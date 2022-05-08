@@ -137,7 +137,19 @@ class Admin {
     }
 
     async searchElectionResearchClosedLikeAdminInBlockchain() {
-        //Chamar contrato       
+        const wallet = await buildWallet();
+
+        const connection = new ConnectionChaincode();
+        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+
+        try {            
+            const result = await chaincode.submitTransaction("searchElectionResearchClosedLikeAdmin");
+            
+            return JSON.parse(result.toString());
+
+        } catch (exception) {
+            throw new GeneralContractException(exception);
+        }  
     }
 }
 

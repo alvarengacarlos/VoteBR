@@ -139,7 +139,7 @@ class Admin {
             return res.status(200).json({result: result});
 
         } catch(exception) {
-            const ef = ExceptionFormatter.formatContractExceptions(exception);
+            const ef = ExceptionFormatter.formatApiException(exception);
             
             return res.status(ef.httpStatusCode).json(ef);
         }    
