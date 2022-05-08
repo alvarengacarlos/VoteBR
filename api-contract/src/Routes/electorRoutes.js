@@ -14,7 +14,7 @@ const electorRoutes = (app) => {
     app.get(`${prefix}/search-elector`, validateToken.validateTokenForElector,
         electorValidation.validateSearchElector, electorController.searchElector);
     
-    app.get(`${prefix}/search-election-research-in-process`, validateToken.validateTokenForElector,
+    app.get(`${prefix}/search-election-research-in-progress`, validateToken.validateTokenForElector,
         electorController.searchElectionResearchInProgress);
 
     app.get(`${prefix}/search-election-research-closed`, validateToken.validateTokenForElector,
