@@ -169,7 +169,19 @@ class Elector extends ApiSearchCpf {
 	}
 
 	async searchElectionResearchClosedLikeElectorInBlockchain() {
-		//Chamar contrato
+		const wallet = await buildWallet();
+
+        const connection = new ConnectionChaincode();
+
+        const chaincode = await connection.connect(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+
+        try {
+            const result = await chaincode.submitTransaction("searchElectionResearchClosedLikeElector");
+			return JSON.parse(result.toString());
+
+        } catch (exception) {
+            throw new GeneralContractException(exception);
+        } 
 	}
 }
 
