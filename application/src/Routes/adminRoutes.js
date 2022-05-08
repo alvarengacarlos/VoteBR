@@ -25,7 +25,9 @@ const adminRoutes = (app) => {
     app.post(`${prefix}/finish-election-research`, validateToken.validateTokenForAdmin,
         adminController.finishElectionResearch);
 
-    // app.get(`${prefix}/search-election-research`);
+    app.get(`${prefix}/search-election-research`, validateToken.validateTokenForAdmin,
+        adminValidation.validateSearchElectionResearchLikeAdmin,
+        adminController.searchElectionResearchLikeAdmin);
 };
 
 module.exports = adminRoutes;

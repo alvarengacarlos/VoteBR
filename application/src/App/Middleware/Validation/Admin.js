@@ -66,20 +66,21 @@ class Admin {
         next();
     }
 
-    // searchElectionResearchLikeAdminInBlockchain(req, res, next) {
-    //     const schema = Joi.object({
-    //         monthElection: Joi.number().integer().positive().required(), 
-    //         yearElection: Joi.number().integer().positive().required(),
-    //     });
+    validateSearchElectionResearchLikeAdmin(req, res, next) {
+        const schema = Joi.object({
+            monthElection: Joi.number().integer().positive().required(), 
+            yearElection: Joi.number().integer().positive().required(),
+        });
     
-    //     const value = schema.validate(req.body);
+        const value = schema.validate(req.body);
     
-    //     if (value.error) {
-    //         return res.send(value.error.message);
-    //     }
+        if (value.error) {
+            const ef = ExceptionFormatter.formatJoiException(value.error);            
+            return res.status(ef.httpStatusCode).json(ef);
+        }
     
-    //     next();
-    // }
+        next();
+    }
     
 }
 
