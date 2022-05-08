@@ -17,8 +17,7 @@ class Elector {
             return res.status(ef.httpStatusCode).json(ef);
         }
     }
-
-    //TODO: Decidir entre erro API e Blockchain
+    
     async vote(req, res) {       
         try {                        
             const electorService = new ElectorService();

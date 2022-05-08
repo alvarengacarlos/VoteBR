@@ -1,7 +1,13 @@
+const crypto = require("crypto");
+const process = require("dotenv").config();
+const CONTRACT_ELECTOR_IDENTITY_USERNAME = process.parsed.CONTRACT_ELECTOR_IDENTITY_USERNAME;
+const {buildWallet} = require("../../Infra/Chaincode/AppUtil");
+const ConnectionChaincode = require("../../Infra/Chaincode/ConnectionChaincode");
+
 const InvalidCpf = require("../Exception/Elector/InvalidCpf");
 const InvalidAge = require("../Exception/Elector/InvalidAge");
 const ApiSearchCpf = require("./ApiSearchCpf");
-const crypto = require("crypto");
+const GeneralContractException = require("../Exception/Chaincode/GeneralContractException");
 
 class Elector extends ApiSearchCpf {
 
@@ -25,7 +31,20 @@ class Elector extends ApiSearchCpf {
 		await this.validatesIfElectorIsReal(cpf, birthDateObject);        
 		
 		const cpfHash = this.encryptCpf(cpf);
-		//TODO: SmartContract connection	        
+		
+		//Smart Contract call
+		const wallet = await buildWallet();
+
+        const connection = new ConnectionChaincode();
+
+        const chaincode = await connection.connect(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+
+        try {
+            await chaincode.submitTransaction("vote", cpfHash, numberOfCandidate);
+
+        } catch (exception) {
+            throw new GeneralContractException(exception);
+        }        
     }
 
 	getBirthDateObject(birthDate) {
@@ -84,7 +103,7 @@ class Elector extends ApiSearchCpf {
 
 		const year = new Date().getFullYear();
 		const month = new Date().getMonth();
-		const day = new Date().getDay();
+		const day = new Date().getDate();
 		
 		const toDay = new Date(`${year}-${month}-${day}`);
 		const birthDate = new Date(`${birthDateObject.year}-${birthDateObject.month}-${birthDateObject.day}`);
