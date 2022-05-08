@@ -15,7 +15,7 @@ class Admin {
     }
 
     async removeCandidateOfElectionResearchInBlockchain(payload) {
-        const numberOfCandidate = payload.numberOfCandidate;
+        const numberOfCandidate = String(payload.numberOfCandidate);
 
         //Chamar contrato
     }

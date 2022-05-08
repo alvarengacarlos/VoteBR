@@ -15,8 +15,9 @@ const adminRoutes = (app) => {
         adminValidation.validateInsertCandidateInTheElectionResearch,
         adminController.insertCandidateInTheElectionResearch);
 
-    // app.delete(`${prefix}/remove-candidate-of-election-research`, validateToken.validateTokenForAnyRoutes,
-    //     adminValidation.validateRemoveCandidateOfElectionResearchInBlockchain);
+    app.delete(`${prefix}/remove-candidate-of-election-research`, validateToken.validateTokenForAdmin,
+        adminValidation.validateRemoveCandidateOfElectionResearch,
+        adminController.removeCandidateOfElectionResearch);
 
     // app.post(`${prefix}/begin-collecting-votes`);
 
