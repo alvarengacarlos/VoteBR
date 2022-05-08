@@ -28,6 +28,9 @@ const adminRoutes = (app) => {
     app.get(`${prefix}/search-election-research`, validateToken.validateTokenForAdmin,
         adminValidation.validateSearchElectionResearchLikeAdmin,
         adminController.searchElectionResearchLikeAdmin);
+
+    app.get(`${prefix}/search-election-research-without-starting`, validateToken.validateTokenForAdmin,
+        adminController.searchElectionResearchWithoutStarting);
 };
 
 module.exports = adminRoutes;
