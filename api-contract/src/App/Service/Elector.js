@@ -135,6 +135,21 @@ class Elector extends ApiSearchCpf {
         }
 
 		const cpfHash = this.encryptCpf(cpf);
+
+		//Smart contract call
+		const wallet = await buildWallet();
+
+        const connection = new ConnectionChaincode();
+
+        const chaincode = await connection.connect(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+
+        try {
+            const result = await chaincode.submitTransaction("searchElector", yearElection, monthElection, cpfHash);
+			return JSON.parse(result.toString());
+
+        } catch (exception) {
+            throw new GeneralContractException(exception);
+        } 
 	}
 
 	async searchElectionResearchInProgressLikeElectorInBlockchain() {	
