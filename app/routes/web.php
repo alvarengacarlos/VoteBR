@@ -52,4 +52,8 @@ Route::name("admin.")->prefix("/admin")->group(function () {
     Route::delete("/remove-candidate", [AdminController::class, "removeCandidate"])
         ->middleware("verify-admin-api-token")
         ->name("remove-candidate");
+    
+    Route::post("/begin-collecting-votes", [AdminController::class, "beginCollectingVotes"])
+        ->middleware("verify-admin-api-token")
+        ->name("begin-collecting-votes");
 });

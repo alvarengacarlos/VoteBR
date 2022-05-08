@@ -68,8 +68,11 @@ class AdminController extends Controller
         echo $numberOfCandidate;
     }
 
+    public function beginCollectingVotes(Request $request) {
+        echo "Iniciou coleta de votos";
+    }
     /*  
-        beginCollectingVotes
+        
         finishElectionResearch
         searchElectionResearch
         searchElectionResearchWithoutStarting
