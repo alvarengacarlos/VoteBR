@@ -18,14 +18,6 @@ class ExceptionFormatter {
         };
     }
 
-    static formatContractExceptions(exception) {
-        return {
-            message: exception.message,
-            internalCode: exception.internalCode,
-            httpStatusCode: exception.httpStatusCode
-        };
-    }
-
     static formatJoiException(error) {
         return {
             message: error.message,
