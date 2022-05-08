@@ -2,6 +2,7 @@ const {buildCCPOrg, buildWallet} = require("./Infra/Chaincode/AppUtil");
 const OrganizationOneCertificateAuthority = require("./Infra/Chaincode/OrganizationOneCertificateAuthority");
 const ConnectionChaincode = require("./Infra/Chaincode/ConnectionChaincode");
 const process = require("dotenv").config();
+const {exit} = require("process");
 
 const contractAdminIdenitityUsername = process.parsed.CONTRACT_ADMIN_IDENTITY_USERNAME;
 const contractAdminIdentityPassword = process.parsed.CONTRACT_ADMIN_IDENTITY_PASSWORD;
@@ -16,7 +17,13 @@ const boot = async () => {
     const wallet = await buildWallet();
 
     const orgOne = new OrganizationOneCertificateAuthority();
-    await orgOne.enrollAdmin(wallet);
+    try {
+        await orgOne.enrollAdmin(wallet);
+        
+    } catch(error) {         
+        console.error(error);
+        exit(1);
+    }
     
     try {
         await orgOne.registerNewElectionResearchAdmin(wallet, contractAdminIdenitityUsername, contractAdminIdentityPassword);
@@ -38,10 +45,18 @@ const boot = async () => {
         }
     }
 
-    const connection = new ConnectionChaincode();
-    await connection.connect(wallet, contractAdminIdenitityUsername);
-
-    connection.disconnect();
+    let connection;
+    try {
+        connection = new ConnectionChaincode();
+        await connection.connect(wallet, contractAdminIdenitityUsername);
+    
+    } catch(error) {
+        console.log(error);
+        exit(error.httpStatusCode);
+    
+    } finally {
+        connection.disconnect();
+    }
 };
 
 const bootstrap = (() => {
