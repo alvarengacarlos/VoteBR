@@ -33,6 +33,20 @@ class Elector {
         }
     }
 
+    async searchElector(req, res) {
+        try {                        
+            const electorService = new ElectorService();
+            const result = await electorService.searchElectorInBlockchain(req.body);
+            
+            return res.status(200).json({result: result});  
+
+        } catch (exception) {            
+            const ef = ExceptionFormatter.formatApiException(exception);
+            
+            return res.status(ef.httpStatusCode).json(ef);
+        }
+    }
+
     async searchElectionResearchInProgress(req, res) {
         try {                        
             const electorService = new ElectorService();

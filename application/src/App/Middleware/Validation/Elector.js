@@ -36,21 +36,22 @@ class Elector {
         next();
     }
 
-    // validateSearchElector(req, res, next) {
-    //     const schema = Joi.object({
-    //         monthElection: Joi.required().integer().positive(), 
-    //         yearElection: Joi.required().integer().positive(),
-    //         cpf: Joi.number().integer().positive().less(99999999999).required()
-    //     });
+    validateSearchElector(req, res, next) {
+        const schema = Joi.object({
+            monthElection: Joi.number().integer().positive().required(), 
+            yearElection: Joi.number().integer().positive().required(),
+            cpf: Joi.number().integer().positive().less(99999999999).required()
+        });
 
-    //     const value = schema.validate(req.body);
+        const value = schema.validate(req.body);
 
-    //     if (value.error) {
-    //         return res.send(value.error.message);
-    //     }
+        if (value.error) {
+            const ef = ExceptionFormatter.formatJoiException(value.error);            
+            return res.status(ef.httpStatusCode).json(ef);
+        }
 
-    //     next();
-    // }
+        next();
+    }
 
 }
 

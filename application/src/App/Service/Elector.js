@@ -116,9 +116,6 @@ class Elector extends ApiSearchCpf {
         }
 
 		const cpfHash = this.encryptCpf(cpf);
-
-		//Chama contrato
-		return cpf;
 	}
 
 	async searchElectionResearchInProgressLikeElectorInBlockchain() {	
