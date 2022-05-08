@@ -1,5 +1,5 @@
 {
-  "name": "vote-br-application",
+  "name": "vote-br-api-contract",
   "version": "0.0.0",
   "description": "VoteBr is my TCC",
   "main": "./src/app.js",
