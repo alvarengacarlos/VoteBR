@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function login() {
+    public function login(Request $request) {
+        if ($request->cookie("admin-api-token")) {
+            return redirect()->route("admin.dashboard");
+        }
+
         return view("admin.login");
     }
 

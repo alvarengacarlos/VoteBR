@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 
 class ElectorController extends Controller
 {
-    public function login() {
+    public function login(Request $request) {
+        if ($request->cookie("elector-api-token")) {
+            return redirect()->route("elector.dashboard");
+        }
+        
         return view("elector.login");
     }
 
