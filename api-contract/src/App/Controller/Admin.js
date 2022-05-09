@@ -23,7 +23,7 @@ class Admin {
             const adminService = new AdminService();
             await adminService.createElectionResearchInBlockchain(req.body);
             
-            return res.status(200).json();
+            return res.status(201).json();
 
         } catch (exception) {
             const ef = ExceptionFormatter.formatApiException(exception);
@@ -37,7 +37,7 @@ class Admin {
             const adminService = new AdminService();
             await adminService.insertCandidateInTheElectionResearchInBlockchain(req.body);
 
-            return res.status(200).json();
+            return res.status(201).json();
         
         } catch(exception) {
             const ef = ExceptionFormatter.formatApiException(exception);
@@ -51,7 +51,7 @@ class Admin {
             const adminService = new AdminService();
             await adminService.removeCandidateOfElectionResearchInBlockchain(req.body);
 
-            return res.status(200).json();
+            return res.status(204).json();
 
         } catch(exception) {
             const ef = ExceptionFormatter.formatApiException(exception);

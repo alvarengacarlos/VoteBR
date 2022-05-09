@@ -23,7 +23,7 @@ class Elector {
             const electorService = new ElectorService();
             await electorService.voteInBlockchain(req.body);
             
-            return res.status(200).json();  
+            return res.status(201).json();  
 
         } catch (exception) {            
             const ef = ExceptionFormatter.formatApiException(exception);
