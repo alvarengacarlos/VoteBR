@@ -195,4 +195,40 @@ class AdminService {
             throw new RequestError();
         }
     }
+
+    public function beginCollectingVotes() {
+        $token = $this->getToken();   
+        
+        try {
+            $response = Http::admin()->withHeaders([
+                "token" => $token
+            ])->post("/begin-collecting-votes");
+
+            $this->checkResponse($response);
+        
+        } catch (RequestError $e) {             
+            throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {
+            throw new RequestError();
+        }
+    }  
+    
+    public function finishElectionResearch() {
+        $token = $this->getToken();   
+        
+        try {
+            $response = Http::admin()->withHeaders([
+                "token" => $token
+            ])->post("/finish-election-research");
+
+            $this->checkResponse($response);
+        
+        } catch (RequestError $e) {             
+            throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {
+            throw new RequestError();
+        }
+    }  
 }

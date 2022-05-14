@@ -1,6 +1,6 @@
 @extends("admin.base")
 
-@section("title", "Pesquisas eleitorais em andamento")
+@section("title", "Pesquisas eleitorais não iniciadas")
 
 @section("content")
     <h2>Pesquisas eleitorais em andamento</h2>

@@ -1,6 +1,6 @@
 @extends("admin.base")
 
-@section("title", "Pesquisas eleitorais em andamento")
+@section("title", "Pesquisas eleitorais em progresso")
 
 @section("content")
     <h2>Pesquisas eleitorais em progresso</h2>
@@ -20,16 +20,13 @@
             <summary>{{ $electionResearch["id"] }}</summary>
                 <ul>
                     <li>Total de Votos: {{ $electionResearch["totalOfVotes"] }}</li>
-                    <li>Criado em: {{ $electionResearch["createIn"] }}</li>
-                    <li>{{ $electionResearch["isClose"] }}</li>                    
-                    <li>Iniciada em: {{ $electionResearch["startIn"] ? "Sim" : "Não" }}</li>       
-                    <li>Finalizada em: {{ $electionResearch["finishIn"] ? "Sim" : "Não" }}</li>
+                    <li>Criado em: {{ $electionResearch["createIn"] }}</li>                    
+                    <li>Iniciada em: {{ $electionResearch["startIn"] }}</li>
                     <li>
                         Candidatos:
                         <ul>
                         @forelse ($electionResearch["candidatesList"] as $candidate)
-                            <li>Candidato: {{ $candidate["name"] }}, Número: {{ $candidate["id"] }}</li>                            
-                            <li>{{ $candidate["totalOfVotes"] }}</li>
+                            <li>Candidato: {{ $candidate["name"] }}, Número: {{ $candidate["id"] }}, Total de Votos: {{ $candidate["totalOfVotes"] }}</li>
                             @empty
                             <li>Vazio<li>
                         @endforelse
@@ -38,7 +35,7 @@
                 </ul>
             </details>            
             @if ($electionResearch["isStart"])
-                <form action="{{ route('admin.finish-election-research') }}" method="post">
+                <form action="{{ route('admin.http-finish-election-research') }}" method="post">
                     @csrf        
                     <input type="submit" value="Finalizar pesquisa eleitoral">
                 </form>             

@@ -191,11 +191,27 @@ class AdminController extends Controller
 
     public function beginCollectingVotes()
     {
-        echo "Iniciou coleta de votos";
+        try {         
+            $this->adminService->beginCollectingVotes();
+            
+            return redirect()->route("admin.view-erip");
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("admin.view-erws")->withErrors($json);
+        }
     }
 
     public function finishElectionResearch()
     {
-        echo "Finalizou coleta de votos e pesquisa eleitoral";
+        try {         
+            $this->adminService->finishElectionResearch();
+            
+            return redirect()->route("admin.view-erc");
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("admin.view-erip")->withErrors($json);
+        }
     }
 }

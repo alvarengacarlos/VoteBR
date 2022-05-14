@@ -1,6 +1,6 @@
 @extends("admin.base")
 
-@section("title", "Pesquisas eleitorais em andamento")
+@section("title", "Pesquisas eleitorais encerradas")
 
 @section("content")
     <h2>Pesquisas eleitorais fechadas</h2>
