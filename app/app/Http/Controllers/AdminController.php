@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Service\AdminService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Exceptions\RequestError;
+use Illuminate\Support\MessageBag;
 
 class AdminController extends Controller
 {
-    public function login(Request $request)
+    public function __construct(AdminService $adminService) {
+        $this->adminService = $adminService;
+    }
+
+    public function viewLogin(Request $request)
     {
         $adminTokenExists = $request->session()->has("admin-api-token");
         $cookieInstance = $request->session()->get("admin-api-token");
@@ -27,115 +33,100 @@ class AdminController extends Controller
         ]);
 
         $email = $request->input("email");
-        $password = $request->input("password");
-
-        $response = Http::admin()->post("/auth", [
-            "email" => $email,
-            "password" => $password
-        ]);
+        $password = $request->input("password");        
         
-        if ($response->failed() ||
-            $response->clientError() ||
-            $response->serverError()
-        ) {
-            $json = $response->json();
-            return back()->withErrors($json);
-        }
-
-        if ($response->successful()) {
-            $token = $response->json()["token"];
-
-            $minutes = 60;
-            $cookie = cookie("token", $token, $minutes);
-            session()->put("admin-api-token", $cookie);
-
+        $errors = [];
+        try {
+            $token = $this->adminService->authenticate($email, $password);
+            $this->createSession($token); 
+                        
             return redirect()->route("admin.dashboard");
-        }
+
+        } catch(RequestError $e) {
+            array_push($errors, $e->getMessage());
+
+        } finally {
+            $json = new MessageBag($errors);
+            return back()->withErrors($json);
+        }        
+    }
+    
+    private function createSession($token) {
+        $minutes = 60;
+        $cookie = cookie("token", $token, $minutes);        
+        session()->put("admin-api-token", $cookie);        
+    }
+
+    public function viewDashboard()
+    {   
+        return view("admin.dashboard");
+    }
+
+    public function viewCreateElectionResearch()
+    {           
+        return view("admin.election-research.create");
+    }    
+    
+    public function viewElectionResearchWithoutStarting()
+    {   
+        try {         
+            $electionResearchArray = $this->adminService->searchElectionResearchWithoutStarting();            
+            
+            return view("admin.election-research.without-starting", [
+                "electionResearchArray" => $electionResearchArray
+            ]);
         
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return view("admin.election-research.without-starting", $json);
+        }        
     }
 
-    public function dashboard()
-    {
-        $token = $this->getToken();
+    public function viewElectionResearchInProgress()
+    {          
+        try {         
+            $electionResearchArray = $this->adminService->searchElectionResearchInProgress();            
+            
+            return view("admin.election-research.in-progress", [
+                "electionResearchArray" => $electionResearchArray
+            ]);
         
-        $responseWithoutStarting = Http::admin()->withHeaders([
-            "token" => $token
-        ])->get("/search-election-research-without-starting");
-
-        $this->verifyIfResponseFail($responseWithoutStarting);
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return view("admin.election-research.in-progress", $json);
+        } 
+    }
+    
+    public function viewElectionResearchClosed()
+    {   
+        try {         
+            $electionResearchArray = $this->adminService->searchElectionResearchClosed();            
+            
+            return view("admin.election-research.closed", [
+                "electionResearchArray" => $electionResearchArray
+            ]);
         
-        $responseInProcess = Http::admin()->withHeaders([
-            "token" => $token
-        ])->get("/search-election-research-in-progress");
-
-        $this->verifyIfResponseFail($responseInProcess);
-
-        $responseClosed = Http::admin()->withHeaders([
-            "token" => $token
-        ])->get("/search-election-research-closed");
-
-        $this->verifyIfResponseFail($responseClosed);
-        
-        $electionResearchWithoutStartingArray = $responseWithoutStarting->json()["result"];
-        $electionResearchInProgressArray = $responseInProcess->json()["result"];
-        $electionResearchClosedArray = $responseClosed->json()["result"];
-        
-        return view("admin.dashboard", [
-            "electionResearchWithoutStartingArray" => $electionResearchWithoutStartingArray,
-            "electionResearchInProgressArray" => $electionResearchInProgressArray,
-            "electionResearchClosedArray" => $electionResearchClosedArray
-        ]);
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return view("admin.election-research.closed", $json);
+        } 
     }
+    
+    // private function searchElectionResearch(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         "year" => ["required", "string", "size:4"],
+    //         "month" => ["required", "string", "size:2"],
+    //     ]);
 
-    private function getToken()
-    {
-        $cookieInstance = session("admin-api-token");
-        $token = $cookieInstance->getValue();
-        
-        return $token;
-    }
+    //     $year = $request->input("year");
+    //     $month = $request->input("month");
 
-    private function verifyIfResponseFail($response) {
-        if ($response->failed() ||
-            $response->clientError() ||
-            $response->serverError()
-        ) {
-            $json = $response->json();
-            dd($json);
-            return view("admin.dashboard", ["errors" => $json]);
-        }
-    }
+    //     echo $year;
+    //     echo $month;
+    // }
 
-    private function searchElectionResearchWithoutStarting()
-    {
-        echo [];
-    }
-
-    private function searchElectionResearchInProgress()
-    {
-        echo [];
-    }
-
-    private function searchElectionResearchClosed()
-    {
-        echo [];
-    }
-
-    private function searchElectionResearch(Request $request)
-    {
-        $validatedData = $request->validate([
-            "year" => ["required", "string", "size:4"],
-            "month" => ["required", "string", "size:2"],
-        ]);
-
-        $year = $request->input("year");
-        $month = $request->input("month");
-
-        echo $year;
-        echo $month;
-    }
-
-    public function createElectionResearch(Request $request)
+    public function httpCreateElectionResearch(Request $request)
     {
         $validatedData = $request->validate([
             "year" => ["required", "string", "size:4"],

@@ -41,31 +41,50 @@ Route::name("elector.")->prefix("/elector")->group(function () {
 
 Route::name("admin.")->prefix("/admin")->group(function () {
 
-    Route::get("/login", [AdminController::class, "login"])->name("login");
+    //Views
+    Route::get("/login", [AdminController::class, "viewLogin"])->name("login");
 
     Route::post("/auth", [AdminController::class, "auth"])->name("auth");
-
-    Route::get("/dashboard", [AdminController::class, "dashboard"])
+    
+    Route::get("/dashboard", [AdminController::class, "viewDashboard"])
         ->middleware("verify-admin-api-token")
         ->name("dashboard");
+        
+    Route::get("/view-create-er", [AdminController::class, "viewCreateElectionResearch"])
+        ->middleware("verify-admin-api-token")
+        ->name("view-create-er");
+    
+    Route::get("/view-erws", [AdminController::class, "viewElectionResearchWithoutStarting"])
+        ->middleware("verify-admin-api-token")
+        ->name("view-erws");
+    
+    Route::get("/view-erip", [AdminController::class, "viewElectionResearchInProgress"])
+        ->middleware("verify-admin-api-token")
+        ->name("view-erip");
+    
+    Route::get("/view-erc", [AdminController::class, "viewElectionResearchClosed"])
+        ->middleware("verify-admin-api-token")
+        ->name("view-erc");
 
-    Route::post("/create-election-research", [AdminController::class, "createElectionResearch"])
-        ->middleware("verify-admin-api-token")
-        ->name("create-election-research");
+    //Http Requests
     
-    Route::post("/insert-candidate", [AdminController::class, "insertCandidate"])
+    Route::post("/http-create-er", [AdminController::class, "httpCreateElectionResearch"])
         ->middleware("verify-admin-api-token")
-        ->name("insert-candidate");
+        ->name("http-create-er");
     
-    Route::delete("/remove-candidate", [AdminController::class, "removeCandidate"])
+    Route::post("/http-insert-candidate", [AdminController::class, "insertCandidate"])
         ->middleware("verify-admin-api-token")
-        ->name("remove-candidate");
+        ->name("http-insert-candidate");
     
-    Route::post("/begin-collecting-votes", [AdminController::class, "beginCollectingVotes"])
+    Route::delete("/http-remove-candidate", [AdminController::class, "removeCandidate"])
         ->middleware("verify-admin-api-token")
-        ->name("begin-collecting-votes");
+        ->name("http-remove-candidate");
+    
+    Route::post("/http-begin-collecting-votes", [AdminController::class, "beginCollectingVotes"])
+        ->middleware("verify-admin-api-token")
+        ->name("http-begin-collecting-votes");
 
-    Route::post("/finish-election-research", [AdminController::class, "finishElectionResearch"])
+    Route::post("/http-finish-election-research", [AdminController::class, "finishElectionResearch"])
         ->middleware("verify-admin-api-token")
-        ->name("finish-election-research");
+        ->name("http-finish-election-research");
 });
