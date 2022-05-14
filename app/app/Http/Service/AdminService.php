@@ -53,16 +53,20 @@ class AdminService {
 
             return $response->json()["result"];
         
-        } catch (\Exception $e) {
-            throw new RequestError();
-        
         } catch (RequestError $e) {
             throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {
+            throw new RequestError();        
         }
     }
 
     private function checkResponse($response) {
         if ($response->clientError()) {
+            throw new RequestError($response->json()["message"]);
+        }
+
+        if ($response->serverError()) {
             throw new RequestError($response->json()["message"]);
         }
         
@@ -84,11 +88,12 @@ class AdminService {
 
             return $response->json()["result"];
         
+        } catch (RequestError $e) {
+            throw new RequestError($e->getMessage());
+        
         } catch (\Exception $e) {
             throw new RequestError();
         
-        } catch (RequestError $e) {
-            throw new RequestError($e->getMessage());
         }       
     }
 
@@ -105,12 +110,32 @@ class AdminService {
 
             return $response->json()["result"];
         
-        } catch (\Exception $e) {
-            throw new RequestError();
-        
-        } catch (RequestError $e) {
+        }  catch (RequestError $e) {
             throw new RequestError($e->getMessage());
-        }  
+        
+        } catch (\Exception $e) {
+            throw new RequestError();        
+        } 
     }   
 
+    public function createElectionResearch(string $year, string $month) {
+        $token = $this->getToken();   
+        
+        try {
+            $response = Http::admin()->withHeaders([
+                "token" => $token
+            ])->post("/create-election-research", [
+                "yearElection" => $year,
+                "monthElection" => $month
+            ]);
+            
+            $this->checkResponse($response);
+        
+        } catch (RequestError $e) {            
+            throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {
+            throw new RequestError();
+        }
+    }
 }

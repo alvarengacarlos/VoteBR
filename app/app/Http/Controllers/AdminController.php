@@ -78,7 +78,7 @@ class AdminController extends Controller
         
         } catch (RequestError $e) {
             $json = new MessageBag([$e->getMessage()]);
-            return view("admin.election-research.without-starting", $json);
+            return redirect()->route("dashboard")->withErrors($json);
         }        
     }
 
@@ -93,7 +93,7 @@ class AdminController extends Controller
         
         } catch (RequestError $e) {
             $json = new MessageBag([$e->getMessage()]);
-            return view("admin.election-research.in-progress", $json);
+            return redirect()->route("dashboard")->withErrors($json);
         } 
     }
     
@@ -108,7 +108,7 @@ class AdminController extends Controller
         
         } catch (RequestError $e) {
             $json = new MessageBag([$e->getMessage()]);
-            return view("admin.election-research.closed", $json);
+            return redirect()->route("dashboard")->withErrors($json);
         } 
     }
     
@@ -136,8 +136,15 @@ class AdminController extends Controller
         $year = $request->input("year");
         $month = $request->input("month");
 
-        echo $year;
-        echo $month;
+        try {         
+            $this->adminService->createElectionResearch($year, $month);
+            
+            return redirect()->route("admin.view-erws");
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("admin.view-create-er")->withErrors($json);
+        } 
     }
 
     public function insertCandidate(Request $request)
