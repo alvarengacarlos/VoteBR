@@ -16,7 +16,13 @@ class VerifyAdminApiToken
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->cookie("admin-api-token")) {
+        $adminTokenExists = $request->session()->has("admin-api-token");
+        if (!$adminTokenExists) {
+            return redirect()->route("admin.login");
+        }
+
+        $cookieInstance = $request->session()->get("admin-api-token");                       
+        if ($cookieInstance->getMaxAge() == 0) {
             return redirect()->route("admin.login");
         }
         return $next($request);
