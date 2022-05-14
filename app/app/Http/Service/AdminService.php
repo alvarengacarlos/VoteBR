@@ -138,4 +138,25 @@ class AdminService {
             throw new RequestError();
         }
     }
+
+    public function insertCandidate(string $nameOfCandidate, string $numberOfCandidate, $urlPhoto) {
+        $token = $this->getToken();   
+        
+        try {
+            $response = Http::admin()->withHeaders([
+                "token" => $token
+            ])->post("/insert-candidate-in-the-election-research", [
+                "nameOfCandidate" => $nameOfCandidate,
+                "numberOfCandidate" => $numberOfCandidate           
+            ]);
+            
+            $this->checkResponse($response);
+        
+        } catch (RequestError $e) {            
+            throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {
+            throw new RequestError();
+        }
+    }
 }

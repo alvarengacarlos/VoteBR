@@ -152,13 +152,22 @@ class AdminController extends Controller
         $validatedData = $request->validate([
             "nameOfCandidate" => ["required", "string"],
             "numberOfCandidate" => ["required", "string", "size:2"],
+            "urlPhoto" => ["required", "url"]
         ]);
 
         $nameOfCandidate = $request->input("nameOfCandidate");
         $numberOfCandidate = $request->input("numberOfCandidate");
+        $urlPhoto = $request->input("urlPhoto");
 
-        echo $nameOfCandidate;
-        echo $numberOfCandidate;
+        try {         
+            $this->adminService->insertCandidate($nameOfCandidate, $numberOfCandidate, $urlPhoto);
+            
+            return redirect()->route("admin.view-erws");
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("admin.view-erws")->withErrors($json);
+        }
     }
 
     public function removeCandidate(Request $request)
