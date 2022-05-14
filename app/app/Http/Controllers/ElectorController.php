@@ -2,32 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Service\ElectorService;
 use Illuminate\Http\Request;
+use App\Exceptions\RequestError;
+use Illuminate\Support\MessageBag;
 
 class ElectorController extends Controller
 {
-    public function login(Request $request) {
-        if ($request->cookie("elector-api-token")) {
+    public function __construct(ElectorService $electorService) {
+        $this->electorService = $electorService;
+    }
+
+    public function viewLogin(Request $request)
+    {
+        $electorTokenExists = $request->session()->has("elector-api-token");
+        $cookieInstance = $request->session()->get("elector-api-token");
+
+        if ($electorTokenExists && $cookieInstance->getMaxAge() > 0) {
             return redirect()->route("elector.dashboard");
         }
         
         return view("elector.login");
     }
 
-    public function auth() {
-        //fazer requisição
-        $token = "kasklfflskd.dsfasdf.sdarfsd";
-        $minutes = 60;
-        return redirect()->route("elector.dashboard")->cookie("elector-api-token", $token, $minutes);
-        
-        return back();
-    }
+    public function auth()
+    {
+        $errors = [];
+        try {
+            $token = $this->electorService->authenticate();
+            $this->createSession($token); 
+                        
+            return redirect()->route("elector.dashboard");
 
-    public function dashboard() {
+        } catch(RequestError $e) {
+            array_push($errors, $e->getMessage());
+
+        } finally {            
+            $json = new MessageBag($errors);            
+            return back()->withErrors($json);
+        }        
+    }
+    
+    private function createSession($token) {
+        $minutes = 60;
+        $cookie = cookie("token", $token, $minutes);        
+        session()->put("elector-api-token", $cookie);        
+    }
+    
+    public function viewDashboard() {
         return view("elector.dashboard");
     }
 
-    public function vote(Request $request) {
+    public function viewVote(Request $request) {
         $validatedData = $request->validate([
             "cpf" => ["required", "string", "size:11"],
             "birthDate" => ["required", "date:Y-m-d"],
@@ -43,7 +69,7 @@ class ElectorController extends Controller
         echo $numberOfCandidate;  
     }
 
-    public function searchElector(Request $request) {
+    public function viewSearchElector(Request $request) {
         $validatedData = $request->validate([
             "yearElection" => ["required", "string", "size:4"],
             "monthElection" => ["required", "string", "size:2"],

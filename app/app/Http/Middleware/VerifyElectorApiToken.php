@@ -16,10 +16,15 @@ class VerifyElectorApiToken
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->cookie("elector-api-token")) {
+        $electorTokenExists = $request->session()->has("elector-api-token");
+        if (!$electorTokenExists) {
             return redirect()->route("elector.login");
         }
 
+        $cookieInstance = $request->session()->get("elector-api-token");                       
+        if ($cookieInstance->getMaxAge() == 0) {
+            return redirect()->route("elector.login");
+        }
         return $next($request);
     }
 }

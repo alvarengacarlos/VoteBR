@@ -15,7 +15,7 @@
     </div>
     @endif
 
-    <form action="{{ route('elector.vote') }}" method="post">
+    {{--<form action="{{ route('elector.vote') }}" method="post">
         @csrf
         <label for="cpf">CPF</label>
         <input type="text" name="cpf" id="cpf" minlength="11" maxlength="11">
@@ -35,6 +35,6 @@
         <label for="monthElection">Mês da pesquisa</label>
         <input type="text" name="monthElection" id="monthElection" minlength="2" maxlength="2">
         <input type="submit" value="Consultar">
-    </form>
+    </form>--}}
 </div>
 @endsection

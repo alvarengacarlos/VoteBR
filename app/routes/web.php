@@ -21,21 +21,29 @@ Route::get('/', function () {
 
 Route::name("elector.")->prefix("/elector")->group(function () {
 
-    Route::get("/login", [ElectorController::class, "login"])->name("login");
+    Route::get("/login", [ElectorController::class, "viewLogin"])->name("login");
 
     Route::post("/auth", [ElectorController::class, "auth"])->name("auth");
 
-    Route::get("/dashboard", [ElectorController::class, "dashboard"])
+    Route::get("/dashboard", [ElectorController::class, "viewDashboard"])
         ->middleware("verify-elector-api-token")
         ->name("dashboard");
     
-    Route::post("/vote", [ElectorController::class, "vote"])
+    Route::post("/view-vote", [ElectorController::class, "viewVote"])
         ->middleware("verify-elector-api-token")
-        ->name("vote");
+        ->name("view-vote");
     
-    Route::post("/search-elector", [ElectorController::class, "searchElector"])
+    Route::post("/view-search-elector", [ElectorController::class, "viewSearchElector"])
         ->middleware("verify-elector-api-token")
-        ->name("search-elector");
+        ->name("view-search-elector");
+
+    Route::get("/view-results-in-progress", [ElectorController::class, "viewResultsInProgress"])
+        ->middleware("verify-elector-api-token")
+        ->name("view-results-in-progress");
+    
+    Route::get("/view-results-closed", [ElectorController::class, "viewResultsClosed"])
+        ->middleware("verify-elector-api-token")
+        ->name("view-results-closed");
 
 });
 
