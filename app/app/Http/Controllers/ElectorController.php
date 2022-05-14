@@ -50,10 +50,20 @@ class ElectorController extends Controller
     }
     
     public function viewDashboard() {
-        return view("elector.dashboard");
+        try {         
+            $electionResearchArray = $this->electorService->searchElectionResearchInProgress();
+            
+            return view("elector.dashboard", [
+                "electionResearchArray" => $electionResearchArray
+            ]);
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("elector.login")->withErrors($json);
+        }
     }
 
-    public function viewVote(Request $request) {
+    public function vote(Request $request) {
         $validatedData = $request->validate([
             "cpf" => ["required", "string", "size:11"],
             "birthDate" => ["required", "date:Y-m-d"],
@@ -64,9 +74,16 @@ class ElectorController extends Controller
         $birthDate = $request->input("birthDate");
         $numberOfCandidate = $request->input("numberOfCandidate");
 
-        echo $cpf;
-        echo $birthDate;
-        echo $numberOfCandidate;  
+        try {         
+            $this->electorService->vote($cpf, $birthDate, $numberOfCandidate);
+            
+            return redirect()->route("elector.dashboard");
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("elector.dashboard")->withErrors($json);
+        } 
+
     }
 
     public function viewSearchElector(Request $request) {

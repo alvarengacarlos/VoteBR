@@ -34,12 +34,85 @@ class ElectorService {
         }
     }    
 
+    public function searchElectionResearchInProgress()
+    {
+        $token = $this->getToken();   
+
+        try {
+            $response = Http::elector()->withHeaders([
+                "token" => $token
+            ])->get("/search-election-research-in-progress");
+            
+            $this->checkResponse($response);
+
+            return $response->json()["result"];
+        
+        } catch (RequestError $e) {
+            throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {
+            throw new RequestError();        
+        }       
+    }
+
+    public function vote(string $cpf, string $birthDate, $numberOfCandidate) {
+        $token = $this->getToken();   
+        
+        try {
+            $response = Http::elector()->withHeaders([
+                "token" => $token
+            ])->post("/vote", [
+                "cpf" => $cpf,
+                "birthDate" => $birthDate,
+                "numberOfCandidate" => $numberOfCandidate
+            ]);
+            
+            $this->checkResponse($response);
+        
+        } catch (RequestError $e) {            
+            throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {
+            throw new RequestError();
+        }
+    }
+
     private function getToken()
     {
-        $cookieInstance = session("admin-api-token");
+        $cookieInstance = session("elector-api-token");
         $token = $cookieInstance->getValue();
         
         return $token;
+    }
+
+    private function checkResponse($response) {
+        $json = $response->json();
+        
+        if ($response->clientError()) {            
+            if (array_key_exists("message", $json)) {
+                throw new RequestError($json["message"]);
+            }
+            throw new RequestError();
+        }
+
+        if ($response->serverError()) {
+            if (array_key_exists("message", $json)) {
+                throw new RequestError($json["message"]);
+            }
+            throw new RequestError();
+        }
+        
+        if ($response->successful()) {           
+            if (!$json) {
+                $json = [];
+            }
+
+            if (array_key_exists("result", $json)) {
+                return $json["result"];                        
+            }
+
+            return $json;                        
+        }
     }
 
 }

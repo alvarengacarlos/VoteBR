@@ -29,13 +29,13 @@ Route::name("elector.")->prefix("/elector")->group(function () {
         ->middleware("verify-elector-api-token")
         ->name("dashboard");
     
-    Route::post("/view-vote", [ElectorController::class, "viewVote"])
+    Route::post("/vote", [ElectorController::class, "vote"])
         ->middleware("verify-elector-api-token")
-        ->name("view-vote");
+        ->name("vote");
     
-    Route::post("/view-search-elector", [ElectorController::class, "viewSearchElector"])
+    Route::post("/search-elector", [ElectorController::class, "searchElector"])
         ->middleware("verify-elector-api-token")
-        ->name("view-search-elector");
+        ->name("search-elector");
 
     Route::get("/view-results-in-progress", [ElectorController::class, "viewResultsInProgress"])
         ->middleware("verify-elector-api-token")
