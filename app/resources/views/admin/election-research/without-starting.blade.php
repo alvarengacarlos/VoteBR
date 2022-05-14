@@ -56,7 +56,7 @@
                         @method("DELETE")
                         <label for="numberOfCandidate">Número do candidato</label>
                         <input type="text" name="numberOfCandidate" id="numberOfCandidate" minlength="2" maxlength="2">
-                        <input type="submit" value="Inserir">
+                        <input type="submit" value="Remover">
                     </form>
                 </div>
                 <div>                    

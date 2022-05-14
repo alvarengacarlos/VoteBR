@@ -178,7 +178,15 @@ class AdminController extends Controller
 
         $numberOfCandidate = $request->input("numberOfCandidate");
 
-        echo $numberOfCandidate;
+        try {         
+            $this->adminService->removeCandidate($numberOfCandidate);
+            
+            return redirect()->route("admin.view-erws");
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("admin.view-erws")->withErrors($json);
+        }
     }
 
     public function beginCollectingVotes()

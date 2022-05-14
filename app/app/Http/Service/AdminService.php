@@ -62,16 +62,32 @@ class AdminService {
     }
 
     private function checkResponse($response) {
-        if ($response->clientError()) {
-            throw new RequestError($response->json()["message"]);
+        $json = $response->json();
+        
+        if ($response->clientError()) {            
+            if (array_key_exists("message", $json)) {
+                throw new RequestError($json["message"]);
+            }
+            throw new RequestError();
         }
 
         if ($response->serverError()) {
-            throw new RequestError($response->json()["message"]);
+            if (array_key_exists("message", $json)) {
+                throw new RequestError($json["message"]);
+            }
+            throw new RequestError();
         }
         
-        if ($response->successful()) {                        
-            return $response->json()["result"];                        
+        if ($response->successful()) {           
+            if (!$json) {
+                $json = [];
+            }
+
+            if (array_key_exists("result", $json)) {
+                return $json["result"];                        
+            }
+
+            return $json;                        
         }
     }
 
@@ -153,6 +169,26 @@ class AdminService {
             $this->checkResponse($response);
         
         } catch (RequestError $e) {            
+            throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {            
+            throw new RequestError();
+        }
+    }
+
+    public function removeCandidate(string $numberOfCandidate) {
+        $token = $this->getToken();   
+        
+        try {
+            $response = Http::admin()->withHeaders([
+                "token" => $token
+            ])->delete("/remove-candidate-of-election-research", [
+                "numberOfCandidate" => $numberOfCandidate,                
+            ]);
+
+            $this->checkResponse($response);
+        
+        } catch (RequestError $e) {             
             throw new RequestError($e->getMessage());
         
         } catch (\Exception $e) {
