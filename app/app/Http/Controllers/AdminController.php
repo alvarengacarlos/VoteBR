@@ -78,7 +78,7 @@ class AdminController extends Controller
         
         } catch (RequestError $e) {
             $json = new MessageBag([$e->getMessage()]);
-            return redirect()->route("dashboard")->withErrors($json);
+            return redirect()->route("admin.dashboard")->withErrors($json);
         }        
     }
 
@@ -93,7 +93,7 @@ class AdminController extends Controller
         
         } catch (RequestError $e) {
             $json = new MessageBag([$e->getMessage()]);
-            return redirect()->route("dashboard")->withErrors($json);
+            return redirect()->route("admin.dashboard")->withErrors($json);
         } 
     }
     
@@ -108,7 +108,7 @@ class AdminController extends Controller
         
         } catch (RequestError $e) {
             $json = new MessageBag([$e->getMessage()]);
-            return redirect()->route("dashboard")->withErrors($json);
+            return redirect()->route("admin.dashboard")->withErrors($json);
         } 
     }
     
