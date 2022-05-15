@@ -9,7 +9,7 @@ describe("Candidate", () => {
 	describe("#makeCandidate", () => {
 
 		it("Must return an instance of Candidate", () => {
-			const candidate = Candidate.makeCandidate("Fulano", "10");
+			const candidate = Candidate.makeCandidate("Fulano", "10", "http://image.com");
 
 			expect(candidate).to.instanceOf(Candidate);
 		});
@@ -19,7 +19,7 @@ describe("Candidate", () => {
 	describe("#addOneVote", () => {
 
 		it("Must add a vote", () => {
-			const candidate = Candidate.makeCandidate("Fulano", "10");
+			const candidate = Candidate.makeCandidate("Fulano", "10", "http://image.com");
 
 			candidate.addOneVote();
 
@@ -31,7 +31,7 @@ describe("Candidate", () => {
 	describe("#mountsCandidateObjectRetrievedFromTheBlockchain", () => {
         
 		it("Must mount an Candidate Object", () => {
-			const candidate = Candidate.makeCandidate("Fulano", "10");
+			const candidate = Candidate.makeCandidate("Fulano", "10", "http://image.com.br");
 
 			const c = Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(candidate);
 

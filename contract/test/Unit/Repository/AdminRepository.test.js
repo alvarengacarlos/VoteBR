@@ -267,7 +267,7 @@ describe("AdminRepository", () => {
 
 			it("Must return an array with election researches started", async () => {
 				const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-				electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
+				electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01", "https://image.com.br"));
 				electionResearch.beginCollectingVotes();				
 				const electionResearchBuffer = Buffer.from(JSON.stringify(electionResearch));
 				
@@ -312,7 +312,7 @@ describe("AdminRepository", () => {
 
 		it("Must return an array with election researches closed", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			const candidate = Candidate.makeCandidate("Fulano", 01);
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
 			electionResearch.finishElectionResearch();

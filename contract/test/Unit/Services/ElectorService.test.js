@@ -66,7 +66,7 @@ describe("ElectorServive", () => {
 
 		it("Must throw TotalVotesAchieved", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "02");
-			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
+			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01", "https://image.com.br"));
 			electionResearch.beginCollectingVotes();
 			electionResearch.addOneVote();
             
@@ -82,7 +82,7 @@ describe("ElectorServive", () => {
 
 		it("Must register the elector vote", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "02");
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
 
@@ -124,7 +124,7 @@ describe("ElectorServive", () => {
 
 		it("Must return an elector", async () => {
 			const election = ElectionResearch.makeElectionResearch("2000", "01");
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const elector = Elector.makeElector(cpf, election.getId(), candidate);
             
 			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
@@ -148,7 +148,7 @@ describe("ElectorServive", () => {
 
 		it("Must return an election research in progress", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            const candidate = Candidate.makeCandidate("Fulano", "01");
+            const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
 
@@ -172,7 +172,7 @@ describe("ElectorServive", () => {
 
 		it("Must return an election research closed", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            const candidate = Candidate.makeCandidate("Fulano", "01");
+            const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
 			electionResearch.finishElectionResearch();

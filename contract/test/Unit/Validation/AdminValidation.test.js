@@ -90,6 +90,7 @@ describe("AdminValidation", () => {
 	let adminValidation;
 	let name = "Anônimo Das Anônimas";
 	let numberOfCandidate = "01";
+	let photoUrl = "https://image.com.br";
 
 	beforeEach(() => {
 		adminValidation = new AdminValidation();
@@ -98,9 +99,9 @@ describe("AdminValidation", () => {
 	describe("#validateInsertCandidateInTheElectionResearch", () => {
 
 		it("Must be successful, because values is correct", () => {
-			const value = adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate);
+			const value = adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl);
 
-			expect({ name, numberOfCandidate }).to.eql(value);
+			expect({ name, numberOfCandidate, photoUrl }).to.eql(value);
 		});
 
 	});
@@ -111,7 +112,7 @@ describe("AdminValidation", () => {
 			name = "Ano";
 
 			expect(
-				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate)
+				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl)
 			).to.throw(IncorrectInformationReceived);
 		});
 
@@ -123,7 +124,7 @@ describe("AdminValidation", () => {
 			name = "Anonimo Anonimo Anonimo Anonimo";
 
 			expect(
-				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate)
+				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl)
 			).to.throw(IncorrectInformationReceived);
 		});
 
@@ -135,7 +136,7 @@ describe("AdminValidation", () => {
 			numberOfCandidate = "1";
 
 			expect(
-				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate)
+				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl)
 			).to.throw(IncorrectInformationReceived);
 		});
 
@@ -147,7 +148,7 @@ describe("AdminValidation", () => {
 			numberOfCandidate = "100";
 
 			expect(
-				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate)
+				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl)
 			).to.throw(IncorrectInformationReceived);
 		});
 

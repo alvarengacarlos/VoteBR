@@ -48,7 +48,7 @@ describe("AdminRepository", () => {
 	describe("#electorExists", () => {
 
 		it("Must return true", async () => {
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate);            
             
@@ -63,7 +63,7 @@ describe("AdminRepository", () => {
 		});
 
 		it("Must return false", async () => {
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate); 
 
@@ -80,7 +80,7 @@ describe("AdminRepository", () => {
 	describe("#registerVote", () => {
 
 		it("Must throw ExistingRecord", async () => {
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate);            
             
@@ -94,7 +94,7 @@ describe("AdminRepository", () => {
 		});
 
 		it("Must register an elector", async () => {
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate);            
             
@@ -114,7 +114,7 @@ describe("AdminRepository", () => {
 	describe("#retrieveElector", () => {
 
 		it("Must throw NotExistsRecord", async () => {
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate); 
 
@@ -126,7 +126,7 @@ describe("AdminRepository", () => {
 		});
 
 		it("Must return an elector", async () => {
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate);            
             

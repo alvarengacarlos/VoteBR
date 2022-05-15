@@ -18,14 +18,15 @@ class AdminValidation {
 		return value;
 	}
 
-	validateInsertCandidateInTheElectionResearch(name, numberOfCandidate) {
+	validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl) {
 		const schema = Joi.object({
 			name: Joi.string().min(4).max(30).required(),
-			numberOfCandidate: Joi.string().pattern(/^[0-9]+$/).min(2).max(2).required()
+			numberOfCandidate: Joi.string().pattern(/^[0-9]+$/).min(2).max(2).required(),
+			photoUrl: Joi.string().uri().required()
 		});
 		
-		const {error, value} = schema.validate({name, numberOfCandidate});
-		
+		const {error, value} = schema.validate({name, numberOfCandidate, photoUrl});
+
 		if (error) {
 			throw new IncorrectInformationReceived();
 		}

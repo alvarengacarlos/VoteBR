@@ -56,7 +56,7 @@ describe("ElectionResearch", () => {
 		it("Must be successfully in insert candidate", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);                      
             
@@ -66,7 +66,7 @@ describe("ElectionResearch", () => {
 		it("Must throw exception to ElectionResearchInProgress", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
@@ -78,7 +78,7 @@ describe("ElectionResearch", () => {
 		it("Must throw exception to ElectionResearchClosed", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
@@ -91,7 +91,7 @@ describe("ElectionResearch", () => {
 		it("Must throw exception to ExistingRecord", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);                      
             
@@ -105,7 +105,7 @@ describe("ElectionResearch", () => {
 		it("Must throw exception to NotExistingRecord", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			expect(() => electionResearch.getCandidateIndex(candidate)).to.throw(NotExistingRecord);
 		});
@@ -113,7 +113,7 @@ describe("ElectionResearch", () => {
 		it("Must be successfully in get candidate index", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 			electionResearch.insertCandidate(candidate);
 
 			const index = electionResearch.getCandidateIndex(candidate);
@@ -128,7 +128,7 @@ describe("ElectionResearch", () => {
 		it("Must be successfully in remove candidate", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);
 			electionResearch.removeCandidate(candidate); 
@@ -139,7 +139,7 @@ describe("ElectionResearch", () => {
 		it("Must throw exception to ElectionResearchInProgress", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
@@ -151,7 +151,7 @@ describe("ElectionResearch", () => {
 		it("Must throw exception to ElectionResearchClosed", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
@@ -168,7 +168,7 @@ describe("ElectionResearch", () => {
 		it("Must throw excepction NotExistRecord", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			expect(() => electionResearch.getCandidateIndex(candidate)).to.throw(NotExistingRecord);
 		});
@@ -176,7 +176,7 @@ describe("ElectionResearch", () => {
 		it("Must return a successfull candidate index", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);            
 
@@ -192,7 +192,7 @@ describe("ElectionResearch", () => {
 		it("Must be successfully in update candidate", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);
 
@@ -207,7 +207,7 @@ describe("ElectionResearch", () => {
 		it("Must throw exception to ElectionResearchClosed", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
@@ -230,7 +230,7 @@ describe("ElectionResearch", () => {
 		it("Must return a successfull candidate", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 
 			electionResearch.insertCandidate(candidate);            
 
@@ -246,7 +246,7 @@ describe("ElectionResearch", () => {
 		it("Must begin collecting votes", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 			electionResearch.insertCandidate(candidate);
 
 			electionResearch.beginCollectingVotes();
@@ -257,7 +257,7 @@ describe("ElectionResearch", () => {
 		it("Must throw exception to ElectionResearachInProgress", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");	
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 			electionResearch.insertCandidate(candidate);
 
 			electionResearch.beginCollectingVotes();
@@ -274,7 +274,7 @@ describe("ElectionResearch", () => {
 		it("Must throw exception to ElectionResearchClosed", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");	
             
-			const candidate = Candidate.makeCandidate("Fulano", "01");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "http://image.com.br");
 			electionResearch.insertCandidate(candidate);
 
 			electionResearch.beginCollectingVotes();
@@ -290,7 +290,7 @@ describe("ElectionResearch", () => {
 
 		it("Must throw exception to ElectionResearchClosed", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
+			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01", "http://image.com.br"));
 
 			electionResearch.beginCollectingVotes();
 			electionResearch.finishElectionResearch();
@@ -300,14 +300,14 @@ describe("ElectionResearch", () => {
 
 		it("Must throw exception to UninitiatedElectionResearch", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
+			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01", "http://image.com.br"));
 
 			expect(() => electionResearch.finishElectionResearch()).to.throw(UninitiatedElectionResearch);
 		}); 
         
 		it("Must finish ", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01"));
+			electionResearch.insertCandidate(Candidate.makeCandidate("Fulano", "01", "http://image.com.br"));
 
 			electionResearch.beginCollectingVotes();
 

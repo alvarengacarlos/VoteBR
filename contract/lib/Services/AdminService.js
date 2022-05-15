@@ -28,7 +28,7 @@ class AdminService {
 		await this.adminRepository.createElectionResearch(ctx, electionResearch);        
 	}
 
-	async insertCandidateInTheElectionResearch(ctx, name, numberOfCandidate) {
+	async insertCandidateInTheElectionResearch(ctx, name, numberOfCandidate, photoUrl) {
 		const electionResearchWithoutStartingList = await this.adminRepository.retrieveElectionResearchWithoutStarting(ctx);
 		if (electionResearchWithoutStartingList.length == 0) {
 			throw new ElectionResearchNotFound();
@@ -36,7 +36,7 @@ class AdminService {
 
 		const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchWithoutStartingList[0]);
         
-		const candidate = Candidate.makeCandidate(name, numberOfCandidate);
+		const candidate = Candidate.makeCandidate(name, numberOfCandidate, photoUrl);
 		electionResearch.insertCandidate(candidate);
         
 		await this.adminRepository.updateElectionResearch(ctx, electionResearch);
