@@ -55,7 +55,7 @@ class ElectorService {
         }       
     }
 
-    public function vote(string $cpf, string $birthDate, $numberOfCandidate) {
+    public function vote(string $cpf, string $birthDate, string $numberOfCandidate) {
         $token = $this->getToken();   
         
         try {
@@ -115,4 +115,27 @@ class ElectorService {
         }
     }
 
+    public function searchElector(string $cpf, string $year, string $month, string $passwordGenerated) {
+        $token = $this->getToken();   
+        
+        try {
+            $response = Http::elector()->withHeaders([
+                "token" => $token
+            ])->post("/search-elector", [                
+                "yearElection" => $year,
+                "monthElection" => $month,                
+                "cpf" => $cpf
+            ]);
+
+            $voteOfElector = $this->checkResponse($response);
+
+            return $voteOfElector;
+        
+        } catch (RequestError $e) {                       
+            throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {
+            throw new RequestError();
+        }
+    }
 }

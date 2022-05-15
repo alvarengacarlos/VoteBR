@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ElectorController;
 use App\Http\Controllers\AdminController;
+use App\Http\Service\ElectorService;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +29,18 @@ Route::name("elector.")->prefix("/elector")->group(function () {
     Route::get("/dashboard", [ElectorController::class, "viewDashboard"])
         ->middleware("verify-elector-api-token")
         ->name("dashboard");
+
+    Route::get("/view-search-elector", [ElectorController::class, "viewSearchElector"])
+        ->middleware("verify-elector-api-token")
+        ->name("view-search-elector");
     
-    Route::post("/vote", [ElectorController::class, "vote"])
+    Route::post("/http-vote", [ElectorController::class, "httpVote"])
         ->middleware("verify-elector-api-token")
         ->name("vote");
     
-    Route::post("/search-elector", [ElectorController::class, "searchElector"])
+    Route::post("/http-search-elector", [ElectorController::class, "httpSearchElector"])
         ->middleware("verify-elector-api-token")
-        ->name("search-elector");
+        ->name("http-search-elector");
 
     Route::get("/view-results-in-progress", [ElectorController::class, "viewResultsInProgress"])
         ->middleware("verify-elector-api-token")

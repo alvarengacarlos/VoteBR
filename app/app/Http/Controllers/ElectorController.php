@@ -63,7 +63,7 @@ class ElectorController extends Controller
         }
     }
 
-    public function vote(Request $request) {
+    public function httpVote(Request $request) {
         $validatedData = $request->validate([
             "cpf" => ["required", "string", "size:11"],
             "birthDate" => ["required", "date:Y-m-d"],
@@ -86,20 +86,37 @@ class ElectorController extends Controller
 
     }
 
-    public function viewSearchElector(Request $request) {
+    public function viewSearchElector() {
+        return view("elector.search-elector", [
+            "voteOfElector" => null
+        ]);
+    }
+
+    public function httpSearchElector(Request $request) {
         $validatedData = $request->validate([
             "yearElection" => ["required", "string", "size:4"],
             "monthElection" => ["required", "string", "size:2"],
-            "cpf" => ["required", "string", "size:11"],            
+            "cpf" => ["required", "string", "size:11"],
+            "passwordGenerated" => ["required", "string"]            
         ]);
 
         $cpf = $request->input("cpf");
         $year = $request->input("yearElection");
         $month = $request->input("monthElection");
+        $passwordGenerated = $request->input("passwordGenerated");
 
-        echo $cpf;
-        echo $year;
-        echo $month;        
+        try {         
+            $voteOfElector = $this->electorService->searchElector($cpf, $year, $month, $passwordGenerated);
+            
+            return view("elector.search-elector", [
+                "voteOfElector" => $voteOfElector
+            ]);
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("elector.dashboard")->withErrors($json);
+        } 
+
     }
 
     private function searchElectionResearchInProgress() {

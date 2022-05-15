@@ -53,17 +53,7 @@
     @empty
         <p>Não há pesquisa eleitoral em Andamento. Aguarde em breve teremos uma nova pesquisa</p>
     @endforelse
-    
-    {{--
-    <form action="{{ route('elector.search-elector') }}" method="post">
-        @csrf
-        <label for="cpf">CPF</label>
-        <input type="text" name="cpf" id="cpf" minlength="11" maxlength="11">
-        <label for="yearElection">Ano da pesquisa</label>
-        <input type="text" name="yearElection" id="yearElection" minlength="4" maxlength="4">
-        <label for="monthElection">Mês da pesquisa</label>
-        <input type="text" name="monthElection" id="monthElection" minlength="2" maxlength="2">
-        <input type="submit" value="Consultar">
-    </form>--}}
+    <h4>Consultar Voto</h4>
+    <a href="{{ route('elector.view-search-elector') }}" target="_blank">Consultar Voto</a>   
 </div>
 @endsection
