@@ -28,7 +28,7 @@
                         Candidatos:
                         <ul>
                         @forelse ($electionResearch["candidatesList"] as $candidate)
-                            <li>Candidato: {{ $candidate["name"] }}, Número: {{ $candidate["id"] }}</li>
+                            <li>Candidato: {{ $candidate["name"] }}, Número: {{ $candidate["id"] }}, Url da Foto: {{ $candidate["photoUrl"] }}</li>
                             @empty
                             <li>Vazio<li>
                         @endforelse
@@ -38,7 +38,7 @@
             </details>            
             @if ($electionResearch["isStart"])
                 <!--Vote form-->
-                <form action="{{ route('elector.vote') }}" method="post">
+                <form action="{{ route('elector.http-vote') }}" method="post">
                     @csrf
                     <label for="cpf">CPF</label>
                     <input type="text" name="cpf" id="cpf" minlength="11" maxlength="11">
@@ -52,7 +52,7 @@
     </div>
     @empty
         <p>Não há pesquisa eleitoral em Andamento. Aguarde em breve teremos uma nova pesquisa</p>
-    @endforelse
+    @endforelse    
     <h4>Opções</h4>
     <a href="{{ route('elector.view-search-elector') }}" target="_blank">Consultar Voto</a>       
     <a href="{{ route('elector.view-results-in-progress') }}" target="_blank">Pesquisa em andamento</a>    

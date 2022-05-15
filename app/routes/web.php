@@ -36,7 +36,7 @@ Route::name("elector.")->prefix("/elector")->group(function () {
     
     Route::post("/http-vote", [ElectorController::class, "httpVote"])
         ->middleware("verify-elector-api-token")
-        ->name("vote");
+        ->name("http-vote");
     
     Route::post("/http-search-elector", [ElectorController::class, "httpSearchElector"])
         ->middleware("verify-elector-api-token")

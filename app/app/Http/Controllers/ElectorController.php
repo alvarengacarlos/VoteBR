@@ -54,7 +54,7 @@ class ElectorController extends Controller
             $electionResearchArray = $this->electorService->searchElectionResearchInProgress();
             
             return view("elector.dashboard", [
-                "electionResearchArray" => $electionResearchArray
+                "electionResearchArray" => $electionResearchArray,                
             ]);
         
         } catch (RequestError $e) {
@@ -75,9 +75,11 @@ class ElectorController extends Controller
         $numberOfCandidate = $request->input("numberOfCandidate");
 
         try {         
-            $this->electorService->vote($cpf, $birthDate, $numberOfCandidate);
+            $secretPhrase = $this->electorService->vote($cpf, $birthDate, $numberOfCandidate);
             
-            return redirect()->route("elector.dashboard");
+            return view("elector.secret-phrase", [
+                "secretPhrase" => $secretPhrase
+            ]);
         
         } catch (RequestError $e) {
             $json = new MessageBag([$e->getMessage()]);
@@ -97,16 +99,16 @@ class ElectorController extends Controller
             "yearElection" => ["required", "string", "size:4"],
             "monthElection" => ["required", "string", "size:2"],
             "cpf" => ["required", "string", "size:11"],
-            "passwordGenerated" => ["required", "string"]            
+            "secretPhrase" => ["required", "string"]            
         ]);
 
         $cpf = $request->input("cpf");
         $year = $request->input("yearElection");
         $month = $request->input("monthElection");
-        $passwordGenerated = $request->input("passwordGenerated");
+        $secretPhrase = $request->input("secretPhrase");
 
         try {         
-            $voteOfElector = $this->electorService->searchElector($cpf, $year, $month, $passwordGenerated);
+            $voteOfElector = $this->electorService->searchElector($cpf, $year, $month, $secretPhrase);
             
             return view("elector.search-elector", [
                 "voteOfElector" => $voteOfElector
@@ -114,7 +116,7 @@ class ElectorController extends Controller
         
         } catch (RequestError $e) {
             $json = new MessageBag([$e->getMessage()]);
-            return redirect()->route("elector.dashboard")->withErrors($json);
+            return redirect()->route("elector.view-search-elector")->withErrors($json);
         } 
 
     }

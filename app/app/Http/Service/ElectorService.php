@@ -68,6 +68,8 @@ class ElectorService {
             ]);
             
             $this->checkResponse($response);
+            
+            return $response->json()["result"];
         
         } catch (RequestError $e) {            
             throw new RequestError($e->getMessage());
@@ -115,7 +117,7 @@ class ElectorService {
         }
     }
 
-    public function searchElector(string $cpf, string $year, string $month, string $passwordGenerated) {
+    public function searchElector(string $cpf, string $year, string $month, string $secretPhrase) {
         $token = $this->getToken();   
         
         try {
@@ -124,7 +126,8 @@ class ElectorService {
             ])->post("/search-elector", [                
                 "yearElection" => $year,
                 "monthElection" => $month,                
-                "cpf" => $cpf
+                "cpf" => $cpf,
+                "secretPhrase" => $secretPhrase
             ]);
 
             return $this->checkResponse($response);
