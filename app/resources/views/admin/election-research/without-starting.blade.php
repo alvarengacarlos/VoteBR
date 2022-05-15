@@ -26,7 +26,7 @@
                         Candidatos:
                         <ul>
                         @forelse ($electionResearch["candidatesList"] as $candidate)
-                            <li>Candidato: {{ $candidate["name"] }}, Número: {{ $candidate["id"] }}</li>                                                        
+                            <li>Candidato: {{ $candidate["name"] }}, Número: {{ $candidate["id"] }}, URL da foto: {{ $candidate["photoUrl"] }}</li>                                                        
                             @empty
                             <li>Vazio<li>
                         @endforelse
@@ -44,8 +44,8 @@
                         <input type="text" name="nameOfCandidate" id="nameOfCandidate">
                         <label for="numberOfCandidate">Número do candidato</label>
                         <input type="text" name="numberOfCandidate" id="numberOfCandidate" minlength="2" maxlength="2">
-                        <label for="urlPhoto">Url da foto</label>
-                        <input type="url" name="urlPhoto" id="urlPhoto">
+                        <label for="photoUrl">Url da foto</label>
+                        <input type="url" name="photoUrl" id="photoUrl">
                         <input type="submit" value="Inserir">
                     </form>
                 </div>

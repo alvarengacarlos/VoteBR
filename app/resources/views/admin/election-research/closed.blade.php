@@ -28,7 +28,7 @@
                         Candidatos:
                         <ul>
                         @forelse ($electionResearch["candidatesList"] as $candidate)
-                            <li>Candidato: {{ $candidate["name"] }}, Número: {{ $candidate["id"] }}, Total de Votos: {{ $candidate["totalOfVotes"] }}</li>                                                        
+                            <li>Candidato: {{ $candidate["name"] }}, Número: {{ $candidate["id"] }}, Total de Votos: {{ $candidate["totalOfVotes"] }}, {{ $candidate["photoUrl"] }}</li>                                                        
                             @empty
                             <li>Vazio<li>
                         @endforelse

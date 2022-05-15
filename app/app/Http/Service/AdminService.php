@@ -155,7 +155,7 @@ class AdminService {
         }
     }
 
-    public function insertCandidate(string $nameOfCandidate, string $numberOfCandidate, $urlPhoto) {
+    public function insertCandidate(string $nameOfCandidate, string $numberOfCandidate, $photoUrl) {
         $token = $this->getToken();   
         
         try {
@@ -163,7 +163,8 @@ class AdminService {
                 "token" => $token
             ])->post("/insert-candidate-in-the-election-research", [
                 "nameOfCandidate" => $nameOfCandidate,
-                "numberOfCandidate" => $numberOfCandidate           
+                "numberOfCandidate" => $numberOfCandidate,
+                "photoUrl" => $photoUrl           
             ]);
             
             $this->checkResponse($response);

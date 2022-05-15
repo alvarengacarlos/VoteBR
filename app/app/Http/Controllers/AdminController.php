@@ -152,15 +152,15 @@ class AdminController extends Controller
         $validatedData = $request->validate([
             "nameOfCandidate" => ["required", "string"],
             "numberOfCandidate" => ["required", "string", "size:2"],
-            "urlPhoto" => ["required", "url"]
+            "photoUrl" => ["required", "url"]
         ]);
 
         $nameOfCandidate = $request->input("nameOfCandidate");
         $numberOfCandidate = $request->input("numberOfCandidate");
-        $urlPhoto = $request->input("urlPhoto");
+        $photoUrl = $request->input("photoUrl");
 
         try {         
-            $this->adminService->insertCandidate($nameOfCandidate, $numberOfCandidate, $urlPhoto);
+            $this->adminService->insertCandidate($nameOfCandidate, $numberOfCandidate, $photoUrl);
             
             return redirect()->route("admin.view-erws");
         
