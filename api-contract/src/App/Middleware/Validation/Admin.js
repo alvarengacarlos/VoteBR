@@ -38,7 +38,8 @@ class Admin {
     validateInsertCandidateInTheElectionResearch(req, res, next) {
         const schema = Joi.object({
             nameOfCandidate: Joi.string().min(4).max(30).required(),
-            numberOfCandidate: Joi.number().integer().positive().less(100).required()
+            numberOfCandidate: Joi.number().integer().positive().less(100).required(),
+            photoUrl: Joi.string().uri().required()
         });
     
         const value = schema.validate(req.body);

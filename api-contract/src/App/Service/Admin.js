@@ -27,6 +27,7 @@ class Admin {
     async insertCandidateInTheElectionResearchInBlockchain(payload) {
         const nameOfCandidate = String(payload.nameOfCandidate);
         const numberOfCandidate = String(payload.numberOfCandidate);
+        const photoUrl = String(payload.photoUrl);
 
         const wallet = await buildWallet();
 
@@ -34,7 +35,7 @@ class Admin {
         const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         try {
-            await chaincode.submitTransaction("insertCandidateInTheElectionResearch", nameOfCandidate, numberOfCandidate);
+            await chaincode.submitTransaction("insertCandidateInTheElectionResearch", nameOfCandidate, numberOfCandidate, photoUrl);
         
         } catch (exception) {
             throw new GeneralContractException(exception);
