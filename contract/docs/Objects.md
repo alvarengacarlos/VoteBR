@@ -7,7 +7,8 @@ Este representa o candidato ao cargo eleitoral, ou seja, são as pessoas em quem
 {
     "id": "01",
     "name": "Fulano de Tal",	
-	"totalOfVotes": 0
+	"totalOfVotes": 0,
+    "photoUrl": "https://image.com.br"
 }
 ```
 
@@ -16,7 +17,8 @@ Este representa o usuário final eleitor. Este tem associação com o objeto Can
 ```json
 {
     "id": "2000-01_a9ce3f1ad25d4deee9393c74e5b98f28ac74946a29dfebd24217910b73d234ba", 
-    "candidate": {}
+    "candidate": {},
+    "secretPhrase": "secretPhrase"
 }
 ```
 

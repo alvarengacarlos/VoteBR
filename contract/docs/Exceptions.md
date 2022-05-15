@@ -10,5 +10,6 @@
 |TOTAL_OF_CANDIDATES_IS_ZERO|400|It is not possible to start an electoral research with zero candidates|
 |UNINITIATED_ELECTION_RESEARCH|400|The electoral research has not been started|
 |TOTAL_VOTES_ACHIEVED|500|The established limit of votes received has been reached|
+|INCORRECT_SECRET_PHRASE|400|The secret phrase is incorrect|
 |ACCESS_DENIED|403|Your credentials do not allow access|
 |INCORRECT_INFORMATION_RECEIVED|400|Some Information provided does not meet requirements|
