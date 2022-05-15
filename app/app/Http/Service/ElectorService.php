@@ -138,6 +138,22 @@ class ElectorService {
     }
 
     public function searchElectionResearchClosed() {
+        $token = $this->getToken();   
 
+        try {
+            $response = Http::elector()->withHeaders([
+                "token" => $token
+            ])->get("/search-election-research-closed");
+            
+            $this->checkResponse($response);
+
+            return $response->json()["result"];
+        
+        } catch (RequestError $e) {
+            throw new RequestError($e->getMessage());
+        
+        } catch (\Exception $e) {
+            throw new RequestError();        
+        }   
     }
 }

@@ -56,6 +56,6 @@
     <h4>Opções</h4>
     <a href="{{ route('elector.view-search-elector') }}" target="_blank">Consultar Voto</a>       
     <a href="{{ route('elector.view-results-in-progress') }}" target="_blank">Pesquisa em andamento</a>    
-    <a href="" target="_blank">Pesquisas encerradas</a>
+    <a href="{{ route('elector.view-results-closed') }}" target="_blank">Pesquisas encerradas</a>
 </div>
 @endsection

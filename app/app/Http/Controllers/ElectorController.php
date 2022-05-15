@@ -129,11 +129,21 @@ class ElectorController extends Controller
         
         } catch (RequestError $e) {
             $json = new MessageBag([$e->getMessage()]);
-            return redirect()->route("elector.results-in-progress")->withErrors($json);
+            return redirect()->route("elector.dashboard")->withErrors($json);
         } 
     }
 
     public function viewResultsClosed() {
-
+        try {         
+            $electionResearchArray = $this->electorService->searchElectionResearchClosed();
+            
+            return view("elector.results-closed", [
+                "electionResearchArray" => $electionResearchArray
+            ]);
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("elector.dashboard")->withErrors($json);
+        }
     }
 }
