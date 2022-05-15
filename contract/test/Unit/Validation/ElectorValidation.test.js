@@ -12,19 +12,21 @@ describe("ElectorValidation", () => {
 	let electorValidation;
 	let cpf;
 	let candidateNumber;
+	let secretPhrase;
 
 	beforeEach(() => {
 		electorValidation = new ElectorValidation();
 		cpf = "adfsdfs00000fsdfdf000000";
 		candidateNumber = "01";
+		secretPhrase = "secretPhrase";
 	});
 
 	describe("#validateVote", () => {
         
 		it("Must be successful, because values is correct", () => {
-			const value = electorValidation.validateVote(cpf, candidateNumber);
+			const value = electorValidation.validateVote(cpf, candidateNumber, secretPhrase);
             
-			expect({cpfHashing: cpf, candidateNumber}).to.eql(value);     
+			expect({cpfHashing: cpf, candidateNumber, secretPhrase}).to.eql(value);     
 		});
 
 	});
@@ -35,7 +37,7 @@ describe("ElectorValidation", () => {
 			cpf = "#0##000000000";            
             
 			expect(
-				() => electorValidation.validateVote(cpf, candidateNumber)
+				() => electorValidation.validateVote(cpf, candidateNumber, secretPhrase)
 			).to.throw(IncorrectInformationReceived);     
 		});
 
@@ -47,7 +49,7 @@ describe("ElectorValidation", () => {
 			candidateNumber = "1";
             
 			expect(
-				() => electorValidation.validateVote(cpf, candidateNumber)
+				() => electorValidation.validateVote(cpf, candidateNumber, secretPhrase)
 			).to.throw(IncorrectInformationReceived);
 		});
 
@@ -55,22 +57,35 @@ describe("ElectorValidation", () => {
 			candidateNumber = "100";
             
 			expect(
-				() => electorValidation.validateVote(cpf, candidateNumber)
+				() => electorValidation.validateVote(cpf, candidateNumber, secretPhrase)
 			).to.throw(IncorrectInformationReceived); 
 		});
 
-	});    
+	}); 
+	
+	describe("#validateVote: secretPhrase", () => {
+       
+		it("Must throw an error for secretPhrase not string", () => {
+			secretPhrase = 1;
+            
+			expect(
+				() => electorValidation.validateVote(cpf, candidateNumber, secretPhrase)
+			).to.throw(IncorrectInformationReceived);
+		});
+
+	}); 
 });
 
 describe("ElectorValidation", () => {
     
-	let electorValidation, year, month, cpf;
+	let electorValidation, year, month, cpf, secretPhrase;
 
 	beforeEach(() => {
 		electorValidation = new ElectorValidation();
 		yearElectionResearch = "2000";
 		monthElectionResearch = "01";
 		cpf = "00000000000";
+		secretPhrase = "secretPhrase";
 	});
 
 	describe("#validateSearchElector: cpf", () => {        
@@ -79,7 +94,7 @@ describe("ElectorValidation", () => {
 			cpf = "0$$###000000000";            
             
 			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf)
+				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
 			).to.throw(IncorrectInformationReceived);     
 		});    
 
@@ -92,7 +107,7 @@ describe("ElectorValidation", () => {
 			yearElectionResearch = "200";
 
 			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf)
+				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
 			).to.throw(IncorrectInformationReceived);
 		});
 
@@ -100,7 +115,7 @@ describe("ElectorValidation", () => {
 			yearElectionResearch = "20000";
 
 			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf)
+				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
 			).to.throw(IncorrectInformationReceived);
 		});
 	});
@@ -111,7 +126,7 @@ describe("ElectorValidation", () => {
 			monthElectionResearch = "1";
 
 			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf)
+				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
 			).to.throw(IncorrectInformationReceived);
 		});
 
@@ -119,7 +134,7 @@ describe("ElectorValidation", () => {
 			monthElectionResearch = "011";
 
 			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf)
+				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
 			).to.throw(IncorrectInformationReceived);
 		});
 
@@ -127,7 +142,7 @@ describe("ElectorValidation", () => {
 			monthElectionResearch = "00";
 
 			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf)
+				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
 			).to.throw(IncorrectInformationReceived);
 		});
 
@@ -135,7 +150,7 @@ describe("ElectorValidation", () => {
 			monthElectionResearch = "13";
 
 			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf)
+				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
 			).to.throw(IncorrectInformationReceived);
 		});
 	});

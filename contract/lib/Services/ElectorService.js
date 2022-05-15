@@ -18,7 +18,7 @@ class ElectorService {
 		this.electorRepository = new ElectorRepository();	
 	}
 
-	async vote(ctx, cpf, numberOfCandidate) {
+	async vote(ctx, cpf, numberOfCandidate, secretPhrase) {
 		const electionResearchInProgressList = await this.adminRepository.retrieveElectionResearchInProgress(ctx);
 		if (electionResearchInProgressList.length == 0) {
 			throw new ElectionResearchNotFound();
@@ -37,18 +37,22 @@ class ElectorService {
 
 		await this.adminRepository.updateElectionResearch(ctx, electionResearch);
 		
-		const elector = Elector.makeElector(cpf, electionResearch.getId(), candidate);
+		const elector = Elector.makeElector(cpf, electionResearch.getId(), candidate, secretPhrase);
 			
 		await this.electorRepository.registerElector(ctx, elector);
 	}	
 
-	async searchElector(ctx, yearElectionResearch, monthElectionResearch, cpf) {
+	async searchElector(ctx, yearElectionResearch, monthElectionResearch, cpf, secretPhrase) {
 		const electionResearch = ElectionResearch.makeElectionResearch(yearElectionResearch, monthElectionResearch);
 		
 		const elector = Elector.makeElector(cpf, electionResearch.getId());
 		
 		const electorBuffer = await this.electorRepository.retrieveElector(ctx, elector);
-		return JSON.parse(electorBuffer.toString());
+		
+		const el = Elector.mountsElectorObjectRetrievedFromTheBlockchain(JSON.parse(electorBuffer.toString()));
+		el.compareSecretPhraseAndThrowException(secretPhrase);
+
+		return el;
 	}
 
 	async searchElectionResearchInProgress(ctx) {

@@ -96,24 +96,24 @@ class VoteBr extends Contract {
 	}
 
 	//User Features
-	async vote(ctx, cpfHashing, numberOfCandidate) {
+	async vote(ctx, cpfHashing, numberOfCandidate, secretPhrase) {
 		this._checkAuthorityElector(ctx);
 
 		const electorValidation = new ElectorValidation();
-		electorValidation.validateVote(cpfHashing, numberOfCandidate);
+		electorValidation.validateVote(cpfHashing, numberOfCandidate, secretPhrase);
 
 		const electorService = new ElectorService();
-		await electorService.vote(ctx, cpfHashing, numberOfCandidate);
+		await electorService.vote(ctx, cpfHashing, numberOfCandidate, secretPhrase);
 	}
 
-	async searchElector(ctx, yearElectionResearch, monthElectionResearch, cpfHashing) {
+	async searchElector(ctx, yearElectionResearch, monthElectionResearch, cpfHashing, secretPhrase) {
 		this._checkAuthorityElector(ctx);
 
 		const electorValidation = new ElectorValidation();
-		electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpfHashing);
+		electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpfHashing, secretPhrase);
 	
 		const electorService = new ElectorService();
-		return await electorService.searchElector(ctx, yearElectionResearch, monthElectionResearch, cpfHashing);
+		return await electorService.searchElector(ctx, yearElectionResearch, monthElectionResearch, cpfHashing, secretPhrase);
 	}
 
 	async searchElectionResearchInProgressLikeElector(ctx) {

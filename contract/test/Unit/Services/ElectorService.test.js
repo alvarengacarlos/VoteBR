@@ -60,7 +60,7 @@ describe("ElectorServive", () => {
 			const electorService = new ElectorService();            
 			electorService.adminRepository = adminRepository;
 
-			await electorService.vote(transactionContext, cpf, "01")
+			await electorService.vote(transactionContext, cpf, "01", "secretPhrase")
 				.should.be.rejectedWith(ElectionResearchNotFound);
 		});
 
@@ -76,7 +76,7 @@ describe("ElectorServive", () => {
 			electorService.VOTE_LIMIT = 0;                        
 			electorService.adminRepository = adminRepository;
 
-			await electorService.vote(transactionContext, "01")
+			await electorService.vote(transactionContext, "01", "secretPhrase")
 				.should.be.rejectedWith(TotalVotesAchieved);
 		});
 
@@ -93,7 +93,7 @@ describe("ElectorServive", () => {
 				await chaincodeStub.putState(electionResearch.getId(), electionResearch.serializerInBuffer());
 			});
 
-			const elector = Elector.makeElector(cpf, electionResearch.getId(), candidate);
+			const elector = Elector.makeElector(cpf, electionResearch.getId(), candidate, "secretePhrase");
 
 			electorRepository.registerElector.callsFake(async () => {
 				await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
@@ -104,7 +104,7 @@ describe("ElectorServive", () => {
 			electorService.adminRepository = adminRepository;
 			electorService.electorRepository = electorRepository;
             
-			await electorService.vote(transactionContext, cpf, "01");
+			await electorService.vote(transactionContext, cpf, "01", "secretPhrase");
 
 			const electionResearchBuffer = await chaincodeStub.getState(electionResearch.getId());
 			const electorBuffer = await chaincodeStub.getState(elector.getId());
@@ -125,7 +125,7 @@ describe("ElectorServive", () => {
 		it("Must return an elector", async () => {
 			const election = ElectionResearch.makeElectionResearch("2000", "01");
 			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
-			const elector = Elector.makeElector(cpf, election.getId(), candidate);
+			const elector = Elector.makeElector(cpf, election.getId(), candidate, "secretPhrase");
             
 			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
@@ -137,7 +137,7 @@ describe("ElectorServive", () => {
 			electorService.VOTE_LIMIT = 10;                                    
 			electorService.electorRepository = electorRepository;
 
-			const electorObject = await electorService.searchElector(transactionContext, "2000", "01", cpf);
+			const electorObject = await electorService.searchElector(transactionContext, "2000", "01", cpf, "secretPhrase");
 
 			expect(electorObject).to.eql(elector);
 		});

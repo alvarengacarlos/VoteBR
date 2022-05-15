@@ -19,7 +19,7 @@ const ElectionResearch = require("../../../lib/Classes/Admin/ElectionResearch");
 const Candidate = require("../../../lib/Classes/Admin/Candidate");
 
 
-describe("AdminRepository", () => {
+describe("ElectorRepository", () => {
     
 	let transactionContext, chaincodeStub;
     
@@ -52,7 +52,7 @@ describe("AdminRepository", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate);            
             
-			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
             
 			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
@@ -67,7 +67,7 @@ describe("AdminRepository", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate); 
 
-			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
 
 			const electorRepository = new ElectorRepository(); 
 			const response = await electorRepository.electorExists(transactionContext, elector.getId());
@@ -84,7 +84,7 @@ describe("AdminRepository", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate);            
             
-			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
             
 			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
@@ -98,7 +98,7 @@ describe("AdminRepository", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate);            
             
-			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
 
 			const electorRepository = new ElectorRepository(); 
 			await electorRepository.registerElector(transactionContext, elector);
@@ -118,7 +118,7 @@ describe("AdminRepository", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate); 
 
-			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
 
 			const electorRepository = new ElectorRepository(); 
 			await electorRepository.retrieveElector(transactionContext, elector)
@@ -130,7 +130,7 @@ describe("AdminRepository", () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
 			electionResearch.insertCandidate(candidate);            
             
-			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate);
+			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
             
 			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
@@ -138,7 +138,7 @@ describe("AdminRepository", () => {
 			const elBuffer = await electorRepository.retrieveElector(transactionContext, elector);
                    
 			const el = JSON.parse(elBuffer.toString());
-
+			
 			expect(el).to.eql(elector);
 		});
 
