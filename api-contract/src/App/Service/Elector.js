@@ -31,6 +31,7 @@ class Elector extends ApiSearchCpf {
 		await this.validatesIfElectorIsReal(cpf, birthDateObject);        
 		
 		const cpfHash = this.encryptCpf(cpf);
+		const secretPhrase = crypto.randomUUID({disableEntropyCache: false});
 		
 		//Smart Contract call
 		const wallet = await buildWallet();
@@ -40,11 +41,13 @@ class Elector extends ApiSearchCpf {
         const chaincode = await connection.connect(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
 
         try {
-            await chaincode.submitTransaction("vote", cpfHash, numberOfCandidate);
+            await chaincode.submitTransaction("vote", cpfHash, numberOfCandidate, secretPhrase);
 
         } catch (exception) {
             throw new GeneralContractException(exception);
-        }        
+        }
+		
+		return secretPhrase;
     }
 
 	getBirthDateObject(birthDate) {
@@ -128,6 +131,7 @@ class Elector extends ApiSearchCpf {
 		const yearElection = String(payload.yearElection);
 		const monthElection = String(payload.monthElection);
 		const cpf = String(payload.cpf);
+		const secretPhrase = String(payload.secretPhrase);
 
 		const cpfIsValid = this.cpfIsValid(cpf);
 		if (!cpfIsValid) {
@@ -144,7 +148,7 @@ class Elector extends ApiSearchCpf {
         const chaincode = await connection.connect(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
 
         try {
-            const result = await chaincode.submitTransaction("searchElector", yearElection, monthElection, cpfHash);
+            const result = await chaincode.submitTransaction("searchElector", yearElection, monthElection, cpfHash, secretPhrase);
 			return JSON.parse(result.toString());
 
         } catch (exception) {

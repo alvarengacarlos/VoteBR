@@ -21,9 +21,9 @@ class Elector {
     async vote(req, res) {       
         try {                        
             const electorService = new ElectorService();
-            await electorService.voteInBlockchain(req.body);
+            const secretPhrase = await electorService.voteInBlockchain(req.body);
             
-            return res.status(201).json();  
+            return res.status(201).json({result: secretPhrase});  
 
         } catch (exception) {            
             const ef = ExceptionFormatter.formatApiException(exception);

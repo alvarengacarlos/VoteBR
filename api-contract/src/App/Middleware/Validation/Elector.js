@@ -40,7 +40,8 @@ class Elector {
         const schema = Joi.object({
             monthElection: Joi.number().integer().positive().required(), 
             yearElection: Joi.number().integer().positive().required(),
-            cpf: Joi.number().integer().positive().less(99999999999).required()
+            cpf: Joi.number().integer().positive().less(99999999999).required(),
+            secretPhrase: Joi.string().required()
         });
 
         const value = schema.validate(req.body);
