@@ -127,9 +127,7 @@ class ElectorService {
                 "cpf" => $cpf
             ]);
 
-            $voteOfElector = $this->checkResponse($response);
-
-            return $voteOfElector;
+            return $this->checkResponse($response);
         
         } catch (RequestError $e) {                       
             throw new RequestError($e->getMessage());
@@ -137,5 +135,9 @@ class ElectorService {
         } catch (\Exception $e) {
             throw new RequestError();
         }
+    }
+
+    public function searchElectionResearchClosed() {
+
     }
 }

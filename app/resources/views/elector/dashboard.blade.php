@@ -53,7 +53,9 @@
     @empty
         <p>Não há pesquisa eleitoral em Andamento. Aguarde em breve teremos uma nova pesquisa</p>
     @endforelse
-    <h4>Consultar Voto</h4>
-    <a href="{{ route('elector.view-search-elector') }}" target="_blank">Consultar Voto</a>   
+    <h4>Opções</h4>
+    <a href="{{ route('elector.view-search-elector') }}" target="_blank">Consultar Voto</a>       
+    <a href="{{ route('elector.view-results-in-progress') }}" target="_blank">Pesquisa em andamento</a>    
+    <a href="" target="_blank">Pesquisas encerradas</a>
 </div>
 @endsection

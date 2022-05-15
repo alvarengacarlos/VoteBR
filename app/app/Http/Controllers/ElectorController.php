@@ -119,12 +119,21 @@ class ElectorController extends Controller
 
     }
 
-    private function searchElectionResearchInProgress() {
-        echo [];
+    public function viewResultsInProgress() {
+        try {         
+            $electionResearchArray = $this->electorService->searchElectionResearchInProgress();
+            
+            return view("elector.results-in-progress", [
+                "electionResearchArray" => $electionResearchArray
+            ]);
+        
+        } catch (RequestError $e) {
+            $json = new MessageBag([$e->getMessage()]);
+            return redirect()->route("elector.results-in-progress")->withErrors($json);
+        } 
     }
 
-    private function searchElectionResearchClosed() {
-        echo [];
-    }
+    public function viewResultsClosed() {
 
+    }
 }
