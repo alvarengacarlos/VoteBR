@@ -43,7 +43,8 @@ Todas as rotas da api exceto as de autenticação são protegidas por tokens, ou
 /admin/insert-candidate-in-the-election-research
 {
     "name": "Fulano",
-    "numberOfCandidate": "01"
+    "numberOfCandidate": "01",
+    "photoUrl": "https://image.com.br"
 }
 ```
 
@@ -96,6 +97,7 @@ Todas as rotas da api exceto as de autenticação são protegidas por tokens, ou
 {
     "yearElection": "2000",
     "monthElection": "01",
-    "cpf": "01234567890"
+    "cpf": "01234567890",
+    "secretPhrase": "secretPhrase"
 }
 ```
