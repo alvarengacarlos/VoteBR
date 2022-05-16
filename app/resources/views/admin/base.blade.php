@@ -9,14 +9,22 @@
 <body>
     <div class="container">
         <header>
-            <p>Header</p>
-            <a href="{{ route('welcome') }}">Página Inicial</a>
+            <nav>
+                <ul>
+                    <li><a href="{{ route('welcome') }}">Página Inicial</a></li>
+                    <li><a href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                    <li><a href="{{ route('admin.view-create-er') }}">Criar Nova Pesquisa</a></li>
+                    <li><a href="{{ route('admin.view-erws') }}">Pesquisas não Inicadas</a></li>
+                    <li><a href="{{ route('admin.view-erip') }}">Pesquisas em Progresso</a></li>
+                    <li><a href="{{ route('admin.view-erc') }}">Pesquisas Encerradas</a></li>                
+                </ul>
+            </nav>            
         </header>
         <main>
             @yield("content")
         </main>
         <footer>
-            <p>Footer</p>
+            
         </footer>        
     </div>
 </body>

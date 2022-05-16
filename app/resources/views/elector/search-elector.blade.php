@@ -1,4 +1,4 @@
-@extends("elector.base")
+@extends("base")
 
 @section("title", "Consultar Voto")
 

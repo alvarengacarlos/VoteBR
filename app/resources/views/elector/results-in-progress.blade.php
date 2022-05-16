@@ -1,24 +1,30 @@
-@extends("elector.base")
+@extends("base")
 
-@section("title", "Resultados das pesquisa em andamento")
+@section("title", "Resultados das pesquisa em progresso")
 
 @section("content")
-<h1>Pesquisa em andamento</h1>
-<div>
-    @forelse ($electionResearchArray as $electionResearch) 
-    <div> 
-        <p>{{ $electionResearch["id"] }}</p>
-        <p>Total de Votos: {{ $electionResearch["totalOfVotes"] }}</p>
-        <p>Criado em: {{ $electionResearch["createIn"] }}</p>                    
-        <p>Iniciada em: {{ $electionResearch["startIn"] }}</p>             
+<div>            
+    <h1>Pesquisa em andamento</h1>
+    @forelse ($electionResearchArray as $electionResearch)    
+        <h3>Pesquisa eleitoral: {{ $electionResearch["id"] }}</h3>                
+        <p>Total de votos recebidos: {{ $electionResearch["totalOfVotes"] }}</p>
+        <p>Criado em: {{ $electionResearch["createIn"] }}</p>        
+        <p>Iniciada em: {{ $electionResearch["startIn"] }}</p>     
         @foreach ($electionResearch["candidatesList"] as $candidate)
-            <p>Candidato: {{ $candidate["name"] }}
-            <p>Número: {{ $candidate["id"] }}</p>
-            <p>Tota de Votos: {{ $candidate["totalOfVotes"] }}</p>
-        @endforeach
-    </div>
+        <div>
+            <img src="{{ asset($candidate['photoUrl']) }}" alt="Foto do candidato {{ $candidate['name'] }}" width="100px">
+            <span>Total de votos recebidos: {{ $candidate['totalOfVotes'] }}</span>
+            <span>Nome: {{ $candidate["name"] }}</span>
+            <span>Número: {{ $candidate["id"] }}</span>            
+            @if ($candidate['totalOfVotes'] == 0)
+                <span><progress value="{{ $candidate['totalOfVotes'] }}" max="100"></progress>{{ $candidate['totalOfVotes'] }}%</span>
+            @else
+                <span><progress value="{{ $candidate['totalOfVotes'] * 100 / $electionResearch['totalOfVotes'] }}" max="100"></progress>{{ $candidate['totalOfVotes'] * 100 / $electionResearch['totalOfVotes'] }}%</span>
+            @endif
+        </div>
+        @endforeach        
     @empty
-    <h4>Não há pesquisas em andamento</h4>
+        <p>Não há pesquisas em progresso</p>
     @endforelse
 </div>
 @endsection
