@@ -37,7 +37,7 @@ Clique no link e leia a [documentação oficial da aplicação](./app/docs/Index
 
 ## __Subindo ambiente de testes no Linux__
 ```
-Para mais informações de confituração acesse a documentação individual de cada aplicação.
+Para mais informações de configuração acesse a documentação individual de cada aplicação.
 ```
 
 ### Subindo ambiente de testes da Blockchain.
