@@ -14,9 +14,9 @@
     @endif
     <form action="{{ route('admin.http-create-er') }}" method="post">
         @csrf
-        <label for="year">Year</label>
+        <label for="year">Ano</label>
         <input type="text" name="year" id="year" minlength="4" maxlength="4">
-        <label for="month">Month</label>
+        <label for="month">Mês</label>
         <input type="text" name="month" id="month" minlength="2" maxlength="2">
         <input type="submit" value="Criar">
     </form>
