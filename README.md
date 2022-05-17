@@ -27,12 +27,43 @@ __Palavras Chave:__ Presidente, Pesquisas; Intenção de Voto, Blockchain.
 
 
 ## __Documentação__
-O projeto é divido em duas partes. Uma compões o contrato inteligênte e a outra a aplicação que irá conversar com o contrato.
+O projeto é divido em três partes. Uma compõe o contrato inteligênte, outra a API que irá conversar com o contrato e por último uma aplicação que será a interface do usuário.
 
 Clique no link e leia a [documentação oficial do contrato](./contract/docs/Index.md).
 
 Clique no link e leia a [documentação oficial da api do contrato](./api-contract/docs/Index.md).
 
+Clique no link e leia a [documentação oficial da aplicação](./app/docs/Index.md).
+
+## __Subindo ambiente de testes no Linux__
+```
+Para mais informações de confituração acesse a documentação individual de cada aplicação.
+```
+
+### Subindo ambiente de testes da Blockchain.
+- Execute o arquivo __microfab-test-enviroment.sh__ que está dentro da pasta __contract__ para subir a rede Blockchain:
+```sh
+sh microfab-test-enviroment.sh
+```
+- Instale o editor Visual Studio Code e depois a extensão da [IBM Blockchain Plataform](https://marketplace.visualstudio.com/items?itemName=IBMBlockchain.ibm-blockchain-platform). Isso irá facilitar o deploy do contrato em nossa rede.
+
+- Veja os seguintes tutoriais da IBM Blockchain Plataform: _Create and use a custom Fabric network_ e depois _Deploying a smart contract_. Ambos são necessários para seguir os próximos passos.
+
+- Agora execute o comando abaixo dentro da pasta __api-contract__. Este irá iniciar nossa API e verificar a conexão com o nosso contrato.
+```npm
+npm run start
+```
+
+- Já temos a API e o Contrato então podemos subir a nossa API fake de CPF. Para isso execute o seguinte dentro da pasta __api-search-cpf-fake__:
+```npm
+npm run start
+```
+
+- Por último iniciamos nossa aplicação que faz a interface do cliente. Para isso basta executar o seguinte dentro da pasta __app__:
+```composer
+php artisan serve
+```
+- Pronto, você já pode acessar a seguinte URL: http://localhost:8000. O login e a senha padrão para o administrador são respectivamente: admin@email.com e adminpw. 
 
 ## __Linceça__
 A licença em: [licença](./LICENSE).
