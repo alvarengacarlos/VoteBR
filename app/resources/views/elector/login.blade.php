@@ -1,22 +1,22 @@
-@extends("elector.base")
+@extends("base")
 
-@section("title", "Login")
+@section("title", "Login eleitor")
 
 @section("content")
-<h1>Elector Login</h1>
 <div>
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+    <h1>Login eleitor</h1>
+    @if ($errors->any())    
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>    
     @endif
-    <form action="{{ route('elector.auth') }}" method="post">
-        @csrf        
-        <input type="submit" value="entrar">
-    </form>
-    @endsection()
+    <div>
+        <form action="{{ route('elector.auth') }}" method="post">
+            @csrf        
+            <input type="submit" value="Entrar">
+        </form>
+    </div>
+@endsection()
 </div>

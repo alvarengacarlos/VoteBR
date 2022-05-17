@@ -18,7 +18,7 @@
         <p>Candidatos:</p>
         @forelse ($electionResearch["candidatesList"] as $candidate)
             <div>
-                <img src="{{ asset($candidate['photoUrl']) }}" alt="foto do candidato {{ $candidate['name'] }}" width="300px">
+                <figure><img src="{{ asset($candidate['photoUrl']) }}" alt="foto do candidato {{ $candidate['name'] }}" width="300px"></figure>
                 <p>Nome:{{ $candidate["name"] }}</p>
                 <p>Número: {{ $candidate["id"] }}</p>
             </div>                                                                  

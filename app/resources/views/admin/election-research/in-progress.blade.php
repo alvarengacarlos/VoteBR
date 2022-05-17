@@ -19,7 +19,7 @@
         <p>Candidatos:</p>
         @foreach ($electionResearch["candidatesList"] as $candidate)
             <div>
-                <img src="{{ asset($candidate['photoUrl']) }}" alt="foto do candidato {{ $candidate['name'] }}" width="300px">
+                <figure><img src="{{ asset($candidate['photoUrl']) }}" alt="foto do candidato {{ $candidate['name'] }}" width="300px"></figure>
                 <p>Nome:{{ $candidate["name"] }}</p>
                 <p>Número: {{ $candidate["id"] }}</p>
                 <p>Total de votos do candidato: {{ $candidate["totalOfVotes"] }}</p>
@@ -37,7 +37,7 @@
     </div>
     @empty
         <div>
-            <p>Não há pesquisa eleitoral em Andamento</p>
+            <p>Não há pesquisa eleitoral em progresso</p>
         </div>
     @endforelse
 </div>
