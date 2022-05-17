@@ -3,3 +3,4 @@
 - [Objetos](./Objects.md)
 - [Métodos](./Method.md)
 - [Exceções](./Exceptions.md)
+- [Configurações](./Config.md)
