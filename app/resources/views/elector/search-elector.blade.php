@@ -4,7 +4,7 @@
 
 @section("content")
 <div>
-    <h4>Consultar Voto</h4>
+    <h4 class="text-center">Consultar Voto</h4>
     @if ($errors->any())            
         @foreach ($errors->all() as $error)
             <div class="alert alert-warning" role="alert">{{ $error }}</div>
@@ -25,8 +25,19 @@
             <label for="monthElection">Mês da pesquisa</label>        
         </div>        
         <div class="form-floating mt-2">
-            <input class="form-control" placeholder="kjflsjfelriepofoofg" type="text" name="secretPhrase" id="secretPhrase">
+            <input class="form-control" placeholder="kjflsjfelriepofoofg" type="password" name="secretPhrase" id="secretPhrase">
             <label for="secretPhrase">Senha gerada pelo sistema</label>
+            <input class="text-justify" type="checkbox" onclick="viewPassword()"><span>Mostrar Senha</span>
+            <script>
+                function viewPassword() {
+                    let secretPhrase = document.getElementById("secretPhrase");
+                    if (secretPhrase.type === "password") {
+                      secretPhrase.type = "text";
+                    } else {
+                      secretPhrase.type = "password";
+                    }
+                }
+            </script>            
         </div>
         <input class="btn btn-primary mt-2" type="submit" value="Consultar">
     </form> 

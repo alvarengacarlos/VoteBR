@@ -3,7 +3,7 @@
 @section("title", "Admin Dashboard")
 
 @section("content")
-<h1>Admin Dashboard</h1>
+<h4 class="text-center">Admin Dashboard</h4>
 <div>    
     @if ($errors->any())
     <ul>

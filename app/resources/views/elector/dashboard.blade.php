@@ -4,7 +4,7 @@
 
 @section("content")
 <div>
-    <h1>Dashboard eleitor</h1>
+    <h4 class="text-center">Dashboard eleitor</h4>
     @if ($errors->any())            
         @foreach ($errors->all() as $error)
             <div class="alert alert-warning" role="alert">{{ $error }}</div>

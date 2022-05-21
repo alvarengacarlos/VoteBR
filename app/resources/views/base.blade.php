@@ -41,14 +41,14 @@
             @yield("content", "No content")                        
         </main>
         <footer class="position-relative">                
-                <ul class="position-absolute">                    
-                    <hr>
+                <hr>
+                <ul class="position-absolute">                                        
                     <li class="list-group-item text-center">VoteBr é um Dapp focado em pesquisas eleitorais para presidência da República Federativa do Brasil</li>                
                     <li class="list-group-item text-center"><span>Autor:</span><a href="https://alvarengacarlos.github.io/My-Profile/dist/" target="_blank">@AlvarengaCarlos</a></li>
                     <li class="list-group-item text-center"><span>Código fonte:</span><a href="https://github.com/alvarengacarlos/VoteBr.git" target="_blank">Github</a></li>
                     <li class="list-group-item text-center"><span>Direitos das imagens:</span><a href="https://www.flaticon.com/br/" target="_blank">Flaticon</a></li>
                     <li class="list-group-item text-center">Software licenciado</li>
-                    <li class="list-group-item text-center">Copyrigth &copy;<a href="{{ route('admin.login') }}"><img class="admin-access-img" src="{{ asset('img/icon-cadeado-preto-fechado.png') }}" alt="ícone de cadeado de cor preta fechado" width="0.8%"></a></li>                    
+                    <li class="list-group-item text-center">Copyrigth &copy;<a href="{{ route('admin.login') }}"><img class="admin-access-img" src="{{ asset('img/icon-cadeado-preto-fechado.png') }}" alt="ícone de cadeado de cor preta fechado" width="1.5%"></a></li>                    
                 </ul>
         </footer>                
     </div>

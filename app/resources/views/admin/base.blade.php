@@ -45,8 +45,8 @@
             @yield("content")
         </main>
         <footer class="position-relative">
-            <ul class="position-absolute">
-                <hr>                    
+            <hr>    
+            <ul class="position-absolute">                                
                 <li class="list-group-item text-center">VoteBr é um Dapp focado em pesquisas eleitorais para presidência da República Federativa do Brasil</li>                
                 <li class="list-group-item text-center"><span>Autor:</span><a href="https://alvarengacarlos.github.io/My-Profile/dist/" target="_blank">@AlvarengaCarlos</a></li>
                 <li class="list-group-item text-center"><a href="https://github.com/alvarengacarlos/VoteBr.git" target="_blank">Código fonte</a></li>

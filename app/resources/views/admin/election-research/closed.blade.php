@@ -4,7 +4,7 @@
 
 @section("content")
 <div>    
-    <h2>Pesquisas eleitorais encerradas</h2>
+    <h4 class="text-center">Pesquisas eleitorais encerradas</h4>
     @if ($errors->any())            
         @foreach ($errors->all() as $error)
             <div class="alert alert-warning" role="alert">{{ $error }}</div>
@@ -25,11 +25,11 @@
                 <span class="me-3"><b>Número:</b> {{ $candidate["id"] }}</span>            
                 @if ($candidate['totalOfVotes'] == 0)                    
                         <div class="progress">
-                            <div class="progress-bar p-1" role="progressbar" style="width: 0;" aria-valuenow="{{ $candidate['totalOfVotes'] }}" aria-valuemin="0" aria-valuemax="100">0%</div>
+                            <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                         </div>
                 @else                    
                         <div class="progress">
-                            <div class="progress-bar p-1" role="progressbar" style="width: {{ $candidate['totalOfVotes'] * 100 / $electionResearch['totalOfVotes'] }};" aria-valuenow="{{ $candidate['totalOfVotes'] * 100 / $electionResearch['totalOfVotes'] }}" aria-valuemin="0" aria-valuemax="100">{{ $candidate['totalOfVotes'] * 100 / $electionResearch['totalOfVotes'] }}%</div>
+                            <div class="progress-bar p-1" role="progressbar" style="width: {{ $candidate['totalOfVotes'] * 100 / $electionResearch['totalOfVotes'] }}%;" aria-valuenow="{{ $candidate['totalOfVotes'] * 100 / $electionResearch['totalOfVotes'] }}" aria-valuemin="0" aria-valuemax="100">{{ $candidate['totalOfVotes'] * 100 / $electionResearch['totalOfVotes'] }}%</div>
                         </div>
                 @endif
             </div>

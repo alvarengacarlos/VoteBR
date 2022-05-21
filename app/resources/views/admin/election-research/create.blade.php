@@ -4,7 +4,7 @@
 
 @section("content")
 <div>
-    <h1 class="text-center">Criar nova pesquisa eletoral</h1>
+    <h4 class="text-center">Criar nova pesquisa eletoral</h4>
     @if ($errors->any())            
         @foreach ($errors->all() as $error)
             <div class="alert alert-warning" role="alert">{{ $error }}</div>
