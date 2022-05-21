@@ -11,7 +11,7 @@
         @endforeach        
     @endif  
     @forelse ($electionResearchArray as $electionResearch)    
-        <div class="border p-2">
+        <div class="border p-2 mt-4">
             <h4><b>Pesquisa eleitoral:</b> {{ $electionResearch["id"] }}</h4>
             <p><b>Criado em:</b> {{ $electionResearch["createIn"] }}</p>        
             <p><b>Iniciada em:</b> {{ $electionResearch["startIn"] }}</p>     
