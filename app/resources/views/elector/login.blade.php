@@ -4,18 +4,16 @@
 
 @section("content")
 <div>
-    <h1>Login eleitor</h1>
-    @if ($errors->any())    
-    <ul>
+    <h1 class="text-center">Login eleitor</h1>
+    @if ($errors->any())            
         @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>    
+            <div class="alert alert-warning" role="alert">{{ $error }}</div>
+        @endforeach        
     @endif
-    <div>
+    <div class="text-center">
         <form action="{{ route('elector.auth') }}" method="post">
             @csrf        
-            <input type="submit" value="Entrar">
+            <input class="mt-2 btn btn-primary" type="submit" value="Entrar">
         </form>
     </div>
 @endsection()

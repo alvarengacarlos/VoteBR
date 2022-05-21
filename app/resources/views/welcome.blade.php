@@ -11,7 +11,7 @@
     </p>
     <h2>Como participar das pesquisas eleitorais?</h2>        
     <ol>
-        <li>Acesse o <a href="{{ route('elector.dashboard') }}" target="_blank">Dashboard.</a></li>
+        <li>Acesse o <a href="{{ route('elector.dashboard') }}">Dashboard.</a></li>
         <li>Observe que aparecerá a pesquisa eleitoral disponível.</li>
         <li>Escolha o candidato</li>
         <li>preencha seu CPF, sua data de nascimento e o número do candidato que escolheu.</li>
