@@ -42,7 +42,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTI2NDAwNDQsImV4cCI6MTY1MjY0MzY0NCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.pWm2TpMSdd8glsmIep2dXKXBqwiRH3qMaMMo9nuAHPk",
 								"type": "default"
 							}
 						],
@@ -75,13 +75,13 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTI2NDAwNDQsImV4cCI6MTY1MjY0MzY0NCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.pWm2TpMSdd8glsmIep2dXKXBqwiRH3qMaMMo9nuAHPk",
 								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nameOfCandidate\": \"Fulano\",\n    \"numberOfCandidate\": \"01\"\n}",
+							"raw": "{\n    \"nameOfCandidate\": \"Fulano\",\n    \"numberOfCandidate\": \"01\",\n    \"photoUrl\": \"https://cdn.pixabay.com/photo/2015/11/26/00/14/woman-1063100_960_720.jpg\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -108,13 +108,13 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMjA5MjgsImV4cCI6MTY1MjAyNDUyOCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.WOi-EBXGHMTd6Wiee0rR-Afo9NVdiZkK1WgtRY_z1Ds",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTI2NDAwNDQsImV4cCI6MTY1MjY0MzY0NCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.pWm2TpMSdd8glsmIep2dXKXBqwiRH3qMaMMo9nuAHPk",
 								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"numberOfCandidate\": \"02\"\n}",
+							"raw": "{\n    \"numberOfCandidate\": \"01\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -141,7 +141,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTI2NDAwNDQsImV4cCI6MTY1MjY0MzY0NCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.pWm2TpMSdd8glsmIep2dXKXBqwiRH3qMaMMo9nuAHPk",
 								"type": "default"
 							}
 						],
@@ -165,7 +165,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMjA5MjgsImV4cCI6MTY1MjAyNDUyOCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.WOi-EBXGHMTd6Wiee0rR-Afo9NVdiZkK1WgtRY_z1Ds",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwNTUxNTksImV4cCI6MTY1MjA1ODc1OSwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.jdvgtdgcjQEkgKo_m63jqL9MgWjvdBIe8gPJqlSqJ2Y",
 								"type": "default"
 							}
 						],
@@ -192,7 +192,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTI2NDAwNDQsImV4cCI6MTY1MjY0MzY0NCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.pWm2TpMSdd8glsmIep2dXKXBqwiRH3qMaMMo9nuAHPk",
 								"type": "default"
 							}
 						],
@@ -225,7 +225,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTI1NjY1OTYsImV4cCI6MTY1MjU3MDE5Niwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.UhDAJSP505gp5qF_NnSq-HBBriHLAsx4uv81I5K7XrE",
 								"type": "default"
 							}
 						],
@@ -244,27 +244,15 @@
 				},
 				{
 					"name": "/search-election-research-in-progress",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTIwMzMxMzQsImV4cCI6MTY1MjAzNjczNCwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.roMMJVkRZ9Q5jqzu96_c6Hw0FBqnMfVCvNfP4Yd68DE",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsImFkbWluIjp0cnVlLCJpYXQiOjE2NTI3NDU5MzYsImV4cCI6MTY1Mjc0OTUzNiwic3ViIjoiYWRtaW5AZW1haWwuY29tIn0.EEZeRs9-NBI_chgaMkAbTd_iZ4dwesysSMZ_zx9MZ8c",
 								"type": "default"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"yearElection\": \"2000\",\n    \"monthElection\": \"02\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{host}}/admin/search-election-research-in-progress",
 							"host": [
@@ -280,9 +268,6 @@
 				},
 				{
 					"name": "/search-election-research-closed",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -292,15 +277,6 @@
 								"type": "default"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"yearElection\": \"2000\",\n    \"monthElection\": \"02\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{host}}/admin/search-election-research-closed",
 							"host": [
@@ -353,13 +329,13 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTIwMzIzOTQsImV4cCI6MTY1MjAzNTk5NCwic3ViIjoiNmU5MDM0MWYtNDNmNi00Nzc2LWE0YTAtOGJlNWUwY2M5M2VlIn0.nO8LteB5t80w0MzMuA9sd_keaoYOxyRMvqmia2oFfvQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTI3NDk4NTksImV4cCI6MTY1Mjc1MzQ1OSwic3ViIjoiMTcxNjIzYjctYWY4Ny00YjE5LTk4OTktMzVmODExMjAzZTdiIn0.hq6g4OBSLYKMnV7doWGTDm9zTxs40gyoYs2p4joUK60",
 								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"cpf\": \"01234567890\",\n    \"birthDate\": \"2000-01-01\",\n    \"numberOfCandidate\": \"01\"\n}",
+							"raw": "{\n    \"cpf\": \"01234567890\",\n    \"birthDate\": \"2000-01-01\",\n    \"numberOfCandidate\": \"13\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -381,21 +357,18 @@
 				},
 				{
 					"name": "/search-elector",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTIwMzMzMzEsImV4cCI6MTY1MjAzNjkzMSwic3ViIjoiYWU0ZDc1OTUtOWVjYi00ZmI1LWI1ZTgtNzg5N2JkYjU3MWM3In0.KDEUttB4cM9EP5UpSOLj6_wydmQrIiwgaLk0fm6uqcM",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTI2NDA4MTEsImV4cCI6MTY1MjY0NDQxMSwic3ViIjoiMzUwMjg3MDYtZmU1NS00OTUyLThjMzctNzYyOGZmN2FiZjQ2In0.13Cxo4kUOUccTjji3olxaEmJpmCnhqGTQX7uD840TgA",
 								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"yearElection\": \"2000\",\n    \"monthElection\": \"01\",\n    \"cpf\": \"01234567890\"\n}",
+							"raw": "{\n    \"monthElection\": \"01\",\n    \"yearElection\": \"2000\",\n    \"cpf\": \"01234567890\",\n    \"secretPhrase\": \"4cba95a7-648a-4a46-9d6a-6f4299272ca6\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -422,7 +395,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTIwMzMzMzEsImV4cCI6MTY1MjAzNjkzMSwic3ViIjoiYWU0ZDc1OTUtOWVjYi00ZmI1LWI1ZTgtNzg5N2JkYjU3MWM3In0.KDEUttB4cM9EP5UpSOLj6_wydmQrIiwgaLk0fm6uqcM",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbGVjdG9yIjp0cnVlLCJpYXQiOjE2NTI2MzEzMTcsImV4cCI6MTY1MjYzNDkxNywic3ViIjoiMmQyMDU1MDktZTk5Ni00NjhiLThmY2UtMjBmYTM5YjY1ZTQyIn0.pdHg0lVHakKUay2Xj8jAX9HockmZMtECVtSBpeLAltE",
 								"type": "default"
 							}
 						],
