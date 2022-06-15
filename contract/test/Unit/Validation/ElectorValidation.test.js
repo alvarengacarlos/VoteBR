@@ -1,8 +1,6 @@
 const chai = require("chai");
-const sinonChai = require("sinon-chai");
-chai.use(sinonChai);
 const expect = chai.expect;
-const {describe, beforeEach} = require("mocha");
+const {describe, beforeEach, it} = require("mocha");
 
 const ElectorValidation = require("../../../lib/Validation/ElectorValidation");
 const IncorrectInformationReceived = require("../../../lib/Exceptions/IncorrectInformationReceived");
@@ -10,18 +8,15 @@ const IncorrectInformationReceived = require("../../../lib/Exceptions/IncorrectI
 describe("ElectorValidation", () => {
     
 	let electorValidation;
-	let cpf;
-	let candidateNumber;
-	let secretPhrase;
-
+	
 	beforeEach(() => {
-		electorValidation = new ElectorValidation();
-		cpf = "adfsdfs00000fsdfdf000000";
-		candidateNumber = "01";
-		secretPhrase = "secretPhrase";
+		electorValidation = new ElectorValidation();		
 	});
 
 	describe("#validateVote", () => {
+		let cpf = "adfsdfs00000fsdfdf000000";
+		let candidateNumber = "01";
+		let secretPhrase = "secretPhrase";
         
 		it("Must be successful, because values is correct", () => {
 			const value = electorValidation.validateVote(cpf, candidateNumber, secretPhrase);
@@ -29,129 +24,68 @@ describe("ElectorValidation", () => {
 			expect({cpfHashing: cpf, candidateNumber, secretPhrase}).to.eql(value);     
 		});
 
-	});
-
-	describe("#validateVote: cpf", () => {        
-        
-		it("Must throw error for no cpf hashing", () => {
-			cpf = "#0##000000000";            
-            
+		it("Must throw error, because the value is incorrect", () => {
 			expect(
-				() => electorValidation.validateVote(cpf, candidateNumber, secretPhrase)
+				() => electorValidation.validateVote("#0##000000000", candidateNumber, secretPhrase)
 			).to.throw(IncorrectInformationReceived);     
-		});
-
-	});
-
-	describe("#validateVote: candidateNumber", () => {
-       
-		it("Must throw an error for candidateNumber size smaller than 2 digits", () => {
-			candidateNumber = "1";
-            
+          
 			expect(
-				() => electorValidation.validateVote(cpf, candidateNumber, secretPhrase)
+				() => electorValidation.validateVote(cpf, "1", secretPhrase)
 			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw an error for candidateNumber size greater than 2 digits", () => {
-			candidateNumber = "100";
             
 			expect(
-				() => electorValidation.validateVote(cpf, candidateNumber, secretPhrase)
+				() => electorValidation.validateVote(cpf, "100", secretPhrase)
 			).to.throw(IncorrectInformationReceived); 
-		});
 
-	}); 
-	
-	describe("#validateVote: secretPhrase", () => {
-       
-		it("Must throw an error for secretPhrase not string", () => {
-			secretPhrase = 1;
-            
 			expect(
-				() => electorValidation.validateVote(cpf, candidateNumber, secretPhrase)
+				() => electorValidation.validateVote(cpf, candidateNumber, 1)
 			).to.throw(IncorrectInformationReceived);
 		});
 
-	}); 
-});
-
-describe("ElectorValidation", () => {
-    
-	let electorValidation, year, month, cpf, secretPhrase;
-
-	beforeEach(() => {
-		electorValidation = new ElectorValidation();
-		yearElectionResearch = "2000";
-		monthElectionResearch = "01";
-		cpf = "00000000000";
-		secretPhrase = "secretPhrase";
 	});
 
-	describe("#validateSearchElector: cpf", () => {        
+	describe("#validateSearchElector", () => { 
+		
+		let cpfHashing = "adfsdfs00000fsdfdf000000";
+		let yearElectionResearch = "2000";
+		let monthElectionResearch = "01";
+		let secretPhrase = "secretPhrase";
+		
+		it("Must be successful, because values is correct", () => {
+			const value = electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpfHashing, secretPhrase);
+			
+			expect({cpfHashing, yearElectionResearch, monthElectionResearch, secretPhrase}).to.eql(value);
+		});
         
-		it("Must throw error for no cpf hashing", () => {
-			cpf = "0$$###000000000";            
-            
+		it("Must throw error, because the value is incorrect", () => {            
 			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
+				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, "0$$###000000000", secretPhrase)
 			).to.throw(IncorrectInformationReceived);     
-		});    
-
-	});
-
-
-	describe("#validateSearchElector: yearElectionResearch", () => {
-
-		it("Must throw an error for yearElectionResearch size smaller than 4 digits", () => {
-			yearElectionResearch = "200";
+	
+			expect(
+				() => electorValidation.validateSearchElector("200", monthElectionResearch, cpfHashing, secretPhrase)
+			).to.throw(IncorrectInformationReceived);
+		
+			expect(
+				() => electorValidation.validateSearchElector("20000", monthElectionResearch, cpfHashing, secretPhrase)
+			).to.throw(IncorrectInformationReceived);
+		
+			expect(
+				() => electorValidation.validateSearchElector(yearElectionResearch, "1", cpfHashing, secretPhrase)
+			).to.throw(IncorrectInformationReceived);
+		
+			expect(
+				() => electorValidation.validateSearchElector(yearElectionResearch, "011", cpfHashing, secretPhrase)
+			).to.throw(IncorrectInformationReceived);
 
 			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
+				() => electorValidation.validateSearchElector(yearElectionResearch, "00", cpfHashing, secretPhrase)
+			).to.throw(IncorrectInformationReceived);
+
+			expect(
+				() => electorValidation.validateSearchElector(yearElectionResearch, "13", cpfHashing, secretPhrase)
 			).to.throw(IncorrectInformationReceived);
 		});
 
-		it("Must throw an error for yearElectionResearch size greater than 4 digits", () => {
-			yearElectionResearch = "20000";
-
-			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
-			).to.throw(IncorrectInformationReceived);
-		});
-	});
-    
-	describe("#validateSearchElector: monthElectionResearch", () => {
-
-		it("Must throw an error for monthElectionResearch size smaller than 2 digits", () => {
-			monthElectionResearch = "1";
-
-			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw an error for monthElectionResearch size greater than 2 digits", () => {
-			monthElectionResearch = "011";
-
-			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw error for monthElectionResearch smaller than 01", () => {
-			monthElectionResearch = "00";
-
-			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw error for monthElectionResearch greather than 12", () => {
-			monthElectionResearch = "13";
-
-			expect(
-				() => electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpf, secretPhrase)
-			).to.throw(IncorrectInformationReceived);
-		});
 	});
 });

@@ -1,9 +1,9 @@
 const ExistingRecord = require("../Exceptions/ExistingRecord");
 const NotExistsRecord = require("../Exceptions/NotExistingRecord");
 
-class AdminRepository {
-
-	async createElectionResearch(ctx, electionResearch) {        
+class ElectionResearchRepository {
+    
+    async createElectionResearch(ctx, electionResearch) {        
 		const electionResearchExists = await this.electionResearchExists(ctx, electionResearch.getId());
 		if (electionResearchExists) {
 			throw new ExistingRecord();
@@ -94,6 +94,7 @@ class AdminRepository {
 
 		return resultsArray;
 	}
+	
 }
 
-module.exports = AdminRepository;
+module.exports = ElectionResearchRepository;

@@ -1,14 +1,14 @@
 class Candidate {
     
-	constructor(name, numberOfCandidate, photoUrl) {
-		this.id = numberOfCandidate;
+	constructor(name, candidateNumber, photoUrl) {
+		this.id = candidateNumber;
 		this.name = name;		
 		this.totalOfVotes = 0;
 		this.photoUrl = photoUrl;
 	}
     
-	static makeCandidate(name, numberOfCandidate, photoUrl) {	           			
-		return new Candidate(name, numberOfCandidate, photoUrl);			
+	static makeCandidate(name, candidateNumber, photoUrl) {	           			
+		return new Candidate(name, candidateNumber, photoUrl);			
 	}
 
 	static mountsCandidateObjectRetrievedFromTheBlockchain(candidateObject) {

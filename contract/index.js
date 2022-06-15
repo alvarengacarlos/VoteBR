@@ -1,4 +1,5 @@
-const voteBr = require('./lib/VoteBr.js');
+const ContractBase = require("./lib/ContractBase");
+const AdminContract = require("./lib/AdminContract");
+const ElectorContract = require("./lib/ElectorContract");
 
-module.exports.VoteBr = voteBr;
-module.exports.contracts = [voteBr];
+module.exports.contracts = [ContractBase, AdminContract, ElectorContract];

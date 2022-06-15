@@ -115,11 +115,11 @@ class ElectionResearch extends Serializer {
 		this.candidatesList[index] = candidate;
 	}
 
-	getCandidateByNumber(numberOfCandidate) {
+	getCandidateByNumber(candidateNumber) {
 		for (let c of this.candidatesList) {  
 			const candidateMounted = Candidate.mountsCandidateObjectRetrievedFromTheBlockchain(c);                 
 			
-			if(numberOfCandidate == candidateMounted.getId()) {
+			if(candidateNumber == candidateMounted.getId()) {
 				return candidateMounted;
 			}
 		}  

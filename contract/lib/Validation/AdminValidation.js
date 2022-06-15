@@ -18,14 +18,14 @@ class AdminValidation {
 		return value;
 	}
 
-	validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl) {
+	validateInsertCandidateInTheElectionResearch(name, candidateNumber, photoUrl) {
 		const schema = Joi.object({
 			name: Joi.string().min(4).max(30).required(),
-			numberOfCandidate: Joi.string().pattern(/^[0-9]+$/).min(2).max(2).required(),
+			candidateNumber: Joi.string().pattern(/^[0-9]+$/).min(2).max(2).required(),
 			photoUrl: Joi.string().uri().required()
 		});
 		
-		const {error, value} = schema.validate({name, numberOfCandidate, photoUrl});
+		const {error, value} = schema.validate({name, candidateNumber, photoUrl});
 
 		if (error) {
 			throw new IncorrectInformationReceived();
@@ -34,12 +34,12 @@ class AdminValidation {
 		return value;		
 	}
 
-	validateRemoveCandidateOfElectionResearch(numberOfCandidate) {
+	validateRemoveCandidateOfElectionResearch(candidateNumber) {
 		const schema = Joi.object({
-			numberOfCandidate: Joi.string().pattern(/^[0-9]+$/).min(2).max(2).required()
+			candidateNumber: Joi.string().pattern(/^[0-9]+$/).min(2).max(2).required()
 		});
 		
-		const {error, value} = schema.validate({numberOfCandidate});
+		const {error, value} = schema.validate({candidateNumber});
 		
 		if (error) {
 			throw new IncorrectInformationReceived();
@@ -48,7 +48,7 @@ class AdminValidation {
 		return value;
 	}
 
-	validateSearchElectionResearchLikeAdmin(year, month) {
+	validateSearchElectionResearch(year, month) {
 		const schema = Joi.object({			
 			year: Joi.string().pattern(/^[0-9]+$/).min(4).max(4).required(),
 			month: Joi.string().pattern(/^0[1-9]|1[0-2]$/).min(2).max(2).required()			

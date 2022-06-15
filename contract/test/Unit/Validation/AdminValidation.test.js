@@ -1,8 +1,6 @@
+const { describe, beforeEach, it } = require("mocha");
 const chai = require("chai");
-const sinonChai = require("sinon-chai");
-chai.use(sinonChai);
 const expect = chai.expect;
-const { describe, beforeEach } = require("mocha");
 
 const AdminValidation = require("../../../lib/Validation/AdminValidation");
 const IncorrectInformationReceived = require("../../../lib/Exceptions/IncorrectInformationReceived");
@@ -10,8 +8,6 @@ const IncorrectInformationReceived = require("../../../lib/Exceptions/IncorrectI
 describe("AdminValidation", () => {
 
 	let adminValidation;
-	let year = "2000";
-	let month = "01";
 
 	beforeEach(() => {
 		adminValidation = new AdminValidation();
@@ -20,242 +16,123 @@ describe("AdminValidation", () => {
 	describe("#validatesCreateElectionResearch", () => {
 
 		it("Must be successful, because values is correct", () => {
-			const value = adminValidation.validateCreateElectionResearch(year, month);
+			const value = adminValidation.validateCreateElectionResearch("2000", "01");
 
-			expect({ year, month }).to.eql(value);
-		});
+			expect({ year:"2000", month:"01" }).to.eql(value);
+		});	
 
-	});
+		it("Must throw an error, because values is incorrect", () => {
+			
+			expect(
+				() => adminValidation.validateCreateElectionResearch("200", "01")
+			).to.throw(IncorrectInformationReceived);
+		
+			expect(
+				() => adminValidation.validateCreateElectionResearch("20000", "01")
+			).to.throw(IncorrectInformationReceived);
+		
+			expect(
+				() => adminValidation.validateCreateElectionResearch("2000", "1")
+			).to.throw(IncorrectInformationReceived);
 
-	describe("#validateCreateElectionResearch: year", () => {
-
-		it("Must throw an error for year size smaller than 4 digits", () => {
-			year = "200";
+			
+			expect(
+				() => adminValidation.validateCreateElectionResearch("2000", "011")
+			).to.throw(IncorrectInformationReceived);
+		
 
 			expect(
-				() => adminValidation.validateCreateElectionResearch(year, month)
+				() => adminValidation.validateCreateElectionResearch("2000", "00")
+			).to.throw(IncorrectInformationReceived);
+		
+			expect(
+				() => adminValidation.validateCreateElectionResearch("2000", "13")
 			).to.throw(IncorrectInformationReceived);
 		});
 
-		it("Must throw an error for year size greater than 4 digits", () => {
-			year = "20000";
-
-			expect(
-				() => adminValidation.validateCreateElectionResearch(year, month)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-	});
-
-	describe("#validateCreateElectionResearch: month", () => {
-
-		it("Must throw an error for month size smaller than 2 digits", () => {
-			month = "1";
-
-			expect(
-				() => adminValidation.validateCreateElectionResearch(year, month)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw an error for month size greater than 2 digits", () => {
-			month = "011";
-
-			expect(
-				() => adminValidation.validateCreateElectionResearch(year, month)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw error for month smaller than 01", () => {
-			month = "00";
-
-			expect(
-				() => adminValidation.validateCreateElectionResearch(year, month)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw error for month greather than 12", () => {
-			month = "13";
-
-			expect(
-				() => adminValidation.validateCreateElectionResearch(year, month)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-	});
-
-});
-
-describe("AdminValidation", () => {
-
-	let adminValidation;
-	let name = "Anônimo Das Anônimas";
-	let numberOfCandidate = "01";
-	let photoUrl = "https://image.com.br";
-
-	beforeEach(() => {
-		adminValidation = new AdminValidation();
 	});
 
 	describe("#validateInsertCandidateInTheElectionResearch", () => {
+		
+		let name = "Anônimo Das Anônimas";
+		let candidateNumber = "01";
+		let photoUrl = "https://image.com.br";
 
 		it("Must be successful, because values is correct", () => {
-			const value = adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl);
+			const value = adminValidation.validateInsertCandidateInTheElectionResearch(name, candidateNumber, photoUrl);
 
-			expect({ name, numberOfCandidate, photoUrl }).to.eql(value);
+			expect({ name, candidateNumber, photoUrl }).to.eql(value);
 		});
 
-	});
-
-	describe("#validateInsertCandidateInTheElectionResearch: name", () => {
-
-		it("Must throw an error for name size smaller than 4 digits", async () => {
-			name = "Ano";
-
-			expect(
-				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-	});
-
-	describe("#validateInsertCandidateInTheElectionResearch: name", () => {
-
-		it("Must throw an error for name size greater than 30 digits", () => {
-			name = "Anonimo Anonimo Anonimo Anonimo";
-
-			expect(
-				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-	});
-
-	describe("#validateInsertCandidateInTheElectionResearch: numberOfCandidate", () => {
-
-		it("Must throw an error for numberOfCandidate size smaller than 2 digits", () => {
-			numberOfCandidate = "1";
-
-			expect(
-				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-	});
-
-	describe("#validateInsertCandidateInTheElectionResearch: numberOfCandidate", () => {
-
-		it("Must throw an error for numberOfCandidate size greater than 2 digits", () => {
-			numberOfCandidate = "100";
-
-			expect(
-				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, numberOfCandidate, photoUrl)
-			).to.throw(IncorrectInformationReceived);
-		});
-
-	});
-
-});
-
-
-describe("AdminValidation", () => {
 	
-	let adminValidation;
-	let numberOfCandidate = "01";
+		it("Must throw an error, because values is incorrect", async () => {
+			expect(
+				() => adminValidation.validateInsertCandidateInTheElectionResearch("Jac", candidateNumber, photoUrl)
+			).to.throw(IncorrectInformationReceived);
+		
+			expect(
+				() => adminValidation.validateInsertCandidateInTheElectionResearch("Anonimo Anonimo Anonimo Anonimo", candidateNumber, photoUrl)
+			).to.throw(IncorrectInformationReceived);
+		
+			expect(
+				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, "1", photoUrl)
+			).to.throw(IncorrectInformationReceived);
 
-	beforeEach(() => {
-		adminValidation = new AdminValidation();
+			expect(
+				() => adminValidation.validateInsertCandidateInTheElectionResearch(name, "100", photoUrl)
+			).to.throw(IncorrectInformationReceived);
+		});
+
 	});
 
-	describe("#validateRemoveCandidateOfElectionResearch: numberOfCandidate", () => {
+	describe("#validateRemoveCandidateOfElectionResearch", () => {
 		
 		it("Must be sucessfull", () => {
-			const value = adminValidation.validateRemoveCandidateOfElectionResearch(numberOfCandidate);
+			const value = adminValidation.validateRemoveCandidateOfElectionResearch("02");
 
-			expect({numberOfCandidate}).to.eql(value);
+			expect({ candidateNumber:"02" }).to.eql(value);
 		});
 		
-		it("Must throw an error for numberOfCandidate size smaller than 2 digits", () => {
-			numberOfCandidate = "1";
-	
+		it("Must throw an error, because the values is incorrect", () => {
 			expect(
-				() => adminValidation.validateRemoveCandidateOfElectionResearch(numberOfCandidate)
+				() => adminValidation.validateRemoveCandidateOfElectionResearch("1")
 			).to.throw(IncorrectInformationReceived);
-		});
-		
-		it("Must throw an error for numberOfCandidate size greater than 2 digits", () => {
-			numberOfCandidate = "100";
 
 			expect(
-				() => adminValidation.validateRemoveCandidateOfElectionResearch(numberOfCandidate)
+				() => adminValidation.validateRemoveCandidateOfElectionResearch("011")
 			).to.throw(IncorrectInformationReceived);
 		});
+
 	});	
 
-});
+	describe("#validateSearchElectionResearch", () => {
 
-describe("AdminAvaliation", () => {
-    
-	let adminValidation;
-	let year = "2000";
-	let month = "01";
-    
-	beforeEach(() => {
-		adminValidation = new AdminValidation();
-	});
-
-	describe("#validateSearchElectionResearchLikeAdmin: year", () => {
-
-		it("Must throw an error for year size smaller than 4 digits", () => {
-			year = "200";
-
+		it("Must throw an error, because the values is incorrect", () => {
 			expect(
-				() => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+				() => adminValidation.validateSearchElectionResearch("200", "01")
 			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw an error for year size greater than 4 digits", () => {
-			year = "20000";
-
+		
 			expect(
-				() => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+				() => adminValidation.validateSearchElectionResearch("20000", "01")
 			).to.throw(IncorrectInformationReceived);
-		});
-
-	});
-
-	describe("#validateSearchElectionResearchLikeAdmin: month", () => {
-        
-		it("Must throw an error for month size smaller than 2 digits", () => {
-			month = "1";
 
 			expect(
-				() => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+				() => adminValidation.validateSearchElectionResearch("2000", "1")
 			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw an error for month size greater than 2 digits", () => {
-			month = "011";
 
 			expect(
-				() => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+				() => adminValidation.validateSearchElectionResearch("2000", "011")
 			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw error for month smaller than 01", () => {
-			month = "00";
-
+		
 			expect(
-				() => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+				() => adminValidation.validateSearchElectionResearch("2000", "00")
 			).to.throw(IncorrectInformationReceived);
-		});
-
-		it("Must throw error for month greather than 12", () => {
-			month = "13";
-
+		
 			expect(
-				() => adminValidation.validateSearchElectionResearchLikeAdmin(year, month)
+				() => adminValidation.validateSearchElectionResearch("2000", "13")
 			).to.throw(IncorrectInformationReceived);
 		});
 
 	});
+	
 });

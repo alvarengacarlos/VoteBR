@@ -1,14 +1,12 @@
-const {describe, beforeEach, it} = require("mocha");
+const { describe, beforeEach, it } = require("mocha");
 const chai = require("chai");
-const sinon = require("sinon");
 const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 const expect = chai.expect;
 chai.should();
 
-const { Context } = require("fabric-contract-api");
-const { ChaincodeStub } = require("fabric-shim");
+const { ctx, chaincodeStub, resetChaincodeStubState } = require("../mocks");
 
 const ExistingRecord = require("../../../lib/Exceptions/ExistingRecord");
 const NotExistingRecord = require("../../../lib/Exceptions/NotExistingRecord");
@@ -20,29 +18,9 @@ const Candidate = require("../../../lib/Classes/Admin/Candidate");
 
 
 describe("ElectorRepository", () => {
-    
-	let transactionContext, chaincodeStub;
-    
+
 	beforeEach(() => {
-		transactionContext = new Context();
-        
-		chaincodeStub = sinon.createStubInstance(ChaincodeStub);
-		transactionContext.setChaincodeStub(chaincodeStub);
-
-		chaincodeStub.putState.callsFake((key, value) => {
-			if (!chaincodeStub.states) {
-				chaincodeStub.states = {};
-			}
-			chaincodeStub.states[key] = value;
-		});
-
-		chaincodeStub.getState.callsFake(async (key) => {
-			let ret;
-			if (chaincodeStub.states) {
-				ret = chaincodeStub.states[key];
-			}
-			return Promise.resolve(ret);
-		});
+		resetChaincodeStubState();
 	});
 
 	describe("#electorExists", () => {
@@ -50,14 +28,14 @@ describe("ElectorRepository", () => {
 		it("Must return true", async () => {
 			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.insertCandidate(candidate);            
-            
+			electionResearch.insertCandidate(candidate);
+
 			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
-            
+
 			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
-			const electorRepository = new ElectorRepository(); 
-			const response = await electorRepository.electorExists(transactionContext, elector.getId());
+			const electorRepository = new ElectorRepository();
+			const response = await electorRepository.electorExists(ctx, elector.getId());
 
 			expect(response).to.eql(true);
 		});
@@ -65,12 +43,12 @@ describe("ElectorRepository", () => {
 		it("Must return false", async () => {
 			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.insertCandidate(candidate); 
+			electionResearch.insertCandidate(candidate);
 
 			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
 
-			const electorRepository = new ElectorRepository(); 
-			const response = await electorRepository.electorExists(transactionContext, elector.getId());
+			const electorRepository = new ElectorRepository();
+			const response = await electorRepository.electorExists(ctx, elector.getId());
 
 			expect(response).to.eql(false);
 		});
@@ -82,26 +60,26 @@ describe("ElectorRepository", () => {
 		it("Must throw ExistingRecord", async () => {
 			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.insertCandidate(candidate);            
-            
+			electionResearch.insertCandidate(candidate);
+
 			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
-            
+
 			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
-			const electorRepository = new ElectorRepository(); 
-			await electorRepository.registerElector(transactionContext, elector)
+			const electorRepository = new ElectorRepository();
+			await electorRepository.registerElector(ctx, elector)
 				.should.be.rejectedWith(ExistingRecord);
 		});
 
 		it("Must register an elector", async () => {
 			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.insertCandidate(candidate);            
-            
+			electionResearch.insertCandidate(candidate);
+
 			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
 
-			const electorRepository = new ElectorRepository(); 
-			await electorRepository.registerElector(transactionContext, elector);
+			const electorRepository = new ElectorRepository();
+			await electorRepository.registerElector(ctx, elector);
 
 			const elBuffer = await chaincodeStub.getState(elector.getId());
 			const el = JSON.parse(elBuffer.toString());
@@ -116,29 +94,29 @@ describe("ElectorRepository", () => {
 		it("Must throw NotExistsRecord", async () => {
 			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.insertCandidate(candidate); 
+			electionResearch.insertCandidate(candidate);
 
 			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
 
-			const electorRepository = new ElectorRepository(); 
-			await electorRepository.retrieveElector(transactionContext, elector)
+			const electorRepository = new ElectorRepository();
+			await electorRepository.retrieveElector(ctx, elector)
 				.should.be.rejectedWith(NotExistingRecord);
 		});
 
 		it("Must return an elector", async () => {
 			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-			electionResearch.insertCandidate(candidate);            
-            
+			electionResearch.insertCandidate(candidate);
+
 			const elector = Elector.makeElector("01234567890", electionResearch.getId(), candidate, "secretPhrase");
-            
+
 			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
-			const electorRepository = new ElectorRepository(); 
-			const elBuffer = await electorRepository.retrieveElector(transactionContext, elector);
-                   
+			const electorRepository = new ElectorRepository();
+			const elBuffer = await electorRepository.retrieveElector(ctx, elector);
+
 			const el = JSON.parse(elBuffer.toString());
-			
+
 			expect(el).to.eql(elector);
 		});
 
