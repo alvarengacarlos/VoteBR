@@ -15,14 +15,14 @@ const UninitiatedElectionResearch = require("../../../lib/Exceptions/Admin/Elect
 const ElectionResearchInProgress = require("../../../lib/Exceptions/Admin/ElectionResearch/ElectionResearchInProgress");
 const ElectionResearchClosed = require("../../../lib/Exceptions/Admin/ElectionResearch/ElectionResearchClosed");
 
-describe("Exceptions/*", () => {
+describe("Exceptions", () => {
     
 	describe("Exception Class", () => {
 		it("Must be Exception instance", () => {
 			const exception = new Exception("NOT_FOUND", 404, "Page not found");
             
 			expect(exception).instanceOf(Exception);
-			expect(exception.message).equal("Page not found");            
+			expect(exception.message).equal("NOT_FOUND:404:Page not found");            
 		});
 	});
     
