@@ -23,7 +23,7 @@ const adminRoutes = (app) => {
         adminController.beginCollectingVotes);
 
     app.post(`${prefix}/finish-election-research`, validateToken.validateTokenForAdmin,
-        adminController.finishElectionResearch);
+        adminController.finishElectionResearchAndCollectingVotes);
 
     app.get(`${prefix}/search-election-research`, validateToken.validateTokenForAdmin,
         adminValidation.validateSearchElectionResearch,

@@ -38,9 +38,9 @@ class ElectionResearchContractRepository {
         }
     }
 
-    async finishElectionResearch(chaincode) {
+    async finishElectionResearchAndCollectingVotes(chaincode) {
         try {
-            await chaincode.submitTransaction("finishElectionResearch");
+            await chaincode.submitTransaction("finishElectionResearchAndCollectingVotes");
 
         } catch (exception) {
             throw new GeneralContractException(exception);

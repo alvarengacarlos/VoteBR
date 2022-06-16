@@ -74,10 +74,10 @@ class Admin {
         }
     }
 
-    async finishElectionResearch(req, res) {
+    async finishElectionResearchAndCollectingVotes(req, res) {
         try {
             const adminService = new AdminService();
-            await adminService.finishElectionResearch();
+            await adminService.finishElectionResearchAndCollectingVotes();
 
             return res.status(200).json();
 

@@ -53,12 +53,12 @@ class Admin {
         await this.contractRepository.beginCollectingVotes(chaincode);
     }
 
-    async finishElectionResearch() {
+    async finishElectionResearchAndCollectingVotes() {
         const wallet = await buildWallet();
 
         const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        await this.contractRepository.finishElectionResearch(chaincode);
+        await this.contractRepository.finishElectionResearchAndCollectingVotes(chaincode);
     }
 
     async searchElectionResearch(payload) {
