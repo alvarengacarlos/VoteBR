@@ -21,7 +21,7 @@ class ElectorContract extends ContractBase {
 		this.validation = new ElectorValidation();
 		this.repository = new ElectorRepository();
 		this.electionResearchRepository = new ElectionResearchRepository();
-		this.VOTE_LIMIT = VOTE_LIMIT ?? Number(147918483);	
+		this.VOTE_LIMIT = VOTE_LIMIT || Number(147918483);	
 	}
 
 	async vote(ctx, cpfHashing, candidateNumber, secretPhrase) {
