@@ -13,21 +13,15 @@ const InvalidAge = require("../../../src/App/Exception/Elector/InvalidAge");
 
 describe("ElectorService", () => {
     
-    let electorService, requestLibFake;
+    let electorService;
 
     beforeEach(() => {
-        electorService = new ElectorService();
-        
-        class RequestLibFake {
-            get(){};
-        }
-        requestLibFake = sinon.createStubInstance(RequestLibFake);
-        electorService.requestLib = requestLibFake;
+        electorService = new ElectorService();           
     });
 
     describe("#getBirthDateObject", () => {
 
-        it("Must return a birth date object", () => {
+        it("It must return a birth date object", () => {
             const birthDateString = "2000-02-01";
 
             const birthDateObject = electorService.getBirthDateObject(birthDateString);
@@ -39,7 +33,7 @@ describe("ElectorService", () => {
 
     describe("#cpfIsValid", () => {
 
-        it("Must return true", () => {
+        it("It must return true", () => {
             const cpf = "01234567890";
 
             const result = electorService.cpfIsValid(cpf);
@@ -47,7 +41,7 @@ describe("ElectorService", () => {
             expect(result).to.eql(true);
         });
 
-        it("Must return false", () => {
+        it("It must return false", () => {
             const cpf = "01234567891";
 
             const result = electorService.cpfIsValid(cpf);
@@ -59,7 +53,7 @@ describe("ElectorService", () => {
 
     describe("#ageIsValid", () => {
 
-        it("Must return true", () => {
+        it("It must return true", () => {
             const birthDateString = "2000-02-01";
             const birthDateObject = electorService.getBirthDateObject(birthDateString);
 
@@ -68,7 +62,7 @@ describe("ElectorService", () => {
             expect(result).to.eql(true);
         });
 
-        it("Must return false", () => {
+        it("It must return false", () => {
             const year = new Date().getFullYear();
             const month = new Date().getMonth();
             const day = new Date().getDay();
@@ -85,29 +79,28 @@ describe("ElectorService", () => {
 
     describe("#encryptCpf", () => {
         
-        it("Must encrypt cpf", () => {
+        it("It must encrypt cpf", () => {
             const cpf = "01234567890";
             
             const result = electorService.encryptCpf(cpf);
             
-            console.log(result);
             expect(result).to.eql("ee29eb4a8725678278ac439cf7abfd2a849cdc7378a6b6316017b81c51d720e7");
         });
 
     });
 
-    describe("#voteInBlockchain", () => {
+    describe("#vote", () => {
 
-        it("Must throw invalid cpf", async () => {
+        it("It must throw invalid cpf", async () => {
             const payload = {
                 cpf: "01234567891",
                 birthDate: "2000-06-23"
             };
             
-            await electorService.voteInBlockchain(payload).should.be.rejectedWith(InvalidCpf);
+            await electorService.vote(payload).should.be.rejectedWith(InvalidCpf);
         });
 
-        it("Must throw invalid age", async () => {
+        it("It must throw invalid age", async () => {
             const year = new Date().getFullYear();
             const month = new Date().getMonth();
             const day = new Date().getDay();
@@ -118,22 +111,107 @@ describe("ElectorService", () => {
                 birthDate: birthDateString
             };
             
-            await electorService.voteInBlockchain(payload).should.be.rejectedWith(InvalidAge);
+            await electorService.vote(payload).should.be.rejectedWith(InvalidAge);
+        });
+
+        it("It must be successfull, because the payload is correct", async () => {
+            const payload = {
+                cpf: "01234567890",
+                birthDate: "2000-01-01",
+                candidateNumber: "01"
+            };            
+
+            electorService.apiSearchCpf.validatesIfElectorIsReal = sinon.stub();
+            electorService.apiSearchCpf.validatesIfElectorIsReal.returns();
+            
+            electorService.contractRepository.vote = sinon.stub();
+            electorService.contractRepository.vote.returns();
+
+            electorService.connectionChaincode.connectElectorContract = sinon.stub();
+            electorService.connectionChaincode.connectElectorContract.returns();
+
+            electorService.connectionChaincode.disconnect = sinon.stub();
+            electorService.connectionChaincode.disconnect.returns();
+            
+            const secretPhrase = await electorService.vote(payload);
+
+            expect(secretPhrase).to.be.string
         });
 
     });
 
-    describe("#searchElectorInBlockchain", () => {
+    describe("#searchElector", () => {
 
-        it("Must throw invalid cpdf", async () => {
+        it("It must throw invalid cpdf", async () => {
             const payload = {
-                cpf: "01234567891",
                 yearElection: "2000",
-                monthElection: "02"
+                monthElection: "02",
+                cpf: "01234567891",                
+                secretPhrase: "secret"
             };
             
-            await electorService.searchElectorInBlockchain(payload).should.be.rejectedWith(InvalidCpf);
+            await electorService.searchElector(payload).should.be.rejectedWith(InvalidCpf);
         });
+
+        it("It must be successfully, because the payload is correct", async () => {
+            const payload = {
+                yearElection: "2000",
+                monthElection: "02",
+                cpf: "01234567890",
+                secretPhrase: "secret"                
+            };
+
+            electorService.contractRepository.searchElector = sinon.stub();
+            electorService.contractRepository.searchElector.returns({});
+
+            electorService.connectionChaincode.connectElectorContract = sinon.stub();
+            electorService.connectionChaincode.connectElectorContract.returns();
+            
+            electorService.connectionChaincode.disconnect = sinon.stub();
+            electorService.connectionChaincode.disconnect.returns();
+
+            const elector = await electorService.searchElector(payload);
+            
+            expect(elector).to.eql({});
+        });
+
+    });
+
+    describe("#searchElectionResearchInProgress", () => {
+
+        it("It must sucessfully, because the information is correct", async () => {
+            electorService.contractRepository.searchElectionResearchInProgress = sinon.stub();
+            electorService.contractRepository.searchElectionResearchInProgress.returns({});
+
+            electorService.connectionChaincode.connectElectorContract = sinon.stub();
+            electorService.connectionChaincode.connectElectorContract.returns();
+            
+            electorService.connectionChaincode.disconnect = sinon.stub();
+            electorService.connectionChaincode.disconnect.returns();
+
+            const electionResearch = await electorService.searchElectionResearchInProgress();
+
+            expect(electionResearch).to.eql({});
+        });        
+
+    });
+
+    describe("#searchElectionResearchClosed", () => {
+
+        it("It must sucessfully, because the information is correct", async () => {
+            electorService.contractRepository.searchElectionResearchClosed = sinon.stub();
+            electorService.contractRepository.searchElectionResearchClosed.returns({});
+
+            electorService.connectionChaincode.connectElectorContract = sinon.stub();
+            electorService.connectionChaincode.connectElectorContract.returns();
+            
+            electorService.connectionChaincode.disconnect = sinon.stub();
+            electorService.connectionChaincode.disconnect.returns();
+
+            const electionResearch = await electorService.searchElectionResearchClosed();
+
+            expect(electionResearch).to.eql({});
+        });        
 
     });
 

@@ -15,36 +15,48 @@ describe("ElectorContractRepository", () => {
         chaincode.evaluateTransaction = sinon.stub();
     });
 
-    it("It must vote", () => {
-        chaincode.submitTransaction.returns();
-
-        expect(async () => {
-            await repository.vote(chaincode, "1234567abcdefg", "01", "secret");
-        }).to.not.throw(GeneralContractException);
+    describe("vote", () => {
+        it("It must vote", () => {
+            chaincode.submitTransaction.returns();
+    
+            expect(async () => {
+                await repository.vote(chaincode, "1234567abcdefg", "01", "secret");
+            }).to.not.throw(GeneralContractException);
+        });
     });
+    
 
-    it("It must search elector", () => {
-        chaincode.evaluateTransaction.returns();
-
-        expect(async () => {
-            await repository.searchElector(chaincode, "2000", "01", "123456abcdefg", "secret");
-        }).to.not.throw(GeneralContractException);
+    describe("searchElector", () => {
+        it("It must search elector", () => {
+            chaincode.evaluateTransaction.returns();
+    
+            expect(async () => {
+                await repository.searchElector(chaincode, "2000", "01", "123456abcdefg", "secret");
+            }).to.not.throw(GeneralContractException);
+        });
     });
+    
 
-    it("It must search election research in progress", () => {
-        chaincode.evaluateTransaction.returns();
-
-        expect(async () => {
-            await repository.searchElectionResearchInProgress(chaincode);
-        }).to.not.throw(GeneralContractException);
+    describe("searchElectionResearchInProgress", () => {
+        it("It must search election research in progress", () => {
+            chaincode.evaluateTransaction.returns();
+    
+            expect(async () => {
+                await repository.searchElectionResearchInProgress(chaincode);
+            }).to.not.throw(GeneralContractException);
+        });
     });
+   
 
-    it("It must search election research closed", () => {
-        chaincode.evaluateTransaction.returns();
-
-        expect(async () => {
-            await repository.searchElectionResearchClosed(chaincode);
-        }).to.not.throw(GeneralContractException);
+    describe("searchElectionResearchClosed", () => {
+        it("It must search election research closed", () => {
+            chaincode.evaluateTransaction.returns();
+    
+            expect(async () => {
+                await repository.searchElectionResearchClosed(chaincode);
+            }).to.not.throw(GeneralContractException);
+        });
+    
     });
-
+    
 });

@@ -1,4 +1,4 @@
-const { describe, beforeEach, it } = require("mocha");
+const { describe, it } = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
 
@@ -14,12 +14,14 @@ describe("GeneralContractException", () => {
         }]
     };
 
-    it("It must create exception with sucessfully", () => {
-        const exception = new GeneralContractException(chaincodeError);
-
-        expect(exception.httpStatusCode).to.eql(400);
-        expect(exception.internalCode).to.eql("ELECTION_RESEARCH_IN_PROGRESS");
-        expect(exception.message.includes("There is already an election research in progress")).to.eql(true);
-    });
+    describe("#extractMessage", () => {
+        it("It must create exception with sucessfully", () => {
+            const exception = new GeneralContractException(chaincodeError);
+    
+            expect(exception.httpStatusCode).to.eql(400);
+            expect(exception.internalCode).to.eql("ELECTION_RESEARCH_IN_PROGRESS");
+            expect(exception.message.includes("There is already an election research in progress")).to.eql(true);
+        });
+    });    
 
 });

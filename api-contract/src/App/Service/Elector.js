@@ -15,6 +15,7 @@ class Elector {
 	constructor() {		
 		this.contractRepository = new ElectorContractRepository();
 		this.apiSearchCpf = new ApiSearchCpf();
+		this.connectionChaincode = new ConnectionChaincode();
 	}
 
 	async vote(payload) {		
@@ -41,12 +42,12 @@ class Elector {
 		
 		//Smart Contract call
 		const wallet = await buildWallet();
-
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+        
+        const chaincode = await this.connectionChaincode.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
 
         await this.contractRepository.vote(chaincode, cpfHashing, candidateNumber, secretPhrase);
-		
+		this.connectionChaincode.disconnect();
+
 		return secretPhrase;
     }
 
@@ -142,9 +143,9 @@ class Elector {
 
 		//Smart contract call
 		const wallet = await buildWallet();
-
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+		
+        const chaincode = await this.connectionChaincode.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+		this.connectionChaincode.disconnect();
 
 		return (await this.contractRepository.searchElector(chaincode, yearElection, monthElection, cpfHashing, secretPhrase));
 	}
@@ -152,9 +153,8 @@ class Elector {
 	async searchElectionResearchInProgress() {	
 		const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-
-        const chaincode = await connection.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+		this.connectionChaincode.disconnect();
 
         return (await this.contractRepository.searchElectionResearchInProgress(chaincode));
 	}
@@ -162,9 +162,8 @@ class Elector {
 	async searchElectionResearchClosed() {
 		const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-
-        const chaincode = await connection.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+		this.connectionChaincode.disconnect();
 
         return (await this.contractRepository.searchElectionResearchClosed(chaincode));
 	}
