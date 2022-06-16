@@ -53,7 +53,7 @@ class ConnectionChaincode {
 		}
 	}
 
-	disconnect() {
+	async disconnect() {
 		this.gateway.disconnect();
 	}
 }

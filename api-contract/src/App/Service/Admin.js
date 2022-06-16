@@ -18,8 +18,7 @@ class Admin {
 
         const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         await this.contractRepository.createElectionResearch(chaincode, year, month);
     }
@@ -31,8 +30,7 @@ class Admin {
 
         const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         await this.contractRepository.insertCandidateInTheElectionResearch(chaincode, candidateName, candidateNumber, photoUrl);
     }
@@ -42,8 +40,7 @@ class Admin {
 
         const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         await this.contractRepository.removeCandidateOfElectionResearch(chaincode, candidateNumber);
     }
@@ -51,8 +48,7 @@ class Admin {
     async beginCollectingVotes() {
         const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         await this.contractRepository.beginCollectingVotes(chaincode);
     }
@@ -60,8 +56,7 @@ class Admin {
     async finishElectionResearch() {
         const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         await this.contractRepository.finishElectionResearch(chaincode);
     }
@@ -72,8 +67,7 @@ class Admin {
 
         const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         return (await this.contractRepository.searchElectionResearch(chaincode, year, month));
     }
@@ -81,8 +75,7 @@ class Admin {
     async searchElectionResearchWithoutStarting() {
         const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         return (await this.contractRepository.searchElectionResearchWithoutStarting(chaincode));
     }
@@ -90,8 +83,7 @@ class Admin {
     async searchElectionResearchInProgress() {
         const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         return (await this.contractRepository.searchElectionResearchInProgress(chaincode));
     }
@@ -99,8 +91,7 @@ class Admin {
     async searchElectionResearchClosed() {
         const wallet = await buildWallet();
 
-        const connection = new ConnectionChaincode();
-        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await this.connectionChaincode.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         return (await this.contractRepository.searchElectionResearchClosed(chaincode));
     }

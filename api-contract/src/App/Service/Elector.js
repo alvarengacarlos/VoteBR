@@ -46,8 +46,7 @@ class Elector {
         const chaincode = await this.connectionChaincode.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
 
         await this.contractRepository.vote(chaincode, cpfHashing, candidateNumber, secretPhrase);
-		this.connectionChaincode.disconnect();
-
+		
 		return secretPhrase;
     }
 
@@ -143,9 +142,8 @@ class Elector {
 
 		//Smart contract call
 		const wallet = await buildWallet();
-		
+		console.log("Aqui");
         const chaincode = await this.connectionChaincode.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
-		this.connectionChaincode.disconnect();
 
 		return (await this.contractRepository.searchElector(chaincode, yearElection, monthElection, cpfHashing, secretPhrase));
 	}
@@ -154,7 +152,6 @@ class Elector {
 		const wallet = await buildWallet();
 
         const chaincode = await this.connectionChaincode.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
-		this.connectionChaincode.disconnect();
 
         return (await this.contractRepository.searchElectionResearchInProgress(chaincode));
 	}
@@ -163,7 +160,6 @@ class Elector {
 		const wallet = await buildWallet();
 
         const chaincode = await this.connectionChaincode.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
-		this.connectionChaincode.disconnect();
 
         return (await this.contractRepository.searchElectionResearchClosed(chaincode));
 	}

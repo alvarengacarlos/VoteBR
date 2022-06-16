@@ -129,10 +129,7 @@ describe("ElectorService", () => {
 
             electorService.connectionChaincode.connectElectorContract = sinon.stub();
             electorService.connectionChaincode.connectElectorContract.returns();
-
-            electorService.connectionChaincode.disconnect = sinon.stub();
-            electorService.connectionChaincode.disconnect.returns();
-            
+                        
             const secretPhrase = await electorService.vote(payload);
 
             expect(secretPhrase).to.be.string
@@ -166,10 +163,7 @@ describe("ElectorService", () => {
 
             electorService.connectionChaincode.connectElectorContract = sinon.stub();
             electorService.connectionChaincode.connectElectorContract.returns();
-            
-            electorService.connectionChaincode.disconnect = sinon.stub();
-            electorService.connectionChaincode.disconnect.returns();
-
+                        
             const elector = await electorService.searchElector(payload);
             
             expect(elector).to.eql({});
@@ -185,10 +179,7 @@ describe("ElectorService", () => {
 
             electorService.connectionChaincode.connectElectorContract = sinon.stub();
             electorService.connectionChaincode.connectElectorContract.returns();
-            
-            electorService.connectionChaincode.disconnect = sinon.stub();
-            electorService.connectionChaincode.disconnect.returns();
-
+                        
             const electionResearch = await electorService.searchElectionResearchInProgress();
 
             expect(electionResearch).to.eql({});
@@ -204,10 +195,7 @@ describe("ElectorService", () => {
 
             electorService.connectionChaincode.connectElectorContract = sinon.stub();
             electorService.connectionChaincode.connectElectorContract.returns();
-            
-            electorService.connectionChaincode.disconnect = sinon.stub();
-            electorService.connectionChaincode.disconnect.returns();
-
+                        
             const electionResearch = await electorService.searchElectionResearchClosed();
 
             expect(electionResearch).to.eql({});
