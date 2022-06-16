@@ -11,7 +11,6 @@ chai.should();
 const ApiSearchCpf = require("../../../src/App/Service/ApiSearchCpf");
 const InternalFailureWhenSearchingVoter = require("../../../src/App/Exception/InternalFailureWhenSearchingVoter")
 const ExternalApiException = require("../../../src/App/Exception/ApiSearchCpf/ExternalApiException");
-const InternalApiException = require("../../../src/App/Exception/ApiSearchCpf/InternalApiException");
 
 describe("ApiSearchCpf", () => {
 
@@ -32,7 +31,7 @@ describe("ApiSearchCpf", () => {
 
     describe("#searchElector", () => {
 
-        it("Must throw InternalFailureWhenSearchingVoter", async () => {
+        it("It must throw InternalFailureWhenSearchingVoter", async () => {
             apiSearchCpf.requestLib.get.callsFake(() => {
                 throw new Error();
             });
@@ -48,7 +47,7 @@ describe("ApiSearchCpf", () => {
                 .should.be.rejectedWith(InternalFailureWhenSearchingVoter);
         });
 
-        it("Must be successfull", async () => {
+        it("It must be successfull", async () => {
             apiSearchCpf.requestLib.get.callsFake(async () => {
                 const response = {
                     status: 200,
@@ -74,7 +73,7 @@ describe("ApiSearchCpf", () => {
 
     describe("#analyzeResponse", () => {
 
-        it("Must throw ExternalApiException", () => {
+        it("It must throw ExternalApiException", () => {
             const response = {
                 status: 400,
                 data: {code: null, message: "Error"}
@@ -91,7 +90,7 @@ describe("ApiSearchCpf", () => {
             
         });
 
-        it("Must throw InternalApiException", () => {
+        it("It must logger InternalApiException and throw InternalFailureWhenSearchingVoter", () => {
             const response = {
                 status: 400,
                 data: {code: null, message: "Error"}
@@ -107,7 +106,7 @@ describe("ApiSearchCpf", () => {
             
         });
 
-        it("Must be successfull", async () => {            
+        it("It must be successfull", async () => {            
             const response = {
                 status: 200,
                 data: {code: 0}
