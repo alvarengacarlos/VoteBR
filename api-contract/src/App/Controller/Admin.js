@@ -1,5 +1,5 @@
 const AdminService = require("../Service/Admin");
-const AuthService = require("../Service/Auth");
+const AuthService = require("../Service/Authentication");
 const ExceptionFormatter = require("../Service/ExceptionFormatter");
 
 class Admin {
@@ -88,10 +88,10 @@ class Admin {
         }
     }
 
-    async searchElectionResearchLikeAdmin(req, res) {
+    async searchElectionResearch(req, res) {
         try {
             const adminService = new AdminService();
-            const result = await adminService.searchElectionResearchLikeAdminInBlockchain(req.body);
+            const result = await adminService.searchElectionResearchInBlockchain(req.body);
         
             return res.status(200).json({result: result});
         
@@ -105,7 +105,7 @@ class Admin {
     async searchElectionResearchWithoutStarting(req, res) {
         try {
             const adminService = new AdminService();
-            const result = await adminService.searchElectionResearchWithoutStartingLikeAdminInBlockchain();    
+            const result = await adminService.searchElectionResearchWithoutStartingInBlockchain();    
             
             return res.status(200).json({result: result});
 
@@ -120,7 +120,7 @@ class Admin {
     async searchElectionResearchInProgress(req, res) {
         try {
             const adminService = new AdminService();
-            const result = await adminService.searchElectionResearchInProgressLikeAdminInBlockchain();    
+            const result = await adminService.searchElectionResearchInProgressInBlockchain();    
             
             return res.status(200).json({result: result});
 
@@ -134,7 +134,7 @@ class Admin {
     async searchElectionResearchClosed(req, res) {
         try {
             const adminService = new AdminService();
-            const result = await adminService.searchElectionResearchClosedLikeAdminInBlockchain();    
+            const result = await adminService.searchElectionResearchClosedInBlockchain();    
             
             return res.status(200).json({result: result});
 

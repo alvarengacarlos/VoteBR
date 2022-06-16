@@ -86,7 +86,7 @@ class Admin {
         }
     }
 
-    async searchElectionResearchLikeAdminInBlockchain(payload) {
+    async searchElectionResearchInBlockchain(payload) {
         const year = String(payload.yearElection);
         const month = String(payload.monthElection);
 
@@ -96,7 +96,7 @@ class Admin {
         const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         try {            
-            const result = await chaincode.submitTransaction("searchElectionResearchLikeAdmin", year, month);
+            const result = await chaincode.submitTransaction("searchElectionResearch", year, month);
             
             return JSON.parse(result.toString());
 
@@ -105,14 +105,14 @@ class Admin {
         }
     }
 
-    async searchElectionResearchWithoutStartingLikeAdminInBlockchain() {
+    async searchElectionResearchWithoutStartingInBlockchain() {
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
         const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         try {            
-            const result = await chaincode.submitTransaction("searchElectionResearchWithoutStartingLikeAdmin");
+            const result = await chaincode.submitTransaction("searchElectionResearchWithoutStarting");
             
             return JSON.parse(result.toString());
 
@@ -121,14 +121,14 @@ class Admin {
         }                    
     }
 
-    async searchElectionResearchInProgressLikeAdminInBlockchain() {
+    async searchElectionResearchInProgressInBlockchain() {
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
         const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         try {            
-            const result = await chaincode.submitTransaction("searchElectionResearchInProgressLikeAdmin");
+            const result = await chaincode.submitTransaction("searchElectionResearchInProgress");
             
             return JSON.parse(result.toString());
 
@@ -137,14 +137,14 @@ class Admin {
         }     
     }
 
-    async searchElectionResearchClosedLikeAdminInBlockchain() {
+    async searchElectionResearchClosedInBlockchain() {
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
         const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
         try {            
-            const result = await chaincode.submitTransaction("searchElectionResearchClosedLikeAdmin");
+            const result = await chaincode.submitTransaction("searchElectionResearchClosed");
             
             return JSON.parse(result.toString());
 

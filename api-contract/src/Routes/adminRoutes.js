@@ -26,8 +26,8 @@ const adminRoutes = (app) => {
         adminController.finishElectionResearch);
 
     app.get(`${prefix}/search-election-research`, validateToken.validateTokenForAdmin,
-        adminValidation.validateSearchElectionResearchLikeAdmin,
-        adminController.searchElectionResearchLikeAdmin);
+        adminValidation.validateSearchElectionResearch,
+        adminController.searchElectionResearch);
 
     app.get(`${prefix}/search-election-research-without-starting`, validateToken.validateTokenForAdmin,
         adminController.searchElectionResearchWithoutStarting);

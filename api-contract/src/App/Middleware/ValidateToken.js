@@ -1,4 +1,4 @@
-const TokenProvider = require("../Service/TokenProvider");
+const TokenProvider = require("../Provider/TokenProvider");
 const ExceptionFormatter = require("../Service/ExceptionFormatter");
 const TokenExpired = require("../Exception/TokenExpired");
 

@@ -1,6 +1,6 @@
 const process = require("dotenv").config();
 
-const TokenProvider = require("./TokenProvider");
+const TokenProvider = require("../Provider/TokenProvider");
 
 const AuthFail = require("../Exception/AuthFail");
 

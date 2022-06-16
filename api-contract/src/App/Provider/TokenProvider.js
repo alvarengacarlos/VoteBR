@@ -3,8 +3,6 @@ const jsonWebToken = require("jsonwebtoken");
 const crypto = require("crypto");
 
 const Forbidden = require("../Exception/Forbidden");
-
-
 const TokenExpired = require("../Exception/TokenExpired");
 
 class TokenProvider {

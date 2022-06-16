@@ -6,7 +6,7 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-const Auth = require("../../../src/App/Service/Auth");
+const Auth = require("../../../src/App/Service/Authentication");
 const AuthFail = require("../../../src/App/Exception/AuthFail");
 
 describe("Auth", () => {

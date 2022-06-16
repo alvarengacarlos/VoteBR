@@ -67,7 +67,7 @@ class Admin {
         next();
     }
 
-    validateSearchElectionResearchLikeAdmin(req, res, next) {
+    validateSearchElectionResearch(req, res, next) {
         const schema = Joi.object({
             monthElection: Joi.number().integer().positive().required(), 
             yearElection: Joi.number().integer().positive().required(),

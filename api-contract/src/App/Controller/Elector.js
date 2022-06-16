@@ -1,5 +1,5 @@
 const ElectorService = require("../Service/Elector");
-const AuthService = require("../Service/Auth");
+const AuthService = require("../Service/Authentication");
 const ExceptionFormatter = require("../Service/ExceptionFormatter");
 
 class Elector {
