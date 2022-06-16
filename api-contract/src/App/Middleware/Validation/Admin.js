@@ -1,5 +1,6 @@
 const Joi = require("joi");
-const ExceptionFormatter = require("../../Service/ExceptionFormatter");
+const JoiWrapper = require("../../Exception/JoiWrapperException");
+const formatException = require("../../Provider/formatException");
 
 class Admin {
 
@@ -11,9 +12,11 @@ class Admin {
 
         const value = schema.validate(req.body);
 
-        if (value.error) {            
-            const ef = ExceptionFormatter.formatJoiException(value.error);            
-            return res.status(ef.httpStatusCode).json(ef);
+        if (value.error) {         
+            const exception = new JoiWrapper(value.error.message);             
+            const exceptionFormated = formatException(exception);
+
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
         
         next();
@@ -27,9 +30,11 @@ class Admin {
     
         const value = schema.validate(req.body);
     
-        if (value.error) {
-            const ef = ExceptionFormatter.formatJoiException(value.error);            
-            return res.status(ef.httpStatusCode).json(ef);
+        if (value.error) {         
+            const exception = new JoiWrapper(value.error.message);             
+            const exceptionFormated = formatException(exception);
+            
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     
         next();
@@ -44,9 +49,11 @@ class Admin {
     
         const value = schema.validate(req.body);
     
-        if (value.error) {
-            const ef = ExceptionFormatter.formatJoiException(value.error);            
-            return res.status(ef.httpStatusCode).json(ef);
+        if (value.error) {         
+            const exception = new JoiWrapper(value.error.message);             
+            const exceptionFormated = formatException(exception);
+            
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     
         next();
@@ -59,9 +66,11 @@ class Admin {
     
         const value = schema.validate(req.body);
     
-        if (value.error) {
-            const ef = ExceptionFormatter.formatJoiException(value.error);            
-            return res.status(ef.httpStatusCode).json(ef);
+        if (value.error) {         
+            const exception = new JoiWrapper(value.error.message);             
+            const exceptionFormated = formatException(exception);
+            
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     
         next();
@@ -75,9 +84,11 @@ class Admin {
     
         const value = schema.validate(req.body);
     
-        if (value.error) {
-            const ef = ExceptionFormatter.formatJoiException(value.error);            
-            return res.status(ef.httpStatusCode).json(ef);
+        if (value.error) {         
+            const exception = new JoiWrapper(value.error.message);             
+            const exceptionFormated = formatException(exception);
+            
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     
         next();

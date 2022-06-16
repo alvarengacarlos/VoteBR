@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const process = require("dotenv").config();
 
-const CcpNotFound = require("../../App/Exception/Bootstrap/CcpNotFound");
+const CcpNotFound = require("../../App/Exception/CcpNotFound");
 
 const buildCCPOrg = () => {  
 	const absolutePathCcp = process.parsed.CONTRACT_CCP_ABSOLUTE_PATH;  

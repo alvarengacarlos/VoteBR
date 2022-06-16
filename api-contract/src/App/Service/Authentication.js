@@ -2,7 +2,7 @@ const process = require("dotenv").config();
 
 const TokenProvider = require("../Provider/TokenProvider");
 
-const AuthFail = require("../Exception/AuthFail");
+const AuthenticateFail = require("../Exception/AuthenticateFail");
 
 class Authenticate {
 
@@ -23,7 +23,7 @@ class Authenticate {
             return token;
         }
 
-        throw new AuthFail();
+        throw new AuthenticateFail();
     }
 
     authenticateElector(payload) {
@@ -35,7 +35,7 @@ class Authenticate {
             return token;
         }
 
-        throw new AuthFail();
+        throw new AuthenticateFail();
     }
 
 }

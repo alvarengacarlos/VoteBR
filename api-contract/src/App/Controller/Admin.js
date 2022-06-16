@@ -1,6 +1,6 @@
 const AdminService = require("../Service/Admin");
 const AuthenticateService = require("../Service/Authentication");
-const ExceptionFormatter = require("../Service/ExceptionFormatter");
+const formatException = require("../Provider/formatException");
 
 class Admin {
 
@@ -12,9 +12,9 @@ class Admin {
             return res.status(200).json({token: token});
 
         } catch (exception) {            
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
@@ -26,9 +26,9 @@ class Admin {
             return res.status(201).json();
 
         } catch (exception) {
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
@@ -40,9 +40,9 @@ class Admin {
             return res.status(201).json();
         
         } catch(exception) {
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
@@ -54,9 +54,9 @@ class Admin {
             return res.status(204).json();
 
         } catch(exception) {
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
@@ -68,9 +68,9 @@ class Admin {
             return res.status(200).json();
 
         } catch(exception) {
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
@@ -82,9 +82,9 @@ class Admin {
             return res.status(200).json();
 
         } catch(exception) {
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
@@ -96,9 +96,9 @@ class Admin {
             return res.status(200).json({result: result});
         
         } catch(exception) {
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
     
@@ -110,9 +110,9 @@ class Admin {
             return res.status(200).json({result: result});
 
         } catch(exception) {
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }        
         
     }
@@ -125,9 +125,9 @@ class Admin {
             return res.status(200).json({result: result});
 
         } catch(exception) {
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }          
     }
 
@@ -139,9 +139,9 @@ class Admin {
             return res.status(200).json({result: result});
 
         } catch(exception) {
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }    
     }
 }

@@ -7,7 +7,7 @@ chai.use(chaiAsPromised);
 const expect = chai.expect;
 
 const Auth = require("../../../src/App/Service/Authentication");
-const AuthFail = require("../../../src/App/Exception/AuthFail");
+const AuthenticateFail = require("../../../src/App/Exception/AuthenticateFail");
 
 describe("Auth", () => {
 
@@ -38,7 +38,7 @@ describe("Auth", () => {
                 password: "123"
             };
             
-            expect(() => auth.authenticateAdmin(payload)).to.throw(AuthFail);            
+            expect(() => auth.authenticateAdmin(payload)).to.throw(AuthenticateFail);            
         });
 
     });

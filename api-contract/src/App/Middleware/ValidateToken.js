@@ -1,6 +1,6 @@
 const TokenProvider = require("../Provider/TokenProvider");
-const ExceptionFormatter = require("../Service/ExceptionFormatter");
-const TokenExpired = require("../Exception/TokenExpired");
+const TokenExpiredException = require("../Exception/TokenExpired");
+const formatException = require("../Provider/formatException");
 
 class ValidateToken {
 
@@ -8,9 +8,9 @@ class ValidateToken {
         const token = req.headers['token'];
 
         if (!token) {
-            const exception = new TokenExpired();
-            const ef = ExceptionFormatter.formatApiException(exception);
-            res.status(ef.httpStatusCode).json(ef) 
+            const exception = new TokenExpiredException();
+            const exceptionFormated = formatException(exception);            
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
 
         const tokenProvider = new TokenProvider();
@@ -18,8 +18,8 @@ class ValidateToken {
             tokenProvider.verifyTokenAdmin(token);
         
         } catch(exception) {                     
-            const ef = ExceptionFormatter.formatApiException(exception);
-            return res.status(ef.httpStatusCode).json(ef);
+            const exceptionFormated = formatException(exception.message);            
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
 
         next();
@@ -29,9 +29,9 @@ class ValidateToken {
         const token = req.headers['token'];
 
         if (!token) {
-            const exception = new TokenExpired();
-            const ef = ExceptionFormatter.formatApiException(exception);
-            res.status(ef.httpStatusCode).json(ef) 
+            const exception = new TokenExpiredException();
+            const exceptionFormated = formatException(exception);            
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
 
         const tokenProvider = new TokenProvider();
@@ -39,8 +39,8 @@ class ValidateToken {
             tokenProvider.verifyTokenElector(token);
         
         } catch(exception) {                     
-            const ef = ExceptionFormatter.formatApiException(exception);
-            return res.status(ef.httpStatusCode).json(ef);
+            const exceptionFormated = formatException(exception.message);            
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
 
         next();

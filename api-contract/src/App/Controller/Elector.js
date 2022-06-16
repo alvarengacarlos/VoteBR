@@ -1,6 +1,6 @@
 const ElectorService = require("../Service/Elector");
 const AuthService = require("../Service/Authentication");
-const ExceptionFormatter = require("../Service/ExceptionFormatter");
+const formatException = require("../Provider/formatException");
 
 class Elector {
 
@@ -12,9 +12,9 @@ class Elector {
             return res.status(200).json({token: token});
 
         } catch (exception) {            
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
     
@@ -26,9 +26,9 @@ class Elector {
             return res.status(201).json({result: secretPhrase});  
 
         } catch (exception) {            
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
@@ -40,9 +40,9 @@ class Elector {
             return res.status(200).json({result: result});  
 
         } catch (exception) {            
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
@@ -54,9 +54,9 @@ class Elector {
             return res.status(200).json({result: result});  
 
         } catch (exception) {            
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
@@ -68,9 +68,9 @@ class Elector {
             return res.status(200).json({result: result});  
 
         } catch (exception) {            
-            const ef = ExceptionFormatter.formatApiException(exception);
+            const exceptionFormated = formatException(exception);
             
-            return res.status(ef.httpStatusCode).json(ef);
+            return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
     }
 
