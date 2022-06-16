@@ -49,7 +49,7 @@ class ElectionResearchContractRepository {
 
     async searchElectionResearch(chaincode, year, month) {
         try {
-            const result = await chaincode.submitTransaction("retrieveElectionResearch", year, month);
+            const result = await chaincode.evaluateTransaction("retrieveElectionResearch", year, month);
 
             return JSON.parse(result.toString());
 
@@ -60,7 +60,7 @@ class ElectionResearchContractRepository {
 
     async searchElectionResearchWithoutStarting(chaincode) {
         try {
-            const result = await chaincode.submitTransaction("retrieveElectionResearchWithoutStarting");
+            const result = await chaincode.evaluateTransaction("retrieveElectionResearchWithoutStarting");
 
             return JSON.parse(result.toString());
 
@@ -71,7 +71,7 @@ class ElectionResearchContractRepository {
 
     async searchElectionResearchInProgress(chaincode) {
         try {
-            const result = await chaincode.submitTransaction("retrieveElectionResearchInProgress");
+            const result = await chaincode.evaluateTransaction("retrieveElectionResearchInProgress");
 
             return JSON.parse(result.toString());
 
@@ -82,7 +82,7 @@ class ElectionResearchContractRepository {
 
     async searchElectionResearchClosed(chaincode) {
         try {
-            const result = await chaincode.submitTransaction("retrieveElectionResearchClosed");
+            const result = await chaincode.evaluateTransaction("retrieveElectionResearchClosed");
 
             return JSON.parse(result.toString());
 

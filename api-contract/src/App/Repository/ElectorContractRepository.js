@@ -13,7 +13,7 @@ class ElectorContractRepository {
 
     async searchElector(chaincode, yearElection, monthElection, cpfHashing, secretPhrase) {
         try {
-            const result = await chaincode.submitTransaction("searchElector", yearElection, monthElection, cpfHashing, secretPhrase);
+            const result = await chaincode.evaluateTransaction("searchElector", yearElection, monthElection, cpfHashing, secretPhrase);
 			return JSON.parse(result.toString());
 
         } catch (exception) {
@@ -23,7 +23,7 @@ class ElectorContractRepository {
 
     async searchElectionResearchInProgress(chaincode) {
         try {
-            const result = await chaincode.submitTransaction("searchElectionResearchInProgress");
+            const result = await chaincode.evaluateTransaction("searchElectionResearchInProgress");
 			return JSON.parse(result.toString());
 
         } catch (exception) {
@@ -33,7 +33,7 @@ class ElectorContractRepository {
 
     async searchElectionResearchClosed(chaincode) {
         try {
-            const result = await chaincode.submitTransaction("searchElectionResearchClosed");
+            const result = await chaincode.evaluateTransaction("searchElectionResearchClosed");
 			return JSON.parse(result.toString());
 
         } catch (exception) {
