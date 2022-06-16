@@ -16,7 +16,7 @@ class ElectionResearch extends Serializer {
 		this.candidatesList = [];
 		this.isStart = false;
 		this.isClose = false;
-		this.createIn = new Date().toString();
+		this.createIn = Date.now();
 		this.startIn = null;
 		this.finishIn = null;
 		this.totalOfVotes = 0;
@@ -142,7 +142,7 @@ class ElectionResearch extends Serializer {
 
 		this.isStart = true;
 		this.totalOfVotes = 0;
-		this.startIn = new Date().toString();
+		this.startIn = Date.now();
 	}
 
 	finishElectionResearch() {
@@ -155,7 +155,7 @@ class ElectionResearch extends Serializer {
 		}
 
 		this.isClose = true;
-		this.finishIn = new Date().toString();
+		this.finishIn = Date.now();
 	}
 
 }
