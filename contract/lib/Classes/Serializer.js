@@ -1,3 +1,5 @@
+const {Buffer} = require("buffer");
+
 class Serializer {
 
 	serializerInBuffer() {

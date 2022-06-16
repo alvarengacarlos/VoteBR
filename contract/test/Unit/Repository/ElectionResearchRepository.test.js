@@ -110,7 +110,7 @@ describe("ElectionResearchRepository", () => {
 			const eBuffer = await chaincodeStub.getState(electionResearch.getId());
 			const eObject = JSON.parse(eBuffer.toString());
 
-			e = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(eObject);
+			let e = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(eObject);
 			e.start = true;
 
 			const electionResearchRepository = new ElectionResearchRepository();

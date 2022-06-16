@@ -39,7 +39,7 @@ describe("AdminContract", () => {
 				.withArgs(ctx)
 				.callsFake(() => [electionResearch]);
 			
-            await adminContract.createElectionResearch(ctx, "2000", "01")
+			await adminContract.createElectionResearch(ctx, "2000", "01")
 				.should.be.rejectedWith(ElectionResearchWithoutStartingExist);
 		});
 

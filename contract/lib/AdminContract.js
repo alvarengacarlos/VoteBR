@@ -16,19 +16,19 @@ class AdminContract extends ContractBase {
 	constructor() {
 		super();
 		this.validation = new AdminValidation();
-		this.repository = new ElectionResearchRepository();		
+		this.repository = new ElectionResearchRepository();
 	}
 
 	async createElectionResearch(ctx, year, month) {
 		this._checkAuthorityAdmin(ctx);
 
 		this.validation.validateCreateElectionResearch(year, month);
-	
-		const electionResearchWithoutStartingList = await this.repository.retrieveElectionResearchWithoutStarting(ctx);    
+
+		const electionResearchWithoutStartingList = await this.repository.retrieveElectionResearchWithoutStarting(ctx);
 		if (electionResearchWithoutStartingList.length != 0) {
 			throw new ElectionResearchWithoutStartingExist();
 		}
-        
+
 		const electionResearchInProgressList = await this.repository.retrieveElectionResearchInProgress(ctx);
 		if (electionResearchInProgressList.length != 0) {
 			throw new ElectionResearchInProgress();
@@ -47,13 +47,13 @@ class AdminContract extends ContractBase {
 		const electionResearchWithoutStartingList = await this.repository.retrieveElectionResearchWithoutStarting(ctx);
 		if (electionResearchWithoutStartingList.length == 0) {
 			throw new ElectionResearchNotFound();
-		}        
+		}
 
 		const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchWithoutStartingList[0]);
-        
+
 		const candidate = Candidate.makeCandidate(name, candidateNumber, photoUrl);
 		electionResearch.insertCandidate(candidate);
-        
+
 		await this.repository.updateElectionResearch(ctx, electionResearch);
 	}
 
@@ -65,13 +65,13 @@ class AdminContract extends ContractBase {
 		const electionResearchWithoutStartingList = await this.repository.retrieveElectionResearchWithoutStarting(ctx);
 		if (electionResearchWithoutStartingList.length == 0) {
 			throw new ElectionResearchNotFound();
-		}        
+		}
 
 		const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchWithoutStartingList[0]);
-        
+
 		const candidate = Candidate.makeCandidate(null, candidateNumber);
 		electionResearch.removeCandidate(candidate);
-        
+
 		await this.repository.updateElectionResearch(ctx, electionResearch);
 	}
 
@@ -81,7 +81,7 @@ class AdminContract extends ContractBase {
 		const electionResearchWithoutStartingList = await this.repository.retrieveElectionResearchWithoutStarting(ctx);
 		if (electionResearchWithoutStartingList.length == 0) {
 			throw new ElectionResearchNotFound();
-		} 
+		}
 
 		const electionResearch = ElectionResearch.mountsElectionResearchObjectRetrievedFromTheBlockchain(electionResearchWithoutStartingList[0]);
 
@@ -89,7 +89,7 @@ class AdminContract extends ContractBase {
 
 		await this.repository.updateElectionResearch(ctx, electionResearch);
 	}
-	
+
 	async finishElectionResearchAndCollectingVotes(ctx) {
 		this._checkAuthorityAdmin(ctx);
 
@@ -111,17 +111,17 @@ class AdminContract extends ContractBase {
 		this.validation.validateSearchElectionResearch(year, month);
 
 		const electionResearch = ElectionResearch.makeElectionResearch(year, month);
-		
+
 		const electionResearchBuffer = await this.repository.retrieveElectionResearch(ctx, electionResearch);
-		
-		return JSON.parse(electionResearchBuffer.toString());	
+
+		return JSON.parse(electionResearchBuffer.toString());
 	}
 
 	async retrieveElectionResearchWithoutStarting(ctx) {
 		this._checkAuthorityAdmin(ctx);
 
 		const electionResearchWithoutStartingList = await this.repository.retrieveElectionResearchWithoutStarting(ctx);
-		
+
 		return electionResearchWithoutStartingList;
 	}
 

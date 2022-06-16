@@ -3,7 +3,7 @@ const NotExistsRecord = require("../Exceptions/NotExistingRecord");
 
 class ElectionResearchRepository {
     
-    async createElectionResearch(ctx, electionResearch) {        
+	async createElectionResearch(ctx, electionResearch) {        
 		const electionResearchExists = await this.electionResearchExists(ctx, electionResearch.getId());
 		if (electionResearchExists) {
 			throw new ExistingRecord();

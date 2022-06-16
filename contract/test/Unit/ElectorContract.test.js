@@ -24,25 +24,25 @@ const ElectorContract = require("../../lib/ElectorContract");
 describe("ElectorContract", () => {
     
 	let cpfHashing = "1234567abcdefg";	
-    let electorContract;
+	let electorContract;
 
 	beforeEach(() => {
 		const electionResearchRepository = sinon.createStubInstance(ElectionResearchRepository);
 		const electorRepository = sinon.createStubInstance(ElectorRepository);
 
-        electorContract = new ElectorContract();
-        electorContract.repository = electorRepository;
-        electorContract.electionResearchRepository = electionResearchRepository;
+		electorContract = new ElectorContract();
+		electorContract.repository = electorRepository;
+		electorContract.electionResearchRepository = electionResearchRepository;
 
-        resetChaincodeStubState();
+		resetChaincodeStubState();
 	});
 
 	describe("#Vote", () => {
 
 		it("Must throw ElectionResearchNotFound exception", async () => {            
 			electorContract.electionResearchRepository.retrieveElectionResearchInProgress
-                .withArgs(ctx)
-                .callsFake(() => []);
+				.withArgs(ctx)
+				.callsFake(() => []);
 
 			await electorContract.vote(ctx, cpfHashing, "01", "secretPhrase")
 				.should.be.rejectedWith(ElectionResearchNotFound);
@@ -55,11 +55,11 @@ describe("ElectorContract", () => {
 			electionResearch.addOneVote();
                         
 			electorContract.electionResearchRepository.retrieveElectionResearchInProgress
-                .withArgs(ctx)
-                .callsFake(() => [electionResearch]);
+				.withArgs(ctx)
+				.callsFake(() => [electionResearch]);
 
 			electorContract.VOTE_LIMIT = 0;
-            await electorContract.vote(ctx, cpfHashing, "01", "secretPhrase")
+			await electorContract.vote(ctx, cpfHashing, "01", "secretPhrase")
 				.should.be.rejectedWith(TotalVotesAchieved);
 		});
 
@@ -70,8 +70,8 @@ describe("ElectorContract", () => {
 			electionResearch.beginCollectingVotes();
 
 			electorContract.electionResearchRepository.retrieveElectionResearchInProgress
-                .withArgs(ctx)
-                .callsFake(() => [electionResearch]);
+				.withArgs(ctx)
+				.callsFake(() => [electionResearch]);
             
 			electorContract.electionResearchRepository.updateElectionResearch.callsFake(async () => {              
 				electionResearch.addOneVote();
@@ -81,7 +81,7 @@ describe("ElectorContract", () => {
 			const elector = Elector.makeElector(cpfHashing, electionResearch.getId(), candidate, "secretePhrase");
 
 			electorContract.repository.registerElector
-                .callsFake(async () => {
+				.callsFake(async () => {
 				    await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 			    });
             
@@ -111,7 +111,7 @@ describe("ElectorContract", () => {
 			await chaincodeStub.putState(elector.getId(), elector.serializerInBuffer());
 
 			electorContract.repository.retrieveElector
-                .callsFake(async () => {
+				.callsFake(async () => {
 				    return await chaincodeStub.getState(elector.getId());
 			    });
 
@@ -126,12 +126,12 @@ describe("ElectorContract", () => {
 
 		it("Must return an election research in progress", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
 
 			electorContract.electionResearchRepository.retrieveElectionResearchInProgress
-                .callsFake(async () => {
+				.callsFake(async () => {
 				    return [electionResearch];
 			    });
 
@@ -147,13 +147,13 @@ describe("ElectorContract", () => {
 
 		it("Must return an election research closed", async () => {
 			const electionResearch = ElectionResearch.makeElectionResearch("2000", "01");
-            const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
+			const candidate = Candidate.makeCandidate("Fulano", "01", "https://image.com.br");
 			electionResearch.insertCandidate(candidate);
 			electionResearch.beginCollectingVotes();
 			electionResearch.finishElectionResearch();
 			
 			electorContract.electionResearchRepository.retrieveElectionResearchClosed
-                .callsFake(async () => {
+				.callsFake(async () => {
 				    return [electionResearch];
 			    });
 

@@ -7,7 +7,7 @@
   "scripts": {
     "test": "mocha --recursive test",
     "start": "fabric-chaincode-node start",
-    "lint": "eslint ./lib && eslint ./test"
+    "lint": "eslint ./lib --fix && eslint ./test --fix"
   },
   "repository": {
     "type": "git",

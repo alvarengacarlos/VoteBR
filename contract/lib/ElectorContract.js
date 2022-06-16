@@ -16,21 +16,21 @@ const ElectionResearchNotFound = require("./Exceptions/Admin/ElectionResearch/El
 
 class ElectorContract extends ContractBase {
 
-    constructor() {
-        super();
-        this.validation = new ElectorValidation();
+	constructor() {
+		super();
+		this.validation = new ElectorValidation();
 		this.repository = new ElectorRepository();
-        this.electionResearchRepository = new ElectionResearchRepository();
-        this.VOTE_LIMIT = VOTE_LIMIT ?? Number(147918483);	
-    }
+		this.electionResearchRepository = new ElectionResearchRepository();
+		this.VOTE_LIMIT = VOTE_LIMIT ?? Number(147918483);	
+	}
 
-    async vote(ctx, cpfHashing, candidateNumber, secretPhrase) {
-        this._checkAuthorityElector(ctx);
+	async vote(ctx, cpfHashing, candidateNumber, secretPhrase) {
+		this._checkAuthorityElector(ctx);
 
-        const electorValidation = new ElectorValidation();
-        electorValidation.validateVote(cpfHashing, candidateNumber, secretPhrase);
+		const electorValidation = new ElectorValidation();
+		electorValidation.validateVote(cpfHashing, candidateNumber, secretPhrase);
 
-        const electionResearchInProgressList = await this.electionResearchRepository.retrieveElectionResearchInProgress(ctx);
+		const electionResearchInProgressList = await this.electionResearchRepository.retrieveElectionResearchInProgress(ctx);
 		if (electionResearchInProgressList.length == 0) {
 			throw new ElectionResearchNotFound();
 		}
@@ -51,15 +51,15 @@ class ElectorContract extends ContractBase {
 		const elector = Elector.makeElector(cpfHashing, electionResearch.getId(), candidate, secretPhrase);
 			
 		await this.repository.registerElector(ctx, elector);
-    }
+	}
 
-    async searchElector(ctx, yearElectionResearch, monthElectionResearch, cpfHashing, secretPhrase) {
-        this._checkAuthorityElector(ctx);
+	async searchElector(ctx, yearElectionResearch, monthElectionResearch, cpfHashing, secretPhrase) {
+		this._checkAuthorityElector(ctx);
 
-        const electorValidation = new ElectorValidation();
-        electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpfHashing, secretPhrase);
+		const electorValidation = new ElectorValidation();
+		electorValidation.validateSearchElector(yearElectionResearch, monthElectionResearch, cpfHashing, secretPhrase);
 
-        const electionResearch = ElectionResearch.makeElectionResearch(yearElectionResearch, monthElectionResearch);
+		const electionResearch = ElectionResearch.makeElectionResearch(yearElectionResearch, monthElectionResearch);
 		
 		const elector = Elector.makeElector(cpfHashing, electionResearch.getId());
 		
@@ -69,23 +69,23 @@ class ElectorContract extends ContractBase {
 		electorResult.compareSecretPhraseAndThrowException(secretPhrase);
 
 		return electorResult;
-    }
+	}
 
-    async searchElectionResearchInProgress(ctx) {
-        this._checkAuthorityElector(ctx);
+	async searchElectionResearchInProgress(ctx) {
+		this._checkAuthorityElector(ctx);
 
-        const electionResearchInProgressList = await this.electionResearchRepository.retrieveElectionResearchInProgress(ctx);
+		const electionResearchInProgressList = await this.electionResearchRepository.retrieveElectionResearchInProgress(ctx);
 
 		return electionResearchInProgressList;
-    }
+	}
 
-    async searchElectionResearchClosed(ctx) {
-        this._checkAuthorityElector(ctx);
+	async searchElectionResearchClosed(ctx) {
+		this._checkAuthorityElector(ctx);
 
-        const electionResearchClosedList = await this.electionResearchRepository.retrieveElectionResearchClosed(ctx);
+		const electionResearchClosedList = await this.electionResearchRepository.retrieveElectionResearchClosed(ctx);
 
 		return electionResearchClosedList;
-    }   
+	}   
 
 }
 
