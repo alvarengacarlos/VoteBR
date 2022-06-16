@@ -18,7 +18,7 @@ class ValidateToken {
             tokenProvider.verifyTokenAdmin(token);
         
         } catch(exception) {                     
-            const exceptionFormated = formatException(exception.message);            
+            const exceptionFormated = formatException(exception);            
             return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
 
@@ -39,7 +39,7 @@ class ValidateToken {
             tokenProvider.verifyTokenElector(token);
         
         } catch(exception) {                     
-            const exceptionFormated = formatException(exception.message);            
+            const exceptionFormated = formatException(exception);            
             return res.status(exceptionFormated.httpStatusCode).json(exceptionFormated);
         }
 

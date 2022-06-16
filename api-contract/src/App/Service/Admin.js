@@ -9,6 +9,7 @@ class Admin {
 
     constructor() {
         this.contractRepository = new ElectionResearchContractRepository();
+        this.connectionChaincode = new ConnectionChaincode();
     }
 
     async createElectionResearch(payload) {
