@@ -3,7 +3,7 @@ let serverPort = process.parsed.API_SERVER_PORT;
 const app = require("./app");
 
 if (!serverPort) {
-	serverPort = 5000;
+	serverPort = 3000;
 }
 
 app.listen(serverPort, () => console.log(`Server running on ${serverPort} port`));
