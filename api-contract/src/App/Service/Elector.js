@@ -142,7 +142,7 @@ class Elector {
 
 		//Smart contract call
 		const wallet = await buildWallet();
-		console.log("Aqui");
+
         const chaincode = await this.connectionChaincode.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
 
 		return (await this.contractRepository.searchElector(chaincode, yearElection, monthElection, cpfHashing, secretPhrase));

@@ -1,4 +1,5 @@
-const GeneralContractException = require("../Exception/Chaincode/GeneralContractException");
+const SubmitTransactionException = require("../Exception/Chaincode/SubmitTransactionException");
+const EvaluateTransactionException = require("../Exception/Chaincode/EvaluateTransactionException");
 
 class ElectionResearchContractRepository {
 
@@ -7,7 +8,7 @@ class ElectionResearchContractRepository {
             await chaincode.submitTransaction("createElectionResearch", year, month);
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new SubmitTransactionException(exception);
         }
     }
 
@@ -16,7 +17,7 @@ class ElectionResearchContractRepository {
             await chaincode.submitTransaction("insertCandidateInTheElectionResearch", candidateName, candidateNumber, photoUrl);
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new SubmitTransactionException(exception);
         }
     }
 
@@ -25,7 +26,7 @@ class ElectionResearchContractRepository {
             await chaincode.submitTransaction("removeCandidateOfElectionResearch", candidateNumber);
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new SubmitTransactionException(exception);
         }
     }
 
@@ -34,7 +35,7 @@ class ElectionResearchContractRepository {
             await chaincode.submitTransaction("beginCollectingVotes");
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new SubmitTransactionException(exception);
         }
     }
 
@@ -43,7 +44,7 @@ class ElectionResearchContractRepository {
             await chaincode.submitTransaction("finishElectionResearchAndCollectingVotes");
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new SubmitTransactionException(exception);
         }
     }
 
@@ -54,7 +55,7 @@ class ElectionResearchContractRepository {
             return JSON.parse(result.toString());
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new EvaluateTransactionException(exception);
         }
     }
 
@@ -65,7 +66,7 @@ class ElectionResearchContractRepository {
             return JSON.parse(result.toString());
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new EvaluateTransactionException(exception);
         }
     }
 
@@ -76,7 +77,7 @@ class ElectionResearchContractRepository {
             return JSON.parse(result.toString());
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new EvaluateTransactionException(exception);
         }
     }
 
@@ -87,7 +88,7 @@ class ElectionResearchContractRepository {
             return JSON.parse(result.toString());
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new EvaluateTransactionException(exception);
         }
     }
 }

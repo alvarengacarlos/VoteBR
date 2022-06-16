@@ -3,7 +3,8 @@ const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
 
-const GeneralContractException = require("../../../src/App/Exception/Chaincode/GeneralContractException");
+const SubmitTransactionException = require("../../../src/App/Exception/Chaincode/SubmitTransactionException");
+const EvaluateTransactionException = require("../../../src/App/Exception/Chaincode/EvaluateTransactionException");
 const ElectorContractRepository = require("../../../src/App/Repository/ElectorContractRepository");
 
 describe("ElectorContractRepository", () => {
@@ -21,7 +22,7 @@ describe("ElectorContractRepository", () => {
     
             expect(async () => {
                 await repository.vote(chaincode, "1234567abcdefg", "01", "secret");
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(SubmitTransactionException);
         });
     });
     
@@ -32,7 +33,7 @@ describe("ElectorContractRepository", () => {
     
             expect(async () => {
                 await repository.searchElector(chaincode, "2000", "01", "123456abcdefg", "secret");
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(EvaluateTransactionException);
         });
     });
     
@@ -43,7 +44,7 @@ describe("ElectorContractRepository", () => {
     
             expect(async () => {
                 await repository.searchElectionResearchInProgress(chaincode);
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(EvaluateTransactionException);
         });
     });
    
@@ -54,7 +55,7 @@ describe("ElectorContractRepository", () => {
     
             expect(async () => {
                 await repository.searchElectionResearchClosed(chaincode);
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(EvaluateTransactionException);
         });
     
     });

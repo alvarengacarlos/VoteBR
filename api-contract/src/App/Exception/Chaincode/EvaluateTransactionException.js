@@ -1,13 +1,13 @@
 const Exception = require("../Exception");
 
-class GeneralContractException extends Exception {
+class EvaluateTransactionException extends Exception {
     constructor(exception) {
-		const message = GeneralContractException.extractMessage(exception);
+		const message = EvaluateTransactionException.extractMessage(exception);
 		super(message[0], message[1], `Sorry it was not possible to perform the operation. Error: ${message[2]}`);
 	}
 	
 	static extractMessage(exception) {
-		const message = String(exception.responses[0].response.message);
+		const message = String(exception.message);
 
 		const index = message.indexOf("Error: ") + 7;
 		const messageSliced = message.slice(index);
@@ -16,4 +16,4 @@ class GeneralContractException extends Exception {
 	}
 }
 
-module.exports = GeneralContractException;
+module.exports = EvaluateTransactionException;

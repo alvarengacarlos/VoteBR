@@ -1,4 +1,5 @@
-const GeneralContractException = require("../Exception/Chaincode/GeneralContractException");
+const SubmitTransactionException = require("../Exception/Chaincode/SubmitTransactionException");
+const EvaluateTransactionException = require("../Exception/Chaincode/EvaluateTransactionException");
 
 class ElectorContractRepository {
     
@@ -7,7 +8,7 @@ class ElectorContractRepository {
             await chaincode.submitTransaction("vote", cpfHashing, candidateNumber, secretPhrase);
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new SubmitTransactionException(exception);
         }
     }
 
@@ -16,8 +17,9 @@ class ElectorContractRepository {
             const result = await chaincode.evaluateTransaction("searchElector", yearElection, monthElection, cpfHashing, secretPhrase);
 			return JSON.parse(result.toString());
 
-        } catch (exception) {
-            throw new GeneralContractException(exception);
+        } catch (exception) {            
+            console.log(exception.message)
+            throw new EvaluateTransactionException(exception);
         } 
     }
 
@@ -27,7 +29,7 @@ class ElectorContractRepository {
 			return JSON.parse(result.toString());
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new EvaluateTransactionException(exception);
         } 
     }
 
@@ -37,7 +39,7 @@ class ElectorContractRepository {
 			return JSON.parse(result.toString());
 
         } catch (exception) {
-            throw new GeneralContractException(exception);
+            throw new EvaluateTransactionException(exception);
         } 
     }
 

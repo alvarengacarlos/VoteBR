@@ -2,9 +2,9 @@ const { describe, it } = require("mocha");
 const chai = require("chai");
 const expect = chai.expect;
 
-const GeneralContractException = require("../../../../src/App/Exception/Chaincode/GeneralContractException");
+const SubmitTransactionException = require("../../../../src/App/Exception/Chaincode/SubmitTransactionException");
 
-describe("GeneralContractException", () => {
+describe("SubmitTransactionException", () => {
 
     const chaincodeError = {
         responses: [{
@@ -16,7 +16,7 @@ describe("GeneralContractException", () => {
 
     describe("#extractMessage", () => {
         it("It must create exception with sucessfully", () => {
-            const exception = new GeneralContractException(chaincodeError);
+            const exception = new SubmitTransactionException(chaincodeError);
     
             expect(exception.httpStatusCode).to.eql(400);
             expect(exception.internalCode).to.eql("ELECTION_RESEARCH_IN_PROGRESS");

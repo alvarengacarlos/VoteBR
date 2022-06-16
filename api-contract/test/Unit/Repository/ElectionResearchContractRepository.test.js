@@ -3,7 +3,8 @@ const chai = require("chai");
 const expect = chai.expect;
 const sinon = require("sinon");
 
-const GeneralContractException = require("../../../src/App/Exception/Chaincode/GeneralContractException");
+const SubmitTransactionException = require("../../../src/App/Exception/Chaincode/SubmitTransactionException");
+const EvaluateTransactionException = require("../../../src/App/Exception/Chaincode/EvaluateTransactionException");
 const ElectionResearchContractRepository = require("../../../src/App/Repository/ElectionResearchContractRepository");
 
 describe("ElectionResearchContractRepository", () => {
@@ -22,7 +23,7 @@ describe("ElectionResearchContractRepository", () => {
             expect(async () => {
                 await repository.createElectionResearch(chaincode);
             
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(SubmitTransactionException);
         });
     });    
 
@@ -32,7 +33,7 @@ describe("ElectionResearchContractRepository", () => {
             expect(async () => {
                 await repository.insertCandidateInTheElectionResearch(chaincode, "Fulano", "01", "https://image.com");
             
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(SubmitTransactionException);
         });
     });    
 
@@ -41,8 +42,8 @@ describe("ElectionResearchContractRepository", () => {
             chaincode.submitTransaction.returns();
             expect(async () => {
                 await repository.removeCandidateOfElectionResearch(chaincode, "01");
-            
-            }).to.not.throw(GeneralContractException);
+                
+            }).to.not.throw(SubmitTransactionException);
         });
     });    
 
@@ -52,7 +53,7 @@ describe("ElectionResearchContractRepository", () => {
             expect(async () => {
                 await repository.beginCollectingVotes(chaincode);
             
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(SubmitTransactionException);
         });
     });    
 
@@ -62,7 +63,7 @@ describe("ElectionResearchContractRepository", () => {
             expect(async () => {
                 await repository.finishElectionResearch(chaincode);
             
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(SubmitTransactionException);
         });
     });    
 
@@ -72,7 +73,7 @@ describe("ElectionResearchContractRepository", () => {
             expect(async () => {
                 await repository.searchElectionResearch(chaincode, "2000", "01");
             
-            }).to.not.throw(GeneralContractException);        
+            }).to.not.throw(EvaluateTransactionException);        
         });
     });    
     
@@ -82,7 +83,7 @@ describe("ElectionResearchContractRepository", () => {
             expect(async () => {
                 await repository.searchElectionResearchWithoutStarting(chaincode);
             
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(EvaluateTransactionException);
         });
     });    
 
@@ -92,7 +93,7 @@ describe("ElectionResearchContractRepository", () => {
             expect(async () => {
                 await repository.searchElectionResearchInProgress(chaincode);
             
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(EvaluateTransactionException);
         });
     });
    
@@ -102,7 +103,7 @@ describe("ElectionResearchContractRepository", () => {
             expect(async () => {
                 await repository.searchElectionResearchClosed(chaincode);
             
-            }).to.not.throw(GeneralContractException);
+            }).to.not.throw(EvaluateTransactionException);
         });
     });
    
