@@ -6,7 +6,7 @@ const electorRoutes = (app) => {
 
     const prefix = "/elector";
 
-    app.post(`${prefix}/auth`, electorValidation.validateAuth, electorController.auth);
+    app.post(`${prefix}/auth`, electorValidation.validateAuth, electorController.authenticate);
     
     app.post(`${prefix}/vote`, validateToken.validateTokenForElector,
         electorValidation.validateVote, electorController.vote);

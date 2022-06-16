@@ -3,7 +3,7 @@ const ExceptionFormatter = require("../../Service/ExceptionFormatter");
 
 class Admin {
 
-    validateAuth(req, res, next) {
+    validateAuthenticate(req, res, next) {
         const schema = Joi.object({
             email: Joi.string().email().required(),
             password: Joi.string().required()
@@ -21,8 +21,8 @@ class Admin {
 
     validateCreateElectionResearch(req, res, next) {
         const schema = Joi.object({
-            yearElection: Joi.number().integer().positive().required(),
-            monthElection: Joi.number().integer().positive().required()           
+            year: Joi.number().integer().positive().required(),
+            month: Joi.number().integer().positive().required()           
         });
     
         const value = schema.validate(req.body);
@@ -37,8 +37,8 @@ class Admin {
 
     validateInsertCandidateInTheElectionResearch(req, res, next) {
         const schema = Joi.object({
-            nameOfCandidate: Joi.string().min(4).max(30).required(),
-            numberOfCandidate: Joi.number().integer().positive().less(100).required(),
+            candidateName: Joi.string().min(4).max(30).required(),
+            candidateNumber: Joi.number().integer().positive().less(100).required(),
             photoUrl: Joi.string().uri().required()
         });
     
@@ -54,7 +54,7 @@ class Admin {
     
     validateRemoveCandidateOfElectionResearch(req, res, next) {
         const schema = Joi.object({            
-            numberOfCandidate: Joi.number().integer().positive().less(100).required()
+            candidateNumber: Joi.number().integer().positive().less(100).required()
         });
     
         const value = schema.validate(req.body);
@@ -69,8 +69,8 @@ class Admin {
 
     validateSearchElectionResearch(req, res, next) {
         const schema = Joi.object({
-            monthElection: Joi.number().integer().positive().required(), 
-            yearElection: Joi.number().integer().positive().required(),
+            month: Joi.number().integer().positive().required(), 
+            year: Joi.number().integer().positive().required(),
         });
     
         const value = schema.validate(req.body);

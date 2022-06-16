@@ -13,20 +13,38 @@ class ConnectionChaincode {
 		this.gateway = null;
 	}
 
-	async connect(walletInstance, identity) {
+	async connectAdminContract(walletInstance, identity) {
 		this.gateway = new Gateway();
 
 		try {
 			await this.gateway.connect(this.ccp, {
 				wallet: walletInstance,
-				identity: identity,
-				discovery: { enabled: true, asLocalhost: true },
+				identity: identity				
 			});
 
 			const network = await this.gateway.getNetwork(channelName);
+			
+			const chaincode = network.getContract(chaincodeName, "AdminContract");
+			return chaincode;
 
-			const chaincode = network.getContract(chaincodeName);
+		} catch (error) {
+			console.error(error);
+			throw new ContractConnectionError();
+		}
+	}
 
+	async connectElectorContract(walletInstance, identity) {
+		this.gateway = new Gateway();
+
+		try {
+			await this.gateway.connect(this.ccp, {
+				wallet: walletInstance,
+				identity: identity				
+			});
+
+			const network = await this.gateway.getNetwork(channelName);
+			
+			const chaincode = network.getContract(chaincodeName, "ElectorContract");
 			return chaincode;
 
 		} catch (error) {

@@ -1,156 +1,107 @@
 const ConnectionChaincode = require("../../Infra/Chaincode/ConnectionChaincode");
-const {buildWallet} = require("../../Infra/Chaincode/AppUtil");
+const { buildWallet } = require("../../Infra/Chaincode/AppUtil");
 const process = require("dotenv").config();
 const CONTRACT_ADMIN_IDENTITY_USERNAME = process.parsed.CONTRACT_ADMIN_IDENTITY_USERNAME;
 
-const GeneralContractException = require("../Exception/Chaincode/GeneralContractException");
+const ElectionResearchContractRepository = require("../Repository/ElectionResearchContractRepository");
 
 class Admin {
 
-    async createElectionResearchInBlockchain(payload) {
-        const year = String(payload.yearElection);
-        const month = String(payload.monthElection);
-       
+    constructor() {
+        this.contractRepository = new ElectionResearchContractRepository();
+    }
+
+    async createElectionResearch(payload) {
+        const year = String(payload.year);
+        const month = String(payload.month);
+
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
-        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        try {
-            await chaincode.submitTransaction("createElectionResearch", year, month);
-        
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }
+        await this.contractRepository.createElectionResearch(chaincode, year, month);
     }
 
-    async insertCandidateInTheElectionResearchInBlockchain(payload) {
-        const nameOfCandidate = String(payload.nameOfCandidate);
-        const numberOfCandidate = String(payload.numberOfCandidate);
+    async insertCandidateInTheElectionResearch(payload) {
+        const candidateName = String(payload.candidateName);
+        const candidateNumber = String(payload.candidateNumber);
         const photoUrl = String(payload.photoUrl);
 
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
-        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        try {
-            await chaincode.submitTransaction("insertCandidateInTheElectionResearch", nameOfCandidate, numberOfCandidate, photoUrl);
-        
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }
+        await this.contractRepository.insertCandidateInTheElectionResearch(chaincode, candidateName, candidateNumber, photoUrl);
     }
 
-    async removeCandidateOfElectionResearchInBlockchain(payload) {
-        const numberOfCandidate = String(payload.numberOfCandidate);
+    async removeCandidateOfElectionResearch(payload) {
+        const candidateNumber = String(payload.candidateNumber);
 
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
-        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        try {
-            await chaincode.submitTransaction("removeCandidateOfElectionResearch", numberOfCandidate);
-        
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }
+        await this.contractRepository.removeCandidateOfElectionResearch(chaincode, candidateNumber);
     }
 
-    async beginCollectingVotesInBlockchain() {
+    async beginCollectingVotes() {
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
-        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        try {
-            await chaincode.submitTransaction("beginCollectingVotes");
-        
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }
+        await this.contractRepository.beginCollectingVotes(chaincode);
     }
 
-    async finishElectionResearchInBlockchain() {
+    async finishElectionResearch() {
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
-        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        try {
-            await chaincode.submitTransaction("finishElectionResearch");
-        
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }
+        await this.contractRepository.finishElectionResearch(chaincode);
     }
 
-    async searchElectionResearchInBlockchain(payload) {
-        const year = String(payload.yearElection);
-        const month = String(payload.monthElection);
+    async searchElectionResearch(payload) {
+        const year = String(payload.year);
+        const month = String(payload.month);
 
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
-        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        try {            
-            const result = await chaincode.submitTransaction("searchElectionResearch", year, month);
-            
-            return JSON.parse(result.toString());
-
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }
+        return (await this.contractRepository.searchElectionResearch(chaincode, year, month));
     }
 
-    async searchElectionResearchWithoutStartingInBlockchain() {
+    async searchElectionResearchWithoutStarting() {
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
-        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        try {            
-            const result = await chaincode.submitTransaction("searchElectionResearchWithoutStarting");
-            
-            return JSON.parse(result.toString());
-
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }                    
+        return (await this.contractRepository.searchElectionResearchWithoutStarting(chaincode));
     }
 
-    async searchElectionResearchInProgressInBlockchain() {
+    async searchElectionResearchInProgress() {
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
-        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        try {            
-            const result = await chaincode.submitTransaction("searchElectionResearchInProgress");
-            
-            return JSON.parse(result.toString());
-
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }     
+        return (await this.contractRepository.searchElectionResearchInProgress(chaincode));
     }
 
-    async searchElectionResearchClosedInBlockchain() {
+    async searchElectionResearchClosed() {
         const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
-        const chaincode = await connection.connect(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
+        const chaincode = await connection.connectAdminContract(wallet, CONTRACT_ADMIN_IDENTITY_USERNAME);
 
-        try {            
-            const result = await chaincode.submitTransaction("searchElectionResearchClosed");
-            
-            return JSON.parse(result.toString());
-
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }  
+        return (await this.contractRepository.searchElectionResearchClosed(chaincode));
     }
 }
 

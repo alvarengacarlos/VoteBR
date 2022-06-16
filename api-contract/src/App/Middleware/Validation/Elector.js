@@ -23,7 +23,7 @@ class Elector {
         const schema = Joi.object({
             cpf: Joi.number().integer().positive().less(99999999999).required(),
             birthDate: Joi.date().less("now").required(),
-            numberOfCandidate: Joi.number().integer().positive().less(100).required()
+            candidateNumber: Joi.number().integer().positive().less(100).required()
         });
 
         const value = schema.validate(req.body);

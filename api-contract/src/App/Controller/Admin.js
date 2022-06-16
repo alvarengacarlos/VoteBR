@@ -1,13 +1,13 @@
 const AdminService = require("../Service/Admin");
-const AuthService = require("../Service/Authentication");
+const AuthenticateService = require("../Service/Authentication");
 const ExceptionFormatter = require("../Service/ExceptionFormatter");
 
 class Admin {
 
-    auth(req, res) {
+    authenticate(req, res) {
         try {
-            const authService = new AuthService();
-            const token = authService.authenticateAdmin(req.body);
+            const authenticateService = new AuthenticateService();
+            const token = authenticateService.authenticateAdmin(req.body);
                       
             return res.status(200).json({token: token});
 
@@ -21,7 +21,7 @@ class Admin {
     async createElectionResearch(req, res) {
         try {
             const adminService = new AdminService();
-            await adminService.createElectionResearchInBlockchain(req.body);
+            await adminService.createElectionResearch(req.body);
             
             return res.status(201).json();
 
@@ -35,7 +35,7 @@ class Admin {
     async insertCandidateInTheElectionResearch(req, res) {
         try {
             const adminService = new AdminService();
-            await adminService.insertCandidateInTheElectionResearchInBlockchain(req.body);
+            await adminService.insertCandidateInTheElectionResearch(req.body);
 
             return res.status(201).json();
         
@@ -49,7 +49,7 @@ class Admin {
     async removeCandidateOfElectionResearch(req, res) {
         try {
             const adminService = new AdminService();
-            await adminService.removeCandidateOfElectionResearchInBlockchain(req.body);
+            await adminService.removeCandidateOfElectionResearch(req.body);
 
             return res.status(204).json();
 
@@ -63,7 +63,7 @@ class Admin {
     async beginCollectingVotes(req, res) {
         try {
             const adminService = new AdminService();
-            await adminService.beginCollectingVotesInBlockchain();
+            await adminService.beginCollectingVotes();
 
             return res.status(200).json();
 
@@ -77,7 +77,7 @@ class Admin {
     async finishElectionResearch(req, res) {
         try {
             const adminService = new AdminService();
-            await adminService.finishElectionResearchInBlockchain();
+            await adminService.finishElectionResearch();
 
             return res.status(200).json();
 
@@ -91,7 +91,7 @@ class Admin {
     async searchElectionResearch(req, res) {
         try {
             const adminService = new AdminService();
-            const result = await adminService.searchElectionResearchInBlockchain(req.body);
+            const result = await adminService.searchElectionResearch(req.body);
         
             return res.status(200).json({result: result});
         
@@ -105,7 +105,7 @@ class Admin {
     async searchElectionResearchWithoutStarting(req, res) {
         try {
             const adminService = new AdminService();
-            const result = await adminService.searchElectionResearchWithoutStartingInBlockchain();    
+            const result = await adminService.searchElectionResearchWithoutStarting();    
             
             return res.status(200).json({result: result});
 
@@ -120,7 +120,7 @@ class Admin {
     async searchElectionResearchInProgress(req, res) {
         try {
             const adminService = new AdminService();
-            const result = await adminService.searchElectionResearchInProgressInBlockchain();    
+            const result = await adminService.searchElectionResearchInProgress();    
             
             return res.status(200).json({result: result});
 
@@ -134,7 +134,7 @@ class Admin {
     async searchElectionResearchClosed(req, res) {
         try {
             const adminService = new AdminService();
-            const result = await adminService.searchElectionResearchClosedInBlockchain();    
+            const result = await adminService.searchElectionResearchClosed();    
             
             return res.status(200).json({result: result});
 

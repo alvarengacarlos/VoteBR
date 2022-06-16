@@ -26,6 +26,14 @@ class ExceptionFormatter {
         };
     }
 
+    static formatContractException(error) {
+        return {
+            message: error.message,
+            internalCode: "CLIENT_ERROR",
+            httpStatusCode: 400
+        };
+    }
+
 }
 
 module.exports = ExceptionFormatter;

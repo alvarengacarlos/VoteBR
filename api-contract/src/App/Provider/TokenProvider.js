@@ -12,14 +12,6 @@ class TokenProvider {
         this.tokenLib = jsonWebToken;        
     }
 
-    configurateTokenAdmin(email) {
-        return {
-            algorithm: "HS256",
-            expiresIn: "1h",
-            subject: email,
-        };
-    }
-
     generateTokenAdmin(email) {
         const payload = {
             email: email,
@@ -33,11 +25,11 @@ class TokenProvider {
         return token;
     }
 
-    configurateTokenElector() {
+    configurateTokenAdmin(email) {
         return {
             algorithm: "HS256",
             expiresIn: "1h",
-            subject: crypto.randomUUID(),
+            subject: email,
         };
     }
 
@@ -51,6 +43,14 @@ class TokenProvider {
         const token = this.tokenLib.sign(payload, this.privateKey, options);
 
         return token;
+    }
+
+    configurateTokenElector() {
+        return {
+            algorithm: "HS256",
+            expiresIn: "1h",
+            subject: crypto.randomUUID(),
+        };
     }
 
     verifyTokenAdmin(token) {

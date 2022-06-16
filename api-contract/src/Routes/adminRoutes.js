@@ -6,7 +6,7 @@ const adminRoutes = (app) => {
 
     const prefix = "/admin";
         
-    app.post(`${prefix}/auth`, adminValidation.validateAuth, adminController.auth);
+    app.post(`${prefix}/auth`, adminValidation.validateAuthenticate, adminController.authenticate);
 
     app.post(`${prefix}/create-election-research`, validateToken.validateTokenForAdmin, 
         adminValidation.validateCreateElectionResearch, adminController.createElectionResearch);

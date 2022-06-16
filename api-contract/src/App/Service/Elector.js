@@ -7,14 +7,20 @@ const ConnectionChaincode = require("../../Infra/Chaincode/ConnectionChaincode")
 const InvalidCpf = require("../Exception/Elector/InvalidCpf");
 const InvalidAge = require("../Exception/Elector/InvalidAge");
 const ApiSearchCpf = require("./ApiSearchCpf");
-const GeneralContractException = require("../Exception/Chaincode/GeneralContractException");
 
-class Elector extends ApiSearchCpf {
+const ElectorContractRepository = require("../Repository/ElectorContractRepository");
 
-	async voteInBlockchain(payload) {		
+class Elector {
+
+	constructor() {		
+		this.contractRepository = new ElectorContractRepository();
+		this.apiSearchCpf = new ApiSearchCpf();
+	}
+
+	async vote(payload) {		
         const cpf = String(payload.cpf);		
         const birthDate = String(payload.birthDate);
-        const numberOfCandidate = String(payload.numberOfCandidate);
+        const candidateNumber = String(payload.candidateNumber);
 
 		const birthDateObject = this.getBirthDateObject(birthDate);
 		
@@ -28,24 +34,18 @@ class Elector extends ApiSearchCpf {
             throw new InvalidCpf();
         }        
 		
-		await this.validatesIfElectorIsReal(cpf, birthDateObject);        
+		await this.apiSearchCpf.validatesIfElectorIsReal(cpf, birthDateObject);        
 		
-		const cpfHash = this.encryptCpf(cpf);
+		const cpfHashing = this.encryptCpf(cpf);
 		const secretPhrase = crypto.randomUUID({disableEntropyCache: false});
 		
 		//Smart Contract call
 		const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
+        const chaincode = await connection.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
 
-        const chaincode = await connection.connect(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
-
-        try {
-            await chaincode.submitTransaction("vote", cpfHash, numberOfCandidate, secretPhrase);
-
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        }
+        await this.contractRepository.vote(chaincode, cpfHashing, candidateNumber, secretPhrase);
 		
 		return secretPhrase;
     }
@@ -127,7 +127,7 @@ class Elector extends ApiSearchCpf {
 		return cpfHashing.digest("hex")
 	}
 
-	async searchElectorInBlockchain(payload) {
+	async searchElector(payload) {
 		const yearElection = String(payload.yearElection);
 		const monthElection = String(payload.monthElection);
 		const cpf = String(payload.cpf);
@@ -138,54 +138,35 @@ class Elector extends ApiSearchCpf {
             throw new InvalidCpf();
         }
 
-		const cpfHash = this.encryptCpf(cpf);
+		const cpfHashing = this.encryptCpf(cpf);
 
 		//Smart contract call
 		const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
+        const chaincode = await connection.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
 
-        const chaincode = await connection.connect(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
-
-        try {
-            const result = await chaincode.submitTransaction("searchElector", yearElection, monthElection, cpfHash, secretPhrase);
-			return JSON.parse(result.toString());
-
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        } 
+		return (await this.contractRepository.searchElector(chaincode, yearElection, monthElection, cpfHashing, secretPhrase));
 	}
 
-	async searchElectionResearchInProgressLikeElectorInBlockchain() {	
+	async searchElectionResearchInProgress() {	
 		const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
 
-        const chaincode = await connection.connect(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+        const chaincode = await connection.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
 
-        try {
-            const result = await chaincode.submitTransaction("searchElectionResearchInProgressLikeElector");
-			return JSON.parse(result.toString());
-
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        } 
+        return (await this.contractRepository.searchElectionResearchInProgress(chaincode));
 	}
 
-	async searchElectionResearchClosedLikeElectorInBlockchain() {
+	async searchElectionResearchClosed() {
 		const wallet = await buildWallet();
 
         const connection = new ConnectionChaincode();
 
-        const chaincode = await connection.connect(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
+        const chaincode = await connection.connectElectorContract(wallet, CONTRACT_ELECTOR_IDENTITY_USERNAME);
 
-        try {
-            const result = await chaincode.submitTransaction("searchElectionResearchClosedLikeElector");
-			return JSON.parse(result.toString());
-
-        } catch (exception) {
-            throw new GeneralContractException(exception);
-        } 
+        return (await this.contractRepository.searchElectionResearchClosed(chaincode));
 	}
 }
 

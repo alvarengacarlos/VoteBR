@@ -4,7 +4,7 @@ const TokenProvider = require("../Provider/TokenProvider");
 
 const AuthFail = require("../Exception/AuthFail");
 
-class Auth {
+class Authenticate {
 
     constructor() {
         this.adminEmail = process.parsed.API_ADMIN_EMAIL;
@@ -40,4 +40,4 @@ class Auth {
 
 }
 
-module.exports = Auth;
+module.exports = Authenticate;

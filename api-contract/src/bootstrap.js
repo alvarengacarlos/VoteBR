@@ -48,7 +48,8 @@ const boot = async () => {
     let connection;
     try {
         connection = new ConnectionChaincode();
-        await connection.connect(wallet, contractAdminIdenitityUsername);
+        await connection.connectAdminContract(wallet, contractAdminIdenitityUsername);
+        await connection.connectElectorContract(wallet, contractAdminIdenitityUsername);
     
     } catch(error) {
         console.log(error);
