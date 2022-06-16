@@ -3,6 +3,10 @@ const AccessDenied = require("./Exceptions/AccessDenied");
 
 class ContractBase extends Contract {
 
+	constructor(contractName = "ContractBase") {
+		super(contractName);
+	}
+
 	_checkAuthorityAdmin(ctx) {
 		const identity = ctx.clientIdentity;
 		

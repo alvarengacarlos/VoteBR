@@ -14,7 +14,7 @@ const ElectionResearchNotFound = require("./Exceptions/Admin/ElectionResearch/El
 class AdminContract extends ContractBase {
 
 	constructor() {
-		super();
+		super("AdminContract");
 		this.validation = new AdminValidation();
 		this.repository = new ElectionResearchRepository();
 	}
