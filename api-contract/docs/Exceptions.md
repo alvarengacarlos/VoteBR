@@ -14,4 +14,4 @@
 |FORBIDDEN|403|You do not have access|
 |INTERNAL_FAILURE_WHEN_SEARCHING_VOTER|500|Sorry. We are having internal problems|
 |TOKEN_EXPIRED|401|Expired token login again|
-|GENERAL_CONTRACT_EXCEPTION|500|Sorry it was not possible to perform the operation. Error: ${exceptionMessage}|
+|SERVER_ERROR|500|${message}|
